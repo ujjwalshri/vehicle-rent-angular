@@ -1,0 +1,20 @@
+
+<head>
+    <link rel="stylesheet" href="/src/components/auth/login.style.css">
+    <script src="/src/routes/app.routes.js"></script>
+    <script src="login.controller.js"></script>
+</head>
+  
+<form  id="userForm" ng-controller="loginCtrl">
+    <h1>Login Form</h1>
+    {{test}}
+    <label for="username">Username:</label>
+    <input type="text" id="username" name="username" placeholder="enter a valid username" ng-model="username" required><br><br>
+    
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password" placeholder="enter your password" ng-model="password" required><br><br>
+    
+    <button id="submit-button" type="submit-button" ng-click="login()">Submit</button>
+    <span id="signup-href">Not a user?? <a ui-sref="signup">signup</a></span>
+    <span id="home-href">dont want to login ? <a ui-sref="home">home</a></span>
+</form>

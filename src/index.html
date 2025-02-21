@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vehical Rental</title>
+    <!--importing global css for the whole app -->
+    <link rel="stylesheet" href="global.style.css">
+    <!-- angular -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <!-- ui Router -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/1.0.29/angular-ui-router.min.js"></script>
+    <!-- importing the app.js which has the main Controller for whole application -->
+    <script src="app.controller.js"></script>
+    <!--importing the app routes -->
+    <script src="routes/app.routes.js"></script>
+    <!--importing the IDB service -->
+    <script src="/src/services/IDB.service.js"></script>
+    <!--importing the signup controller -->
+    <script src="/src/components/auth/signup.controller.js"></script>
+    <!--importing the login controller -->
+    <script src="/src/components/auth/login.controller.js"></script>
+    <!--importing the add Car controller -->
+    <script src="/src/components/car/addCarController.js"></script>
+    <!--hashing the password-->
+    <script src="/src/factories/hashPassword.js"></script>
+</head>
+<body ng-controller="appCtrl">
+   <!-- Navbar -->
+<nav class="navbar">
+    <a ui-sref="home" class="logo">Car-lelo.com</a>
+    <!-- Navigation Links -->
+    <ul class="nav-links">
+        <li><a ui-sref="home">Home</a></li>
+        <!-- Dropdown -->
+        <li class="dropdown" ng-show="logged">
+            <a href="#">More ▾</a>
+            <ul class="dropdown-menu">
+                <li id="profile"><a ui-sref="profile">Profile</a></li>
+                <li id="updateProfile"><a ui-sref="updateProfile">Update Profile</a></li>
+                <li id="addCar" ><a ui-sref="car">Add a car</a></li>
+                <li id="chats"><a ui-sref="chats">Chats</a></li>
+                <li id="logout" ng-click="logout()"><a ui-sref="login">Logout</a></li>
+            </ul>
+        </li>
+    </ul>
+    <!-- Search Bar -->
+    <div class="search-box" ng-show="logged">
+        <input type="text" placeholder="Search...">
+        <button>🔍</button>
+    </div>
+  
+    <!-- Login Button -->
+    <a ui-sref="login" class="login-btn" ng-show="!logged">Login</a>
+</nav>
+    <div id="main-view" ui-view></div>
+</body>
+</html>

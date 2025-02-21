@@ -1,0 +1,61 @@
+<head>
+    <link rel="stylesheet" href="/src/components/auth/signup.style.css">
+    <script src="signup.controller.js"></script>
+</head>
+
+
+<form id="userForm" ng-submit="signup()" ng-controller="signupCtrl">
+    {{test}}
+    <h1>Sign up</h1>
+    <label>Name:</label>
+    <input
+      type="text"
+      id="firstName"
+      name="firstName"
+      placeholder="enter your first name"
+      ng-model="user.firstName"
+      required
+    />
+    <label>LastName:</label>
+    <input
+      type="text"
+      id="lastName"
+      name="lastName"
+      placeholder="enter your lastName"
+      ng-model="user.lastName"
+      required
+    />
+    <label>Username:</label>
+    <input
+      type="text"
+      id="username"
+      name="username"
+      placeholder="enter your username"
+      ng-model="user.username"
+      required
+    />
+    <label>Password:</label>
+    <input
+      type="password"
+      id="password"
+      name="password"
+      placeholder="enter a password"
+      ng-model="user.password"
+      required
+    />
+    <label>Confirm Password:</label>
+    <input
+      type="password"
+      id="confirm-password"
+      name="confirmPassword"
+      placeholder="confirm your password"
+      ng-model="user.confirmPassword"
+      required
+    />
+    <label>City:</label>
+    <input type="text" id="city" name="city" placeholder="please enter your city" ng-model="user.city" required/>
+    <label>Adhaar Number:</label>
+    <input type="number" id="adhaar" name="adhaar" placeholder="adhar number" ng-model="user.adhaar" required />
+    <span id="login-href">Already a user?? <a ui-sref="login">login</a></span>
+    <button id="submit-button" type="submit">Submit</button>
+</form>

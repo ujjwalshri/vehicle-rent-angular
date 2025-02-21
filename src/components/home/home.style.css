@@ -1,0 +1,15 @@
+.nav-div{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #9cbee1;
+}
+
+.nav-div h1{
+    color: white;
+    text-decoration: none;
+    padding: 14px 20px;
+    display: block;
+    cursor: pointer;
+}
+
