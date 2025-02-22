@@ -21,4 +21,27 @@ angular.module("myApp").config(function($stateProvider, $urlRouterProvider) {
             templateUrl: 'components/car/addCarForm.html',
             controller: 'addCarCtrl'
         })
+        .state('admin', {
+            url: '/admin',
+            templateUrl: 'components/admin/admin.html',
+            controller: 'adminCtrl'
+        })
+        .state('admin.carApprovals', {
+            url: '/carApprovals',
+            views: {
+                'adminContent@admin': {  // Named view inside 'admin'
+                    templateUrl: 'components/admin/carApprovals/carApprovals.html',
+                    controller: ''
+                }
+            }
+        })
+        .state('admin.userManagement', {
+            url: '/userManagement',
+            views: {
+                'adminContent@admin': {  // Named view inside 'admin'
+                    templateUrl: 'components/admin/userManagement/userManagement.html',
+                    controller: ''
+                }
+            }
+        });
 });

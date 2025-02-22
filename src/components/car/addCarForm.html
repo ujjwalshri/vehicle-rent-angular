@@ -2,10 +2,10 @@
     <link rel="stylesheet" href="/src/components/car/addCar.style.css">
 </head>
 
-<div class="form-container" ng-app="carApp" >
+<div class="form-container" ng-app="carApp" ng-controller="addCarCtrl">
     <h2>Add a New Car</h2>
     {{test}}
-    <form id="addCarForm" >
+    <form id="addCarForm">
         
         <!-- Car Information -->
         <div class="form-group">
@@ -61,13 +61,20 @@
             <input type="number" id="mileage" name="mileage" ng-model="car.mileage" required>
         </div>
 
-        <!-- File Upload -->
-        <div class="form-group">
-            <label for="images">Car Images:</label>
-            <input type="file" id="imageUpload" name="images" accept=".jpg, .jpeg, .png" ng-model="images" multiple>
-        </div>
-        <div id="imagePreview">
-        </div>
+       <!-- File Upload -->
+<div class="form-group">
+    <label for="imageUpload">Car Images:</label>
+    <input type="file" id="imageUpload" accept=".jpg, .jpeg, .png" multiple
+        onchange="angular.element(this).scope().previewImages(this)">
+</div>
+
+<!-- Image Preview Section -->
+<div id="imagePreview">
+    <div ng-repeat="image in images">
+        <img ng-src="{{image.base64}}" style="max-width: 100px; max-height: 100px; margin: 5px;">
+    </div>
+</div>
+
 
         <!-- Multi-Select Checkboxes -->
         <fieldset>

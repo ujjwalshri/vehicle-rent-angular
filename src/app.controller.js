@@ -3,8 +3,10 @@ const app = angular.module("myApp", ["ui.router"]);
 app.controller("appCtrl", function($scope, $state) {
     $scope.hi = "Hello World!";
     const loggedInUser = JSON.parse(sessionStorage.getItem("user"));
+    if(loggedInUser && loggedInUser.role === "admin"){
+        $scope.adminLogged = true;
+    }
     $scope.logged = !!loggedInUser; // Attach logged to $scope
-
     $scope.logout = () => {
         sessionStorage.removeItem("user");
         $scope.logged = false;

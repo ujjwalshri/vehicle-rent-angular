@@ -12,8 +12,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/1.0.29/angular-ui-router.min.js"></script>
     <!-- importing the app.js which has the main Controller for whole application -->
     <script src="app.controller.js"></script>
+    <!--importing the admin controller-->
+    <script src="/src/components/admin/admin.controller.js"></script>
     <!--importing the app routes -->
     <script src="routes/app.routes.js"></script>
+   
     <!--importing the IDB service -->
     <script src="/src/services/IDB.service.js"></script>
     <!--importing the signup controller -->
@@ -27,7 +30,7 @@
 </head>
 <body ng-controller="appCtrl">
    <!-- Navbar -->
-<nav class="navbar">
+<nav class="navbar" ng-hide="adminLogged">
     <a ui-sref="home" class="logo">Car-lelo.com</a>
     <!-- Navigation Links -->
     <ul class="nav-links">
@@ -36,7 +39,7 @@
         <li class="dropdown" ng-show="logged">
             <a href="#">More ▾</a>
             <ul class="dropdown-menu">
-                <li id="profile"><a ui-sref="profile">Profile</a></li>
+                <li id="profile" ><a ui-sref="profile">Profile</a></li>
                 <li id="updateProfile"><a ui-sref="updateProfile">Update Profile</a></li>
                 <li id="addCar" ><a ui-sref="car">Add a car</a></li>
                 <li id="chats"><a ui-sref="chats">Chats</a></li>
