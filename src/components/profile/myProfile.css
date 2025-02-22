@@ -1,0 +1,95 @@
+/* User Profile Card */
+.user-card {
+    max-width: 400px;
+    background: white;
+    padding: 20px;
+    border: 1px solid #050505;
+    border-radius: 8px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+    margin: auto;
+    color: red;
+    text-align: center;
+}
+
+.user-card h2 {
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.user-card p {
+    margin: 5px 0;
+    font-size: 16px;
+}
+
+.highlight {
+    font-weight: bold;
+    color: #007bff;
+}
+
+/* Added Cars Section */
+.added-cars {
+    margin-top: 20px;
+    padding: 20px;
+    display: flex;
+    flex-wrap: wrap;  /* Allow multiple rows */
+    justify-content: space-between; /* Distribute cars evenly */
+    gap: 20px;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Car List */
+.added-cars ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 100%;
+}
+
+/* Individual Car Card */
+.added-cars li {
+    width: calc(20% - 16px);  /* 5 cars per row (20% each), subtracting the gap */
+    min-width: 200px;
+    background: white;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+/* Car Images */
+.car-image {
+    width: 100%;
+    height: 150px;
+    object-fit: cover; /* Prevents image stretching */
+    border-radius: 8px;
+}
+
+/* Text inside car card */
+.added-cars p {
+    font-size: 14px;
+    margin: 5px 0;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .added-cars li {
+        width: calc(33.33% - 16px); /* 3 cars per row for tablets */
+    }
+}
+
+@media (max-width: 768px) {
+    .added-cars li {
+        width: calc(50% - 16px); /* 2 cars per row for mobile */
+    }
+}
+
+@media (max-width: 480px) {
+    .added-cars li {
+        width: 100%; /* 1 car per row for small screens */
+    }
+}

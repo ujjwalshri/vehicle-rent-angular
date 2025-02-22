@@ -208,6 +208,7 @@
 /* 🔹 Right: Booking Form */
 .book-car-form {
     width: 35%;
+    max-height: 600px;
     background: #f8f9fa;
     padding: 20px;
     border-radius: 10px;
@@ -227,6 +228,7 @@
 .book-car-form input {
     width: 100%;
     padding: 10px;
+    
     margin-top: 5px;
     border: 1px solid #ccc;
     border-radius: 5px;

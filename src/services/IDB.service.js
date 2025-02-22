@@ -122,7 +122,25 @@ angular.module('myApp').service("IDB", function ($q, hashPassword) {
           unique: false,
         });
       }
+      if(!db.objectStoreNames.contains("converations")){
+        const converationsObjectStore = db.createObjectStore("converations", {
+          keyPath: "id",
+        });
+        converationsObjectStore.createIndex("senderIndex", "sender.username", {
+          unique: false,
+        });
+        converationsObjectStore.createIndex("receiverIndex", "receiver.username", {
+          unique: false,
+        });
+        converationsObjectStore.createIndex('carIndex', 'car.id', {
+          unique: false,
+        });
+        converationsObjectStore.createIndex("createdAtIndex", "createdAt", {
+          unique: false,
+        });
+      }
     };
+   
 
     request.onsuccess = function (event) {
       db = event.target.result;
@@ -347,6 +365,24 @@ angular.module('myApp').service("IDB", function ($q, hashPassword) {
       };
       request.onerror = function(event) {
         deferred.reject("Error retrieving car: " + event.target.errorCode);
+      };
+    }).catch(function(error) {
+      deferred.reject("Error opening database: " + error);
+    });
+    return deferred.promise;
+  }
+  this.getAllCarsByUser = (username)=>{
+    let deferred = $q.defer();
+    openDB().then(function (db) {
+      let transaction = db.transaction(["vehicles"], "readonly");
+      let objectStore = transaction.objectStore("vehicles");
+      let index = objectStore.index("ownerIndex");
+      let request = index.getAll(username);
+      request.onsuccess = function(event) {
+        deferred.resolve(event.target.result);
+      };
+      request.onerror = function(event) {
+        deferred.reject("Error retrieving cars: " + event.target.errorCode);
       };
     }).catch(function(error) {
       deferred.reject("Error opening database: " + error);

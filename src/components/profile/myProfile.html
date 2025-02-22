@@ -1,0 +1,25 @@
+<head>
+    <link rel="stylesheet" href="/src/components/profile/myProfile.css">
+</head>
+<div class="user-card">
+    <h2>your Profile</h2>
+    <p><strong>Name:</strong> <span class="highlight">{{ user.firstName }} {{ user.lastName }}</span></p>
+    <p><strong>Username:</strong> {{ user.username }}</p>
+    <p><strong>Email:</strong> {{ user.email }}</p>
+    <p><strong>City:</strong> {{ user.city }}</p>
+    <p><strong>Aadhaar:</strong> {{ user.adhaar }}</p>
+</div>
+
+<div class="added-cars">
+    <h3>Added Cars</h3>
+    <ul>
+        <li ng-repeat="car in userCars">
+            <img ng-src="{{ car.vehicleImages[0] }}" alt="{{ car.carName }}" class="car-image">
+            <p><strong>Make:</strong> {{ car.carPrice }}</p>
+            <p><strong>Model:</strong> {{ car.carName }}</p>
+            <p><strong>type:</strong> {{ car.carType }}</p>
+            <p><strong>category:</strong> {{ car.category }}</p>
+            <p><strong>car status:</strong> {{ car.isApproved }}</p>
+        </li>
+    </ul>
+</div>

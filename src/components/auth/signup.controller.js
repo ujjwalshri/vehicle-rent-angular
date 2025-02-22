@@ -26,6 +26,7 @@ app.controller("signupCtrl", function ($scope, $state, IDB, hashPassword) {
             alert("Passwords do not match!");
             return;
         }
+        $scope.user.confirmPassword = "";
         $scope.user.password = hashPassword($scope.user.password);
         console.log($scope.user);
     

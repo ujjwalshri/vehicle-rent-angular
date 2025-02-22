@@ -8,6 +8,14 @@ angular.module("myApp").controller("homeCtrl", function($scope, $state, IDB) {
     $scope.search = '';
     $scope.category='';
     $scope.carLocation = '';
+
+    $scope.resetFilters = ()=>{
+        $scope.priceFilter = '';
+        $scope.search = '';
+        $scope.category='';
+        $scope.carLocation = '';
+    }
+
     IDB.getApprovedCars().then((cars)=>{
         $scope.allCars = cars;
         console.log($scope.allCars);

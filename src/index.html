@@ -20,16 +20,19 @@
     <script src="/src/components/home/home.controller.js"></script>
     <!--importing the single Car controller-->
     <script src="/src/components/car/singleCar.controller.js"></script>
+     <!--importing the signup controller -->
+     <script src="/src/components/auth/signup.controller.js"></script>
+     <!--importing the login controller -->
+     <script src="/src/components/auth/login.controller.js"></script>
+     <!--importing the add Car controller -->
+     <script src="/src/components/car/addCarController.js"></script>
+     <!--importing the myProfile controller -->
+    <script src="/src/components/profile/myProfile.controller.js"></script>
     <!--importing the app routes -->
     <script src="routes/app.routes.js"></script>
     <!--importing the IDB service -->
     <script src="/src/services/IDB.service.js"></script>
-    <!--importing the signup controller -->
-    <script src="/src/components/auth/signup.controller.js"></script>
-    <!--importing the login controller -->
-    <script src="/src/components/auth/login.controller.js"></script>
-    <!--importing the add Car controller -->
-    <script src="/src/components/car/addCarController.js"></script>
+   
     <!--hashing the password-->
     <script src="/src/factories/hashPassword.js"></script>
     <!--importing the car filters-->
@@ -46,10 +49,10 @@
         <li class="dropdown" ng-show="logged">
             <a href="#">More ▾</a>
             <ul class="dropdown-menu">
-                <li id="profile" ><a ui-sref="profile">Profile</a></li>
+                <li id="profile" ><a ui-sref="myProfile">Profile</a></li>
                 <li id="updateProfile"><a ui-sref="updateProfile">Update Profile</a></li>
                 <li id="addCar" ><a ui-sref="car">Add a car</a></li>
-                <li id="chats"><a ui-sref="chats">Chats</a></li>
+                <li id="chats"><a ui-sref="conversations">Chats</a></li>
                 <li id="logout" ng-click="logout()"><a ui-sref="login">Logout</a></li>
             </ul>
         </li>

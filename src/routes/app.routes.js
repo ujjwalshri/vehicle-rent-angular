@@ -58,4 +58,14 @@ angular.module("myApp").config(function($stateProvider, $urlRouterProvider) {
             templateUrl: 'components/car/singleCar.html',
             controller: 'singleCarCtrl'
         })
+        .state('conversations', {
+            url: '/conversations',
+            templateUrl: 'components/conversations/conversations.html',
+            controller: ''
+        }) 
+        .state('myProfile', {
+            url: '/myProfile',
+            templateUrl: 'components/profile/myProfile.html',
+            controller: 'myProfileCtrl'
+        })
 });
