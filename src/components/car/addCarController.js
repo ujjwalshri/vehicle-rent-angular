@@ -75,7 +75,14 @@ angular
       IDB.addCar($scope.car)
         .then(function (response) {
           console.log("Car added successfully:", response);
+
+          IDB.makeUserSeller(loggedInUser.username).then((response) => {
+            console.log("User updated to seller:", response);
+          }).catch((error) => {
+            console.error("Error making user seller:", error);
+          });
           $state.go("home");
+
         })
         .catch(function (error) {
           console.error("Error adding car:", error);

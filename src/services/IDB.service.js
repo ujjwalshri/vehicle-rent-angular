@@ -389,4 +389,35 @@ angular.module('myApp').service("IDB", function ($q, hashPassword) {
     });
     return deferred.promise;
   }
+  this.makeUserSeller = (username) => {
+    let deferred = $q.defer();
+    openDB().then(function (db) {
+      let transaction = db.transaction(["users"], "readwrite");
+      let objectStore = transaction.objectStore("users");
+      let index = objectStore.index("usernameIndex");
+      let request = index.get(username);
+      request.onsuccess = function(event) {
+        let user = event.target.result;
+        if (user) {
+          user.isSeller = true;
+          let updateRequest = objectStore.put(user);
+          updateRequest.onsuccess = function(event) {
+             sessionStorage.setItem("user", JSON.stringify(user));
+            deferred.resolve();
+          };
+          updateRequest.onerror = function(event) {
+            deferred.reject("Error updating user: " + event.target.errorCode);
+          };
+        } else {
+          deferred.reject("User not found");
+        }
+      };
+      request.onerror = function(event) {
+        deferred.reject("Error retrieving user: " + event.target.errorCode);
+      };
+    }).catch(function(error) {
+      deferred.reject("Error opening database: " + error);
+    });
+    return deferred.promise;
+  };
 });
