@@ -53,4 +53,9 @@ angular.module("myApp").config(function($stateProvider, $urlRouterProvider) {
                 }
             }
         })
+        .state('singleCar',{
+            url: '/singleCar/:id',
+            templateUrl: 'components/car/singleCar.html',
+            controller: 'singleCarCtrl'
+        })
 });

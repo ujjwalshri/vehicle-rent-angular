@@ -18,6 +18,8 @@
     <script src="/src/components/admin/carApprovals/carController.js"></script>
     <!--importing the home controller-->
     <script src="/src/components/home/home.controller.js"></script>
+    <!--importing the single Car controller-->
+    <script src="/src/components/car/singleCar.controller.js"></script>
     <!--importing the app routes -->
     <script src="routes/app.routes.js"></script>
     <!--importing the IDB service -->
@@ -30,11 +32,13 @@
     <script src="/src/components/car/addCarController.js"></script>
     <!--hashing the password-->
     <script src="/src/factories/hashPassword.js"></script>
+    <!--importing the car filters-->
+    <script src="/src/filters/carFilters.js"></script>
 </head>
 <body ng-controller="appCtrl">
    <!-- Navbar -->
 <nav class="navbar" ng-hide="adminLogged">
-    <a ui-sref="home" class="logo">Car-lelo.com</a>
+    <a ui-sref="home" class="logo">Car.com</a>
     <!-- Navigation Links -->
     <ul class="nav-links">
         <li><a ui-sref="home">Home</a></li>

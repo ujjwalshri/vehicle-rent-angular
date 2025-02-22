@@ -335,4 +335,22 @@ angular.module('myApp').service("IDB", function ($q, hashPassword) {
     });
     return deferred.promise;
   }
+  this.getCarByID = (ID) => {
+    let deferred = $q.defer();
+    openDB().then(function (db) {
+      let transaction = db.transaction(["vehicles"], "readonly");
+      let objectStore = transaction.objectStore("vehicles");
+      let index = objectStore.index("vehicleIDIndex");
+      let request = index.get(ID);
+      request.onsuccess = function(event) {
+        deferred.resolve(event.target.result);
+      };
+      request.onerror = function(event) {
+        deferred.reject("Error retrieving car: " + event.target.errorCode);
+      };
+    }).catch(function(error) {
+      deferred.reject("Error opening database: " + error);
+    });
+    return deferred.promise;
+  }
 });

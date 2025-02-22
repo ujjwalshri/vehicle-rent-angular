@@ -2,13 +2,34 @@
 <head>
     <link rel="stylesheet" href="components/home/home.style.css">
 </head>
-  
-<div id="cars-listing">
+<div class="filter-container">
+    <input type="text" ng-model="search" placeholder="Search for cars">
+    <label>Price Range:</label>
+    <select ng-model="priceFilter">
+        <option value="">All</option>
+        <option value="0-500">Below $500</option>
+        <option value="500-1000">$500 - $1000</option>
+        <option value="1000-2000">$1000 - $2000</option>
+        <option value="2000">Above $2000</option>
+    </select>
+    <label>Category:</label>
+    <select ng-model="category">
+        <option value="SUV">SUV</option>
+        <option value="Sedan">Sedan</option>
+    </select>
+    <label>Location:</label>
+    <select ng-model="carLocation">
+        <option value="local">Local</option>
+        <option value="outstation">Outstation</option>
+        <option value="both">Both</option>
+    </select>
+</div>
+<div id="cars-listing" >
     <h2>Available Cars {{test}}</h2>
-    <input type="text" ng-model="search" placeholder="Search for cars"> 
     
+
     <div id="cars" class="car-container"> 
-        <div class="car-card" ng-repeat="car in allCars | filter: search ">
+        <div class="car-card" ng-repeat="car in allCars | carFilters: search:priceFilter:category:carLocation" ng-click="redirectCarPage(car.id)">
             <img ng-src="{{ car.vehicleImages[0] }}" alt="{{ car.carName }}">
             <div class="car-details">
                 <h2>{{ car.carName }} ({{ car.carModel }})</h2>
@@ -16,7 +37,6 @@
                 <p><strong>Type:</strong> {{ car.carType }}</p>
                 <p><strong>Category:</strong> {{ car.category }}</p>
                 <p><strong>Mileage:</strong> {{ car.mileage }} kmpl</p>
-                <p><strong>Car No:</strong> {{ car.car_no }}</p>
                 <div class="features">
                     <strong>Features:</strong>
                     <span ng-if="car.features.GPS">GPS,</span>
@@ -27,9 +47,6 @@
                 </div>
                 <div class="owner">
                     <strong>Owner:</strong> {{ car.owner.firstName }} {{ car.owner.lastName }}
-                    <strong>Owner username:</strong> {{ car.owner.username }}
-                    <strong>Owner city:</strong> {{ car.owner.city }}
-                    <strong>Owner adhaar no:</strong> {{ car.owner.adhaar }}
                 </div>
             </div>
         </div>

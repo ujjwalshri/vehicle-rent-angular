@@ -1,0 +1,303 @@
+.single-car-container {
+    width: 100%;
+    max-width: 1200px;
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.single-car-container:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
+}
+
+/* Car Image Section */
+.car-image {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f0f0f0;
+    padding: 30px;
+}
+
+.car-image img {
+    width: 100%;
+    max-width: 600px;
+    border-radius: 16px;
+    object-fit: contain;  
+    height: auto;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.car-image img:hover {
+    transform: scale(1.08);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Car Information */
+.car-info {
+    flex: 1.5;
+    padding: 30px;
+    background: #fafafa;
+}
+
+.car-info h1 {
+    font-size: 32px;
+    margin-bottom: 20px;
+    color: #222;
+    text-align: center;
+}
+
+.car-info p {
+    font-size: 20px;
+    margin-bottom: 15px;
+    color: #444;
+}
+
+.car-info p strong {
+    color: #0056b3;
+}
+
+/* Features Section */
+.features {
+    margin-top: 25px;
+}
+
+.features strong {
+    display: block;
+    margin-bottom: 15px;
+    font-size: 22px;
+    color: #0056b3;
+}
+
+.features span {
+    background: #0056b3;
+    color: white;
+    padding: 10px 18px;
+    border-radius: 10px;
+    font-size: 16px;
+    margin-right: 10px;
+    display: inline-block;
+    margin-bottom: 8px;
+}
+
+/* Owner Information */
+.owner-info {
+    flex: 1;
+    padding: 30px;
+    background: #f8f9fa;
+    border-top: 5px solid #0056b3;
+    border-radius: 0 0 16px 16px;
+    text-align: center;
+}
+
+.owner-info h3 {
+    font-size: 26px;
+    margin-bottom: 20px;
+    color: #0056b3;
+}
+
+.owner-info p {
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.owner-info p strong {
+    color: #0056b3;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .single-car-container {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .car-image img {
+        width: 90%;
+    }
+
+    .owner-info {
+        border-left: none;
+        border-top: 5px solid #0056b3;
+        border-radius: 0 0 16px 16px;
+    }
+}
+
+/* 🔹 Modal Overlay */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+/* 🔹 Modal Content */
+.modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 80%;
+    max-width: 900px;
+    position: relative;
+    text-align: center;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+/* 🔹 Close Button */
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 30px;
+    cursor: pointer;
+    color: #333;
+    transition: color 0.3s;
+}
+
+.close-btn:hover {
+    color: red;
+}
+
+
+/* 🔹 Image Grid */
+.image-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.image-grid img {
+    width: 100%;
+    height: 150px;
+    object-fit: contain;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.image-grid img:hover {
+    transform: scale(1.1);
+}
+
+/* 🔹 Layout for Car Details & Booking Form */
+.car-booking-container {
+    display: flex;
+    gap: 30px;
+    width: 100%;
+    padding: 20px;
+    justify-content: space-between;
+}
+
+/* 🔹 Left: Car Details */
+.single-car-container {
+    width: 60%;
+}
+
+/* 🔹 Right: Booking Form */
+.book-car-form {
+    width: 35%;
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.book-car-form h2 {
+    text-align: center;
+}
+
+.book-car-form label {
+    display: block;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.book-car-form input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.book-car-form button {
+    width: 100%;
+    padding: 10px;
+    margin-top: 15px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.book-car-form button:hover {
+    background-color: #0056b3;
+}
+
+/* 🔹 Modal Styling */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.image-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 10px;
+}
+
+.image-grid img {
+    width: 100%;
+    height: 150px;
+    object-fit: contain;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.close {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 30px;
+    cursor: pointer;
+}
+
+/* 🔹 Responsive Design */
+@media (max-width: 768px) {
+    .car-booking-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .single-car-container,
+    .book-car-form {
+        width: 100%;
+    }
+}
