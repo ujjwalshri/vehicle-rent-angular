@@ -31,17 +31,17 @@ angular.module("myApp").config(function($stateProvider, $urlRouterProvider) {
             views: {
                 'adminContent@admin': {  // Named view inside 'admin'
                     templateUrl: 'components/admin/carApprovals/carApprovals.html',
-                    controller: ''
+                    controller: 'adminCtrl'
                 }
             }
         })
-        .state('admin.userManagement', {
+        .state('admin.userManagement',{
             url: '/userManagement',
             views: {
-                'adminContent@admin': {  // Named view inside 'admin'
+                'adminContent@admin': {
                     templateUrl: 'components/admin/userManagement/userManagement.html',
-                    controller: ''
+                    controller: 'adminCtrl'
                 }
             }
-        });
+        })
 });
