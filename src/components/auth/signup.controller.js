@@ -6,11 +6,12 @@ app.controller("signupCtrl", function ($scope, $state, IDB, hashPassword) {
     $scope.confirmPassword = "";
     $scope.city = "";
     $scope.password = "";
- 
+    $scope.email = "";
     $scope.user = {
         firstName: "",
         lastName: "",
         username: "",
+        email: "",
         password: "",
         confirmPassword: "",
         city: "",

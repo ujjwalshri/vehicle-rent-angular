@@ -56,3 +56,139 @@
 
 
  /*
+
+/* General Styles */
+
+
+/* Container for the cars */
+.car-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 3 columns per row */
+    gap: 40px;
+    width: 100%;
+    padding: 10px;
+}
+
+/* Individual Car Card */
+.car-card {
+    background: white;
+    border-radius: 12px;
+    padding: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Hover effect */
+.car-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Car Image */
+.car-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+/* Car Details */
+.car-details {
+    margin-top: 10px;
+    padding: 10px;
+}
+
+.car-details h2 {
+    font-size: 18px;
+    margin-bottom: 8px;
+    color: #333;
+}
+
+.car-details p {
+    margin: 5px 0;
+    color: #555;
+    font-size: 14px;
+}
+
+/* Features */
+.features {
+    margin-top: 10px;
+    font-size: 14px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.features strong {
+    flex-basis: 100%;
+    font-weight: 600;
+    color: #222;
+}
+
+.features span {
+    background: #007bff;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 12px;
+    display: inline-block;
+}
+
+/* Owner Details */
+.owner {
+    margin-top: 15px;
+    padding: 10px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    font-size: 14px;
+    line-height: 1.5;
+    color: #333;
+}
+
+.owner strong {
+    display: block;
+    font-weight: 600;
+    color: #007bff;
+}
+
+/* Buttons */
+.approve-reject-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.approve-reject-buttons button {
+    background: #28a745;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    font-size: 14px;
+}
+
+.approve-reject-buttons button:last-child {
+    background: #dc3545;
+}
+
+.approve-reject-buttons button:hover {
+    opacity: 0.8;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) { /* Tablets */
+    .car-container {
+        grid-template-columns: repeat(2, 1fr); /* 2 columns */
+    }
+}
+
+@media (max-width: 768px) { /* Mobile */
+    .car-container {
+        grid-template-columns: repeat(1, 1fr); /* 1 column */
+    }
+}

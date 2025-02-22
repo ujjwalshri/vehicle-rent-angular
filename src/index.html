@@ -14,9 +14,12 @@
     <script src="app.controller.js"></script>
     <!--importing the admin controller-->
     <script src="/src/components/admin/admin.controller.js"></script>
+    <!--importing the car controller-->
+    <script src="/src/components/admin/carApprovals/carController.js"></script>
+    <!--importing the home controller-->
+    <script src="/src/components/home/home.controller.js"></script>
     <!--importing the app routes -->
     <script src="routes/app.routes.js"></script>
-   
     <!--importing the IDB service -->
     <script src="/src/services/IDB.service.js"></script>
     <!--importing the signup controller -->
@@ -47,11 +50,6 @@
             </ul>
         </li>
     </ul>
-    <!-- Search Bar -->
-    <div class="search-box" ng-show="logged">
-        <input type="text" placeholder="Search...">
-        <button>🔍</button>
-    </div>
   
     <!-- Login Button -->
     <a ui-sref="login" class="login-btn" ng-show="!logged">Login</a>

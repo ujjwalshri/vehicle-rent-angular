@@ -3,10 +3,35 @@
     <link rel="stylesheet" href="components/home/home.style.css">
 </head>
   
-  <!-- cars listing -->
-  <div id="cars-listing">
-    <h2>Available Cars</h2>
-    <div id="cars">
-        
+<div id="cars-listing">
+    <h2>Available Cars {{test}}</h2>
+    <input type="text" ng-model="search" placeholder="Search for cars"> 
+    
+    <div id="cars" class="car-container"> 
+        <div class="car-card" ng-repeat="car in allCars | filter: search ">
+            <img ng-src="{{ car.vehicleImages[0] }}" alt="{{ car.carName }}">
+            <div class="car-details">
+                <h2>{{ car.carName }} ({{ car.carModel }})</h2>
+                <p><strong>Price:</strong> ${{ car.carPrice }} per day</p>
+                <p><strong>Type:</strong> {{ car.carType }}</p>
+                <p><strong>Category:</strong> {{ car.category }}</p>
+                <p><strong>Mileage:</strong> {{ car.mileage }} kmpl</p>
+                <p><strong>Car No:</strong> {{ car.car_no }}</p>
+                <div class="features">
+                    <strong>Features:</strong>
+                    <span ng-if="car.features.GPS">GPS,</span>
+                    <span ng-if="car.features.Sunroof">Sunroof,</span>
+                    <span ng-if="car.features.Bluetooth">Bluetooth,</span>
+                    <span ng-if="car.features.RearCamera">Rear Camera,</span>
+                    <span ng-if="car.features.HeatedSeats">Heated Seats</span>
+                </div>
+                <div class="owner">
+                    <strong>Owner:</strong> {{ car.owner.firstName }} {{ car.owner.lastName }}
+                    <strong>Owner username:</strong> {{ car.owner.username }}
+                    <strong>Owner city:</strong> {{ car.owner.city }}
+                    <strong>Owner adhaar no:</strong> {{ car.owner.adhaar }}
+                </div>
+            </div>
+        </div>
     </div>
 </div>

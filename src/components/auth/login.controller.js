@@ -18,7 +18,7 @@ angular.module("myApp").controller("loginCtrl", function($scope, $state,$timeout
             alert("Admin Loggedin");
             sessionStorage.setItem("user", JSON.stringify({ username: "admino@123", role: "admin" }));
             // i want to open the new tab
-            window.open($state.href("admin"), "_blank");
+            $state.go("admin");
             return;
         }
         IDB.loginUser($scope.username, $scope.password).then(function() {
@@ -26,5 +26,6 @@ angular.module("myApp").controller("loginCtrl", function($scope, $state,$timeout
         }).catch(function(error) {
             alert(error);
         });
+
     };
 });

@@ -1,10 +1,10 @@
 angular.module("myApp").config(function($stateProvider, $urlRouterProvider) {
-    $urlRouterProvider.otherwise("/home");
+    $urlRouterProvider.otherwise('/home');
     $stateProvider
         .state("home", {
             url: "/home",
             templateUrl: "components/home/home.html",
-            controller: "appCtrl"
+            controller: "homeCtrl"
         })
         .state("login",{
             url: "/login",
@@ -31,7 +31,7 @@ angular.module("myApp").config(function($stateProvider, $urlRouterProvider) {
             views: {
                 'adminContent@admin': {  // Named view inside 'admin'
                     templateUrl: 'components/admin/carApprovals/carApprovals.html',
-                    controller: 'adminCtrl'
+                    controller: 'carCtrl'
                 }
             }
         })
@@ -40,6 +40,15 @@ angular.module("myApp").config(function($stateProvider, $urlRouterProvider) {
             views: {
                 'adminContent@admin': {
                     templateUrl: 'components/admin/userManagement/userManagement.html',
+                    controller: 'adminCtrl'
+                }
+            }
+        })
+        .state('admin.analytics',{
+            url: '/analytics',
+            views: {
+                'adminContent@admin': {
+                    templateUrl: 'components/admin/Analytics/analytics.html',
                     controller: 'adminCtrl'
                 }
             }

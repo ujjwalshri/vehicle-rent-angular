@@ -5,17 +5,17 @@
 
 <div class="sidebar">
     <div class="logo">
-        <h2>Admin Portal</h2>
+        <h2 ui-sref="admin">Admin Portal</h2>
     </div>
     <ul class="nav-links">
         <li><a ui-sref="admin.carApprovals"><i class="fas fa-home"></i> Car approvals</a></li>
         <li><a ui-sref="admin.userManagement"><i class="fas fa-car"></i> User management</a></li>
-        <li><a ui-sref="#"><i class="fas fa-user"></i> Product Analysis</a></li>
-        <li id="logout"><a ui-sref="#"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+        <li><a ui-sref="admin.analytics"><i class="fas fa-user"></i> Product Analysis</a></li>
+        <li id="logout" ng-click="adminLogout()"><i class="fas fa-sign-out-alt"></i>  Logout</a></li>
     </ul>
 </div>
    <div ui-view="adminContent">
-
+      <h1>welcome to admin portal</h1>
    </div>
 </div>
 </div>

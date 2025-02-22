@@ -2,7 +2,7 @@
 angular.module('myApp').service("IDB", function ($q, hashPassword) {
   let db = null;
   let DB_NAME = "vehicalRental";
-  let DB_VERSION = 1;
+  let DB_VERSION = 2;
   function openDB() {
     let deferred = $q.defer();
 
@@ -31,6 +31,9 @@ angular.module('myApp').service("IDB", function ($q, hashPassword) {
         userObjectStore.createIndex("usernameIndex", "username", {
           unique: true,
         });
+        userObjectStore.createIndex("emailIndex", "email", {
+          unique: true,
+        });
         userObjectStore.createIndex("isSellerIndex", "isSeller", {
           unique: false,
         });
@@ -44,6 +47,9 @@ angular.module('myApp').service("IDB", function ($q, hashPassword) {
         const vehiclesObjectStore = db.createObjectStore("vehicles", {
           keyPath: "id",
         });
+        vehiclesObjectStore.createIndex("vehicleIDIndex", "id", {
+          unique:true,
+        })
         vehiclesObjectStore.createIndex("ownerIndex", "owner.username", {
           unique: false,
         });
@@ -232,6 +238,100 @@ angular.module('myApp').service("IDB", function ($q, hashPassword) {
       addRequest.onerror = function (event) {
         deferred.reject("Error adding car: " + event.target.errorCode);
       };
+    });
+    return deferred.promise;
+  }
+  this.getPendingCars = function(){
+    let deferred = $q.defer();
+    openDB().then(function (db) {
+      let transaction = db.transaction(["vehicles"], "readonly");
+      let objectStore = transaction.objectStore("vehicles");
+      let index = objectStore.index("isApprovedIndex");
+      let request = index.getAll("pending");
+      request.onsuccess = function (event) {
+        deferred.resolve(event.target.result);
+      };
+      request.onerror = function (event) {
+        deferred.reject("Error getting pending cars: " + event.target.errorCode);
+      };
+    });
+    return deferred.promise;
+  }
+  // function to get all the cars  from the database that are approved from the admin 
+  this.getApprovedCars = function(){
+    let deferred = $q.defer();
+    openDB().then(function (db) {
+      let transaction = db.transaction(["vehicles"], "readonly");
+      let objectStore = transaction.objectStore("vehicles");
+      let index = objectStore.index("isApprovedIndex");
+      let request = index.getAll("approved");
+      request.onsuccess = function (event) {
+        deferred.resolve(event.target.result);
+      };
+      request.onerror = function (event) {
+        deferred.reject("Error getting approved cars: " + event.target.errorCode);
+      };
+    });
+    return deferred.promise;
+  }
+
+  this.approveCar = (carID) => {
+    let deferred = $q.defer();
+    openDB().then(function (db) {
+      let transaction = db.transaction(["vehicles"], "readwrite");
+      let objectStore = transaction.objectStore("vehicles");
+      let index = objectStore.index("vehicleIDIndex");
+      let request = index.get(carID);
+      request.onsuccess = function(event) {
+        let car = event.target.result;
+        if (car) {
+          car.isApproved = "approved";
+          let updateRequest = objectStore.put(car);
+          updateRequest.onsuccess = function(event) {
+            deferred.resolve();
+          };
+          updateRequest.onerror = function(event) {
+            deferred.reject("Error approving car: " + event.target.errorCode);
+          };
+        } else {
+          deferred.reject("Car not found");
+        }
+      };
+      request.onerror = function(event) {
+        deferred.reject("Error retrieving car: " + event.target.errorCode);
+      };
+    }).catch(function(error) {
+      deferred.reject("Error opening database: " + error);
+    });
+    return deferred.promise;
+  };
+  this.rejectCar = (carID)=>{
+    let deferred = $q.defer();
+    openDB().then(function (db) {
+      let transaction = db.transaction(["vehicles"], "readwrite");
+      let objectStore = transaction.objectStore("vehicles");
+      let index = objectStore.index("vehicleIDIndex");
+      let request = index.get(carID);
+      request.onsuccess = function(event) {
+        let car = event.target.result;
+        if (car) {
+          car.isApproved = "rejected";
+          let updateRequest = objectStore.put(car);
+          updateRequest.onsuccess = function(event) {
+            deferred.resolve();
+          };
+          updateRequest.onerror = function(event) {
+            deferred.reject("Error approving car: " + event.target.errorCode);
+          };
+        } else {
+          deferred.reject("Car not found");
+        }
+      };
+      request.onerror = function(event) {
+        deferred.reject("Error retrieving car: " + event.target.errorCode);
+      };
+    }).catch(function(error) {
+      deferred.reject("Error opening database: " + error);
     });
     return deferred.promise;
   }
