@@ -2,9 +2,9 @@ angular.module('myApp').controller('ownerBookingsCtrl', function($scope, $state,
      const loggedInUser = JSON.parse(sessionStorage.getItem('user'));
      $scope.bookings = [];
      $scope.calculateBookingPrice = calculateBookingPrice.calculate;
-     IDB.getBookingsByOwnerId(loggedInUser.id).then((bookings) => {
+     IDB.getBookingsByOwnerId(loggedInUser.username).then((bookings) => {
            $scope.bookings = bookings;
-
+           console.log($scope.bookings);
      }).catch((err)=>{
                console.log(err);
      })

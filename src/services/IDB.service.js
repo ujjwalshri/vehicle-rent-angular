@@ -540,4 +540,39 @@ this.getBookingsByCarID = (carID)=>{
   });
   return deferred.promise;
 }
+this.addReview = (review)=>{
+  let deferred = $q.defer();
+  openDB().then(function (db) {
+    let transaction = db.transaction(["carReviews"], "readwrite");
+    let objectStore = transaction.objectStore("carReviews");
+    let addRequest = objectStore.add(review);
+    addRequest.onsuccess = function(event) {
+      deferred.resolve();
+    };
+    addRequest.onerror = function(event) {
+      deferred.reject("Error adding review: " + event.target.errorCode);
+    };
+  }).catch(function(error) {
+    deferred.reject("Error opening database: " + error);
+  });
+  return deferred.promise;
+}
+
+// getting all reviews of a particular car by car id
+ this.getReviewsByCarID = (carID) => {
+  let deferred = $q.defer();
+  openDB().then(function (db) {
+    let transaction = db.transaction(["carReviews"], "readonly");
+    let objectStore = transaction.objectStore("carReviews");
+    let index = objectStore.index("vehicleIndex");
+    let request = index.getAll(carID);
+    request.onsuccess = function(event) {
+      deferred.resolve(event.target.result);
+    };
+    request.onerror = function(event) {
+      deferred.reject("Error getting reviews: " + event.target.errorCode);
+    };
+  });
+  return deferred.promise;
+ }
 });
