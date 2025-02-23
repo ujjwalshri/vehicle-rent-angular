@@ -44,29 +44,27 @@
     </div>
 
     <!-- Right: Book Car Form -->
-    <div class="book-car-form">
+    <div class="book-car-form" ng-hide="isSeller">
         <h2>Book This Car</h2>
-        <form ng-submit="submitBooking()">
-            <label for="bidder">Your Username:</label>
-            <input type="text" id="bidder" ng-model="booking.bidder.username" required>
+        <form >
 
             <label for="amount">Bid Amount:</label>
-            <input type="number" id="amount" ng-model="booking.amount" required>
+            <input type="number" id="amount" ng-model="bidding.amount" required>
 
             <label for="createdAt">Booking StartDate :</label>
-            <input type="date" id="createdAt" ng-model="booking.startDate" required>
+            <input type="date" id="createdAt" ng-model="bidding.startDate" required>
             <label for="createdAt">Booking EndDate :</label>
-            <input type="date" id="createdAt" ng-model="booking.endDate" required>
+            <input type="date" id="createdAt" ng-model="bidding.endDate" required>
             dropdown for location
             <label for="location">Location:</label>
-            <select id="location" name="location" ng-model="booking.location" required>
+            <select id="location" name="location" ng-model="bidding.location" required>
                 <option value="" disabled selected>Select Location Type</option>
                 <option value="local">Local</option>
                 <option value="outstation">Outstation</option>
                 <option value="both">Both</option>
             </select>
 
-            <button type="submit">Place Booking</button>
+            <button type="submit" ng-click="placeBid()">Place Booking</button>
         </form>
     </div>
 </div>

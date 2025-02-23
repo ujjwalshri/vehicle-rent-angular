@@ -26,6 +26,7 @@ angular
         RearCamera: false,
         HeatedSeats: false,
       },
+      createdAt: new Date(),
     };
 
     // Function to handle image preview and Base64 conversion

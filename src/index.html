@@ -24,10 +24,14 @@
      <script src="/src/components/auth/signup.controller.js"></script>
      <!--importing the login controller -->
      <script src="/src/components/auth/login.controller.js"></script>
-     <!--importing the add Car controller -->
+     <!--importing the owner Booking controller -->
+     <script src="/src/components/booking/ownerBookings/ownerBookings.controller.js" ></script>
+     <!-- importing the add Car controller  -->
      <script src="/src/components/car/addCarController.js"></script>
      <!--importing the myProfile controller -->
     <script src="/src/components/profile/myProfile.controller.js"></script>
+    <!--importing the userManagement controller-->
+    <script src="/src/components/admin/userManagement/userManagement.controller.js"></script>
     <!--importing the app routes -->
     <script src="routes/app.routes.js"></script>
     <!--importing the IDB service -->
@@ -35,6 +39,8 @@
    
     <!--hashing the password-->
     <script src="/src/factories/hashPassword.js"></script>
+    <!--importing the factory for calculating the booking price-->
+    <script src="/src/factories/calculateBookingPrice.js"></script>
     <!--importing the car filters-->
     <script src="/src/filters/carFilters.js"></script>
 </head>
@@ -53,6 +59,8 @@
                 <li id="updateProfile"><a ui-sref="updateProfile">Update Profile</a></li>
                 <li id="addCar" ><a ui-sref="car">Add a car</a></li>
                 <li id="chats"><a ui-sref="conversations">Chats</a></li>
+                <li id="chats" ng-if="!isSeller"><a ui-sref="userBookings">bookings</a></li>
+                <li id="chats" ng-if="isSeller"><a ui-sref="ownerBookings">bookings</a></li>
                 <li id="logout" ng-click="logout()"><a ui-sref="login">Logout</a></li>
             </ul>
         </li>

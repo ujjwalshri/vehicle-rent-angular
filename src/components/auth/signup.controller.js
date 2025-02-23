@@ -13,11 +13,12 @@ app.controller("signupCtrl", function ($scope, $state, IDB, hashPassword) {
         username: "",
         email: "",
         password: "",
-        confirmPassword: "",
         city: "",
         adhaar: "",
         isSeller: false,
         isBlocked: false,
+        createdAt: new Date(),
+        updatedAt: new Date(),
     };
 
     $scope.signup = function () {
@@ -26,7 +27,6 @@ app.controller("signupCtrl", function ($scope, $state, IDB, hashPassword) {
             alert("Passwords do not match!");
             return;
         }
-        $scope.user.confirmPassword = "";
         $scope.user.password = hashPassword($scope.user.password);
         console.log($scope.user);
     

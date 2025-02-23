@@ -2,18 +2,15 @@
 angular.module('myApp').service("IDB", function ($q, hashPassword) {
   let db = null;
   let DB_NAME = "vehicalRental";
-  let DB_VERSION = 2;
+  let DB_VERSION = 3;
   function openDB() {
     let deferred = $q.defer();
-
     // If database is already open, return it immediately
     if (db) {
       deferred.resolve(db);
       return deferred.promise;
     }
-
     let request = indexedDB.open(DB_NAME, DB_VERSION);
-
     request.onupgradeneeded = function (event) {
       db = event.target.result;
       // Create or upgrade object stores
@@ -33,6 +30,9 @@ angular.module('myApp').service("IDB", function ($q, hashPassword) {
         });
         userObjectStore.createIndex("emailIndex", "email", {
           unique: true,
+        });
+        userObjectStore.createIndex("createdAtIndex", "createdAt", {
+          unique: false,
         });
         userObjectStore.createIndex("isSellerIndex", "isSeller", {
           unique: false,
@@ -84,6 +84,7 @@ angular.module('myApp').service("IDB", function ($q, hashPassword) {
         const vehicleReviewsObjectStore = db.createObjectStore("carReviews", {
           keyPath: "id",
         });
+        vehicleReviewsObjectStore.createIndex("idIndex", "id", { unique: true });
         vehicleReviewsObjectStore.createIndex("vehicleIndex", "vehicle.id", {
           unique: false,
         });
@@ -102,10 +103,11 @@ angular.module('myApp').service("IDB", function ($q, hashPassword) {
           unique: false,
         });
       }
-      if (!db.objectStoreNames.contains("biddings")) {
+       if(!db.objectStoreNames.contains("biddings")){
         const biddingsObjectStore = db.createObjectStore("biddings", {
           keyPath: "id",
         });
+        biddingsObjectStore.createIndex("idIndex", "id", { unique: true });
         biddingsObjectStore.createIndex("vehicleIndex", "vehicle.id", {
           unique: false,
         });
@@ -121,11 +123,13 @@ angular.module('myApp').service("IDB", function ($q, hashPassword) {
         biddingsObjectStore.createIndex("ownerIndex", "owner.username", {
           unique: false,
         });
-      }
+      
+      } 
       if(!db.objectStoreNames.contains("converations")){
         const converationsObjectStore = db.createObjectStore("converations", {
           keyPath: "id",
         });
+        converationsObjectStore.createIndex("idIndex", "id", { unique: true });
         converationsObjectStore.createIndex("senderIndex", "sender.username", {
           unique: false,
         });
@@ -140,17 +144,17 @@ angular.module('myApp').service("IDB", function ($q, hashPassword) {
         });
       }
     };
-   
-
     request.onsuccess = function (event) {
       db = event.target.result;
-      deferred.resolve(db);
+      if (db) {
+        deferred.resolve(db);
+      } else {
+        deferred.reject("Database initialization failed");
+      }
     };
-
     request.onerror = function (event) {
       deferred.reject("Error opening IndexedDB: " + event.target.errorCode);
     };
-
     return deferred.promise;
   }
 
@@ -244,6 +248,21 @@ angular.module('myApp').service("IDB", function ($q, hashPassword) {
     });
     return deferred.promise;
   };
+  this.getAllUsers = function(){
+    let deferred = $q.defer();
+    openDB().then(function (db) {
+      let transaction = db.transaction(["users"], "readonly");
+      let objectStore = transaction.objectStore("users");
+      let request = objectStore.getAll();
+      request.onsuccess = function (event) {
+        deferred.resolve(event.target.result);
+      };
+      request.onerror = function (event) {
+        deferred.reject("Error getting users: " + event.target.errorCode);
+      };
+    });
+    return deferred.promise;
+  }
   this.addCar = function (car){
     let deferred = $q.defer();
     openDB().then(function (db) {
@@ -420,4 +439,86 @@ angular.module('myApp').service("IDB", function ($q, hashPassword) {
     });
     return deferred.promise;
   };
+
+
+  // bidding and booking controllers 
+  this.addBid = (bid) => {
+    let deferred = $q.defer();
+
+    // Ensure the bid object is defined and has an id property
+    if (!bid) {
+        deferred.reject("Bid object is undefined");
+        return deferred.promise;
+    }
+
+    if (!bid.id) {
+        bid.id = crypto.randomUUID(); // Generate a unique id if not present
+    }
+
+    openDB().then(function (db) {
+        let transaction = db.transaction(["biddings"], "readwrite");
+        let objectStore = transaction.objectStore("biddings");
+        let addRequest = objectStore.add(bid);
+        addRequest.onsuccess = function(event) {
+            deferred.resolve();
+        };
+        addRequest.onerror = function(event) {
+            deferred.reject("Error adding bid: " + event.target.error.message);
+        };
+    }).catch(function(error) {
+        deferred.reject("Error opening database: " + error.message);
+    });
+
+    return deferred.promise;
+};
+
+// getting the bookings requests for the particular owner by getting the biddings which have bidding.to.username === username passed as parameter
+this.getBookingsByOwnerId = (username) => {
+  let deferred = $q.defer();
+  openDB().then(function (db) {
+    let transaction = db.transaction(["biddings"], "readonly");
+    let objectStore = transaction.objectStore("biddings");
+    let index = objectStore.index("ownerIndex");
+    let request = index.getAll(username);
+    
+    request.onsuccess = function (event) {
+      deferred.resolve(event.target.result);
+    };
+    
+    request.onerror = function (event) {
+      deferred.reject("Error getting owner bids: " + event.target.errorCode);
+    };
+  });
+  return deferred.promise;
+};
+this.updateBookingStatus = (bookingID, status) => {
+  let deferred = $q.defer();
+  openDB().then(function (db) {
+    let transaction = db.transaction(["biddings"], "readwrite");
+    let objectStore = transaction.objectStore("biddings");
+    let index = objectStore.index("idIndex");
+    let request = index.get(bookingID);
+    request.onsuccess = function(event) {
+      let booking = event.target.result;
+      if (booking) {
+        booking.status = status;
+        let updateRequest = objectStore.put(booking);
+        updateRequest.onsuccess = function(event) {
+          deferred.resolve();
+        };
+        updateRequest.onerror = function(event) {
+          deferred.reject("Error updating booking: " + event.target.errorCode);
+        };
+      } else {
+        deferred.reject("Booking not found");
+      }
+    };
+    request.onerror = function(event) {
+      deferred.reject("Error retrieving booking: " + event.target.errorCode);
+    };
+  }).catch(function(error) {
+    deferred.reject("Error opening database: " + error);
+  });
+  return deferred.promise;
+};
 });

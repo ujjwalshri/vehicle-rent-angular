@@ -40,7 +40,7 @@ angular.module("myApp").config(function($stateProvider, $urlRouterProvider) {
             views: {
                 'adminContent@admin': {
                     templateUrl: 'components/admin/userManagement/userManagement.html',
-                    controller: 'adminCtrl'
+                    controller: 'userManagementCtrl'
                 }
             }
         })
@@ -67,5 +67,15 @@ angular.module("myApp").config(function($stateProvider, $urlRouterProvider) {
             url: '/myProfile',
             templateUrl: 'components/profile/myProfile.html',
             controller: 'myProfileCtrl'
+        })
+        .state('userBookings', {
+            url: '/userBookings',
+            templateUrl: 'components/booking/userBookings/userBookings.html',
+            controller: ''
+        })
+        .state('ownerBookings', {
+            url: '/ownerBookings',
+            templateUrl: 'components/booking/ownerBookings/ownerBookings.html',
+            controller: 'ownerBookingsCtrl'
         })
 });
