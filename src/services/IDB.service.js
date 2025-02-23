@@ -175,6 +175,7 @@ angular.module('myApp').service("IDB", function ($q, hashPassword) {
         } else {
           let transaction = db.transaction(["users"], "readwrite");
           let objectStore = transaction.objectStore("users");
+          user.confirmPassword = null;
           let addRequest = objectStore.add(user);
           addRequest.onsuccess = function (event) {
             deferred.resolve();

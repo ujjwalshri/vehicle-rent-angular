@@ -29,7 +29,6 @@ app.controller("signupCtrl", function ($scope, $state, IDB, hashPassword) {
         }
         $scope.user.password = hashPassword($scope.user.password);
         console.log($scope.user);
-    
         // Set isSeller based on userRole
         $scope.user.isSeller = $scope.user.userRole === "seller";
         IDB.registerUser($scope.user).then(function () {
