@@ -2,7 +2,7 @@
 angular.module('myApp').service("IDB", function ($q, hashPassword) {
   let db = null;
   let DB_NAME = "vehicalRental";
-  let DB_VERSION = 3;
+  let DB_VERSION = 4;
   function openDB() {
     let deferred = $q.defer();
     // If database is already open, return it immediately
@@ -85,7 +85,7 @@ angular.module('myApp').service("IDB", function ($q, hashPassword) {
           keyPath: "id",
         });
         vehicleReviewsObjectStore.createIndex("idIndex", "id", { unique: true });
-        vehicleReviewsObjectStore.createIndex("vehicleIndex", "vehicle.id", {
+        vehicleReviewsObjectStore.createIndex("vehicleIndex", "car.id", {
           unique: false,
         });
         vehicleReviewsObjectStore.createIndex(
@@ -125,21 +125,21 @@ angular.module('myApp').service("IDB", function ($q, hashPassword) {
         });
       
       } 
-      if(!db.objectStoreNames.contains("converations")){
-        const converationsObjectStore = db.createObjectStore("converations", {
+      if(!db.objectStoreNames.contains("conversations")){
+        const conversationsObjectStore = db.createObjectStore("conversations", {
           keyPath: "id",
         });
-        converationsObjectStore.createIndex("idIndex", "id", { unique: true });
-        converationsObjectStore.createIndex("senderIndex", "sender.username", {
+        conversationsObjectStore.createIndex("idIndex", "id", { unique: true });
+        conversationsObjectStore.createIndex("senderIndex", "sender.username", {
           unique: false,
         });
-        converationsObjectStore.createIndex("receiverIndex", "receiver.username", {
+        conversationsObjectStore.createIndex("receiverIndex", "receiver.username", {
           unique: false,
         });
-        converationsObjectStore.createIndex('carIndex', 'car.id', {
+        conversationsObjectStore.createIndex('carIndex', 'car.id', {
           unique: false,
         });
-        converationsObjectStore.createIndex("createdAtIndex", "createdAt", {
+        conversationsObjectStore.createIndex("createdAtIndex", "createdAt", {
           unique: false,
         });
       }
@@ -521,4 +521,23 @@ this.updateBookingStatus = (bookingID, status) => {
   });
   return deferred.promise;
 };
+this.getBookingsByCarID = (carID)=>{
+  let deferred = $q.defer();
+  openDB().then(function (db) {
+    let transaction = db.transaction(["biddings"], "readonly");
+    let objectStore = transaction.objectStore("biddings");
+    let index = objectStore.index("vehicleIndex");
+    console.log(carID);
+    let request = index.getAll(carID);
+    request.onsuccess = function(event) {
+      deferred.resolve(event.target.result);
+    };
+    request.onerror = function(event) {
+      deferred.reject("Error retrieving bookings: " + event.target.errorCode);
+    };
+  }).catch(function(error) {
+    deferred.reject("Error opening database: " + error);
+  });
+  return deferred.promise;
+}
 });

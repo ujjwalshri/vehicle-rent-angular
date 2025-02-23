@@ -36,13 +36,21 @@
     <script src="routes/app.routes.js"></script>
     <!--importing the IDB service -->
     <script src="/src/services/IDB.service.js"></script>
-   
+    <!--importing the flat picker service -->
+     <!-- Flatpickr CSS -->
+     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+     <!-- Flatpickr JS -->
+     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <!--hashing the password-->
     <script src="/src/factories/hashPassword.js"></script>
     <!--importing the factory for calculating the booking price-->
     <script src="/src/factories/calculateBookingPrice.js"></script>
+    <!--importing the factory for getting the isValid bidding details-->
+    <script src="/src/factories/validateBidding.js"></script>
     <!--importing the car filters-->
     <script src="/src/filters/carFilters.js"></script>
+    <!--importing the owner Bookings filter-->
+    <script src="/src/filters/ownerBooking.js"></script>
 </head>
 <body ng-controller="appCtrl">
    <!-- Navbar -->

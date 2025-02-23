@@ -22,7 +22,9 @@ angular.module("myApp").controller("loginCtrl", function($scope, $state,$timeout
             return;
         }
         IDB.loginUser($scope.username, $scope.password).then(function() {
+            
             $state.go("home");
+            alert("Logged in successfully");
         }).catch(function(error) {
             alert(error);
         });

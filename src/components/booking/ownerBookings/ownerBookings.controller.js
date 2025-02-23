@@ -23,5 +23,14 @@ angular.module('myApp').controller('ownerBookingsCtrl', function($scope, $state,
                $scope.approved = true;
           }).catch((err) => {console.log(err)});
       };
+          $scope.rejectBidding = function(bidID, status= "rejected") {
+               // Logic to reject the bidding
+               console.log("Bidding ID:", bidID);
+               console.log("Status:", status);
+               IDB.updateBookingStatus(bidID, status).then((response) => {
+                    alert("Bidding rejected successfully");
+                    $scope.rejected = true;
+               }).catch((err) => {console.log(err)});
+          };
      
 })

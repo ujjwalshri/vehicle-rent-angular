@@ -7,14 +7,14 @@
 <!-- Container for all bookings -->
 <div class="bidding-requests">
     <!-- Loop through bookings -->
-    <div class="bidding-details" ng-repeat="booking in bookings">
+    <div class="bidding-details" ng-repeat="booking in bookings | orderBy: '-createdAt'">
         <h2>Car Details</h2>
-        <p><strong>Car Name:</strong> {{booking.car.carName}}</p>
-        <p><strong>Car Model:</strong> {{booking.car.carModel}} </p>
-        <p><strong>Car Type:</strong>  {{booking.car.carType}}</p>
-        <p><strong>Car Number:</strong> {{booking.car.car_no}}</p>
-        <p><strong>Category:</strong> {{booking.car.category}}</p>
-        <p><strong>Price:</strong> ${{booking.car.carPrice}} per day</p>
+        <p><strong>Car Name:</strong> {{booking.vehicle.carName}}</p>
+        <p><strong>Car Model:</strong> {{booking.vehicle.carModel}} </p>
+        <p><strong>Car Type:</strong>  {{booking.vehicle.carType}}</p>
+        <p><strong>Car Number:</strong> {{booking.vehicle.car_no}}</p>
+        <p><strong>Category:</strong> {{booking.vehicle.category}}</p>
+        <p><strong>Price:</strong> ${{booking.vehicle.carPrice}} per day</p>
         <h2>Bid details</h2>
         <ul>
             <li>$ {{booking.amount}} per day</li>
@@ -29,5 +29,6 @@
         <p><strong>Username:</strong> {{booking.from.username}}</p>
         <p><strong>Email:</strong> {{booking.from.email}}</p>
         <button ng-click="approveBidding(booking.id)" ng-if="!checkApproved(booking)">Approve Bidding</button>
+        <button ng-click="rejectBidding(booking.id)" >reject Bidding</button>
     </div>
 </div>
