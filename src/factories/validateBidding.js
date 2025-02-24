@@ -1,9 +1,13 @@
 angular.module('myApp').factory('validateBidding', function() {
     return {
         isValidBid: function(bidding, blockedDates) {
+         
             if (!bidding.startDate || !bidding.endDate) {
                 return { success: false, message: "Please select a valid date range." };
             }
+            // check if only the start date date itself is less than the date of today like 23feb < 24 feb
+            
+
 
             const startDate = new Date(bidding.startDate);
             const endDate = new Date(bidding.endDate);

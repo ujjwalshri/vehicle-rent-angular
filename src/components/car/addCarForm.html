@@ -36,8 +36,6 @@
             <select id="category" name="category" ng-model="car.category">
                 <option value="SUV">SUV</option>
                 <option value="Sedan">Sedan</option>
-                <option value="Hatchback">Hatchback</option>
-                <option value="Truck">Truck</option>
             </select>
         </div>
 
@@ -53,7 +51,7 @@
 
         <div class="form-group">
             <label for="carPrice">Car Price per day:</label>
-            <input type="number" id="carPrice" name="carPrice" ng-model="car.carPrice" required>
+            <input type="number" id="carPrice" name="carPrice" ng-model="car.carPrice" placeholder="enter the price from 500 to 20000" required >
         </div>
 
         <div class="form-group">

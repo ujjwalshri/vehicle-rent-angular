@@ -1,6 +1,8 @@
 <head>
-    <link rel="stylesheet" href="/src/components/booking/ownerBookings/ownerBookings.css">
+    <link rel="stylesheet" href="/src/components/booking/userBookings/myBiddings.css">
 </head>
+
+
 
 <h1> Biddings {{test}}</h1>
 
@@ -28,7 +30,6 @@
         <p><strong>Last Name:</strong> {{booking.from.lastName}}</p>
         <p><strong>Username:</strong> {{booking.from.username}}</p>
         <p><strong>Email:</strong> {{booking.from.email}}</p>
-        <button ng-click="approveBidding(booking.id)" ng-if="!checkApproved(booking)">Approve Bidding</button>
-        <button ng-click="rejectBidding(booking.id)" ng-if="checkPending(bidding)" >reject Bidding</button>
+       
     </div>
 </div>

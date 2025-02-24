@@ -1,4 +1,9 @@
-<body>
+
+<head>
+    <title>Confirmed Bookings</title>
+    <link rel="stylesheet" href="/src/components/booking/ownerBookings/confirmedBookings.css">
+</head>
+<body ng-controller="confirmedBookingsCtrl" .class="confimed-Bookings">
     <h1>Confirmed Bookings</h1>
     <table border="1" cellpadding="10" cellspacing="0">
         <thead>
@@ -9,7 +14,7 @@
                 <th>End Date</th>
                 <th>Owner Details</th>
                 <th>Vehicle Details</th>
-              
+                <th>Manage Booking</th>
                 <th>Vehicle Images</th>
             </tr>
         </thead>
@@ -34,7 +39,10 @@
                     <p>Category: {{booking.vehicle.category}}</p>
                     <p>Mileage: {{booking.vehicle.mileage}} kmpl</p>
                 </td>
-                
+                <td>
+                    <button ng-click="handleManageBookings(booking.id) " ng-if="todayBooking(booking)">Manage Booking</button>
+                    <h1 ng-if="!todayBooking(booking)">not for today</h1>
+                </td>
                 <td>
                     <div ng-repeat="image in booking.vehicle.vehicleImages">
                         <img ng-src="{{image}}" alt="Vehicle Image" width="100">
@@ -45,5 +53,4 @@
     </table>
 </body>
 </html>
-
 

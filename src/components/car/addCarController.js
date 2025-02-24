@@ -65,6 +65,10 @@ angular
         alert("Please upload at least one image.");
         return;
       }
+      if($scope.images.length > 5){
+        alert("Please upload a maximum of 5 images.");
+        return;
+      }
 
       console.log("Selected Images:", $scope.images);
       console.log("Car Data before submission:", $scope.car);
@@ -73,6 +77,11 @@ angular
       $scope.car.vehicleImages = $scope.images.map((image) => image.base64);
 
       // Save to IndexedDB
+      if($scope.car.carPrice < 0 || $scope.car.carPrice == null || $scope.car.carPrice > 10000 || $scope.car.carPrice <500){ r 
+        alert("Please enter a valid price");
+        return;
+      }
+
       IDB.addCar($scope.car)
         .then(function (response) {
           console.log("Car added successfully:", response);

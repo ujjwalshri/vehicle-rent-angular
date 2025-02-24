@@ -62,7 +62,17 @@
       required
     />
     <label>City:</label>
-    <input type="text" id="city" name="city" placeholder="please enter your city" ng-model="user.city" required/>
+    <select id="city" name="city" ng-model="user.city" required>
+        <option value="" disabled selected>Please select your nearest city</option>
+        <option value="Delhi">Delhi</option>
+        <option value="Mumbai">Mumbai</option>
+        <option value="Gwalior">Gwalior</option>
+        <option value="Bhind">Bhind</option>
+        <option value="Gurugram">Gurugram</option>
+        <option value="Agra">Agra</option>
+        <option value="Shiv puri">Shiv Puri</option>
+        <!-- Add more cities as needed -->
+    </select>
     <label>Adhaar Number:</label>
     <input type="number" id="adhaar" name="adhaar" placeholder="adhar number" ng-model="user.adhaar" required />
     <span id="login-href">Already a user?? <a ui-sref="login">login</a></span>

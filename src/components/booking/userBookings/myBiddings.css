@@ -1,0 +1,7 @@
+.bidding-details{
+    border: 1px solid #0e0d0d;
+    padding: 20px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap:10px;
+}

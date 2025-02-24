@@ -71,11 +71,26 @@ angular.module("myApp").config(function($stateProvider, $urlRouterProvider) {
         .state('userBookings', {
             url: '/userBookings',
             templateUrl: 'components/booking/userBookings/userBookings.html',
-            controller: ''
+            controller: 'userBookingsCtrl'
         })
         .state('ownerBookings', {
             url: '/ownerBookings',
             templateUrl: 'components/booking/ownerBookings/ownerBookings.html',
             controller: 'ownerBookingsCtrl'
+        })
+        .state('confirmedBookings', {
+            url: '/confirmedBookings',
+            templateUrl: 'components/booking/ownerBookings/confirmedBookings.html',
+            controller: 'confirmedBookingsCtrl'
+        })
+        .state('manageBookings', {
+            url: '/manageBookings:id',
+            templateUrl: 'components/booking/ownerBookings/manageBookings.html',
+            controller: 'manageBookingsCtrl'
+        })
+        .state('myBiddings', {
+            url: '/myBiddings',
+            templateUrl: 'components/booking/userBookings/myBiddings.html',
+            controller: 'myBiddingsCtrl'
         })
 });

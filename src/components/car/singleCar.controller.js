@@ -10,7 +10,7 @@ function getDatesBetween(startDate, endDate) {
   return dates;
 }
 
-angular.module("myApp").controller("singleCarCtrl", function($scope, $state, IDB, $stateParams, validateBidding) {
+angular.module("myApp").controller("singleCarCtrl", function($scope, $state, IDB, $stateParams, validateBidding , calculateBookingPrice) {
   const loggedInUser = JSON.parse(sessionStorage.getItem("user"));
   $scope.isSeller = loggedInUser && loggedInUser.isSeller === true;
   $scope.isModalOpen = false;
@@ -29,6 +29,8 @@ angular.module("myApp").controller("singleCarCtrl", function($scope, $state, IDB
       location: ""
   };
 
+  $scope.calculateBookingPrice = calculateBookingPrice.calculate;
+
   $scope.placeBid = () => {
       $scope.bidding.vehicle = $scope.car;
       $scope.bidding.owner = $scope.car.owner;
@@ -45,6 +47,7 @@ angular.module("myApp").controller("singleCarCtrl", function($scope, $state, IDB
           alert("Please enter a valid location");
           return;
       }
+
       console.log($scope.bidding);
       $scope.blockedDates = [];
       $scope.isValid = false;
@@ -55,12 +58,20 @@ angular.module("myApp").controller("singleCarCtrl", function($scope, $state, IDB
               .flatMap((bid) => getDatesBetween(new Date(bid.startDate), new Date(bid.endDate)));
 
           console.log("Blocked Dates:", $scope.blockedDates);
+
+          if (new Date($scope.bidding.startDate) < new Date().setHours(0, 0, 0, 0)) {
+            alert("Please enter a valid start date");
+            return;
+        }
+        
+
           $scope.isValid = validateBidding.isValidBid($scope.bidding, $scope.blockedDates);
+
           console.log($scope.isValid);
           if ($scope.isValid.success) {
               IDB.addBid($scope.bidding).then(() => {
                   alert("Bid placed successfully");
-                  $state.go("conversations");
+                  
               }).catch((e) => {
                   alert(e);
               });
@@ -114,6 +125,7 @@ angular.module("myApp").controller("singleCarCtrl", function($scope, $state, IDB
       console.log($scope.review);
       IDB.addReview($scope.review).then(() => {
           alert("Review placed successfully");
+          $state.reload();
       }).catch((e) => {
           alert(e);
       });

@@ -9,8 +9,25 @@
         <option value="">All</option>
         <option value="0-500">Below $500</option>
         <option value="500-1000">$500 - $1000</option>
-        <option value="1000-2000">$1000 - $2000</option>
-        <option value="2000">Above $2000</option>
+        <option value="1000-1500">$1000 - $1500</option>
+        <option value="1500-2000">$1500 - $2000</option>
+        <option value="2000-2500">$2000 - $2500</option>
+        <option value="2500-3000">$2500 - $3000</option>
+        <option value="3000-3500">$3000 - $3500</option>
+        <option value="3500-4000">$3500 - $4000</option>
+        <option value="4000-4500">$4000 - $4500</option>
+        <option value="4500-5000">$4500 - $5000</option>
+        <option value="5000-5500">$5000 - $5500</option>
+        <option value="5500-6000">$5500 - $6000</option>
+        <option value="6000-6500">$6000 - $6500</option>
+        <option value="6500-7000">$6500 - $7000</option>
+        <option value="7000-7500">$7000 - $7500</option>
+        <option value="7500-8000">$7500 - $8000</option>
+        <option value="8000-8500">$8000 - $8500</option>
+        <option value="8500-9000">$8500 - $9000</option>
+        <option value="9000-9500">$9000 - $9500</option>
+        <option value="9500-10000">$9500 - $10000</option>
+        <option value="10000">Above $10000</option>
     </select>
     <label>Category:</label>
     <select ng-model="category">
@@ -31,7 +48,7 @@
     
 
     <div id="cars" class="car-container"> 
-        <div class="car-card" ng-repeat="car in allCars | carFilters: search:priceFilter:category:carLocation" ng-click="redirectCarPage(car.id)">
+        <div class="car-card" ng-repeat="car in allCars| orderBy: '-createdAt' | carFilters: search:priceFilter:category:carLocation" ng-click="redirectCarPage(car.id)">
             <img ng-src="{{ car.vehicleImages[0] }}" alt="{{ car.carName }}">
             <div class="car-details">
                 <h2>{{ car.carName }} ({{ car.carModel }})</h2>

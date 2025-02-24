@@ -1,0 +1,42 @@
+.users {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.users h1 {
+    text-align: center;
+    color: #333;
+}
+
+.buyers, .seller {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 15px;
+    margin: 10px 0;
+    background-color: #f9f9f9;
+}
+
+.buyers h2, .seller h2 {
+    color: #555;
+}
+
+.buyers p, .seller p {
+    color: #777;
+    margin: 5px 0;
+}
+
+.buyers button, .seller button {
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.buyers button:hover, .seller button:hover {
+    background-color: #0056b3;
+}

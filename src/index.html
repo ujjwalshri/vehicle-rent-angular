@@ -47,6 +47,15 @@
     <script src="/src/factories/calculateBookingPrice.js"></script>
     <!--importing the factory for getting the isValid bidding details-->
     <script src="/src/factories/validateBidding.js"></script>
+
+    <!--importing the owner confirmed booking controller -->
+    <script src="/src/components/booking/ownerBookings/confirmedBookings.controller.js"></script>
+    <!--importing the myBiddings controller -->
+    <script src="/src/components/booking/userBookings/myBiddings.controller.js"></script>
+    <!--importing the user  booking controller -->
+    <script src="/src/components/booking/userBookings/userBookings.controller.js"></script>
+    <!--importing the manageBookings controller-->
+    <script src="/src/components/booking/ownerBookings/manageBookings.controller.js"></script>
     <!--importing the car filters-->
     <script src="/src/filters/carFilters.js"></script>
     <!--importing the owner Bookings filter-->
@@ -64,11 +73,12 @@
             <a href="#">More ▾</a>
             <ul class="dropdown-menu">
                 <li id="profile" ><a ui-sref="myProfile">Profile</a></li>
-                <li id="updateProfile"><a ui-sref="updateProfile">Update Profile</a></li>
                 <li id="addCar" ><a ui-sref="car">Add a car</a></li>
                 <li id="chats"><a ui-sref="conversations">Chats</a></li>
                 <li id="chats" ng-if="!isSeller"><a ui-sref="userBookings">bookings</a></li>
-                <li id="chats" ng-if="isSeller"><a ui-sref="ownerBookings">bookings</a></li>
+                <li id="chats" ng-if="isSeller"><a ui-sref="ownerBookings">biddings</a></li>
+                <li  ng-if="!isSeller"><a ui-sref="myBiddings">my Biddings</a></li>
+                <li id="chats" ng-if="isSeller"><a ui-sref="confirmedBookings">confirmed Bookings</a></li>
                 <li id="logout" ng-click="logout()"><a ui-sref="login">Logout</a></li>
             </ul>
         </li>

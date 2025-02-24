@@ -29,6 +29,7 @@ body {
     list-style: none;
     padding: 0;
     width: 90%;
+    margin-left :100px;
     display: grid;
     
 }
@@ -114,4 +115,12 @@ body {
 
 .approve-button:hover {
     background-color: #218838;
+}
+
+#logout{
+    margin-left: 50px;
+ 
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
 }

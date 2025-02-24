@@ -59,7 +59,7 @@
                 <label for="createdAt">Booking EndDate :</label>
                 <input type="date" id="createdAt" ng-model="bidding.endDate" required>
     
-                <button type="submit" ng-click="placeBid()">Place Booking</button>
+                <button type="submit" ng-click="placeBid()">Place Booking at $ {{calculateBookingPrice(bidding.startDate, bidding.endDate, bidding.amount)}}</button>
             </form>
         </div>
         <div class="review-form" ng-hide="isSeller">
@@ -78,7 +78,7 @@
                     <option value="5">5 - Excellent</option>
                 </select>
         
-                <button type="submit" ng-click="placeReview()">Place Review</button>
+                <button type="submit" ng-click="placeReview()"> place review</button>
             </form>
         </div>
         

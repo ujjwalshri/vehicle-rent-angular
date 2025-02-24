@@ -6,6 +6,10 @@ angular.module('myApp').service("IDB", function ($q, hashPassword) {
   function openDB() {
     let deferred = $q.defer();
     // If database is already open, return it immediately
+    // to update the schema after the change
+    // const txn = event.target.transaction;
+    // const store = txn.objectStore('biddings');
+
     if (db) {
       deferred.resolve(db);
       return deferred.promise;
@@ -409,6 +413,41 @@ angular.module('myApp').service("IDB", function ($q, hashPassword) {
     });
     return deferred.promise;
   }
+
+
+  // function for deleting a particular car from the platform
+  this.deleteCar = (carID) => {
+    let deferred = $q.defer();
+    openDB().then(function (db) {
+      let transaction = db.transaction(["vehicles"], "readwrite");
+      let objectStore = transaction.objectStore("vehicles");
+      let index = objectStore.index("vehicleIDIndex");
+      let request = index.get(carID);
+      request.onsuccess = function(event) {
+        let car = event.target.result;
+        if (car) {
+          car.deleted = true;
+          let updateRequest = objectStore.put(car);
+          updateRequest.onsuccess = function(event) {
+            deferred.resolve();
+          };
+          updateRequest.onerror = function(event) {
+            deferred.reject("Error deleting car: " + event.target.errorCode);
+          };
+        } else {
+          deferred.reject("Car not found");
+        }
+      };
+      request.onerror = function(event) {
+        deferred.reject("Error retrieving car: " + event.target.errorCode);
+      };
+    }).catch(function(error) {
+      deferred.reject("Error opening database: " + error);
+    });
+    return deferred.promise;
+ 
+  };
+
   this.makeUserSeller = (username) => {
     let deferred = $q.defer();
     openDB().then(function (db) {
@@ -541,6 +580,28 @@ this.getBookingsByCarID = (carID)=>{
   });
   return deferred.promise;
 }
+// function to get all the bookings from the database
+this.getAllBookings = ()=>{
+  let deferred = $q.defer();
+  openDB().then(function (db) {
+    let transaction = db.transaction(["biddings"], "readonly");
+    let objectStore = transaction.objectStore("biddings");
+    let request = objectStore.getAll();
+    request.onsuccess = function(event) {
+      deferred.resolve(event.target.result);
+    };
+    request.onerror = function(event) {
+      deferred.reject("Error getting bookings: " + event.target.errorCode);
+    };
+  });
+  return deferred.promise;
+}
+
+
+
+
+
+// function to add a review to the database
 this.addReview = (review)=>{
   let deferred = $q.defer();
   openDB().then(function (db) {
@@ -558,6 +619,8 @@ this.addReview = (review)=>{
   });
   return deferred.promise;
 }
+
+
 
 // getting all reviews of a particular car by car id
  this.getReviewsByCarID = (carID) => {

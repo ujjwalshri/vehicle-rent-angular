@@ -20,6 +20,8 @@
             <p><strong>type:</strong> {{ car.carType }}</p>
             <p><strong>category:</strong> {{ car.category }}</p>
             <p><strong>car status:</strong> {{ car.isApproved }}</p>
+            
+            <button ng-click="deleteCar(car.id)" ng-hide="car.deleted" >deleteCar</button>
         </li>
     </ul>
 </div>

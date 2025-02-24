@@ -17,7 +17,9 @@ angular.module("myApp").controller("homeCtrl", function($scope, $state, IDB) {
     }
 
     IDB.getApprovedCars().then((cars)=>{
-        $scope.allCars = cars;
+        $scope.allCars = cars.filter((car)=>{
+            return car.deleted === undefined;
+        });
         console.log($scope.allCars);
     })
     .catch((err)=>{

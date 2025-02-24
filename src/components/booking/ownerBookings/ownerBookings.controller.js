@@ -3,7 +3,9 @@ angular.module('myApp').controller('ownerBookingsCtrl', function($scope, $state,
      $scope.bookings = [];
      $scope.calculateBookingPrice = calculateBookingPrice.calculate;
      IDB.getBookingsByOwnerId(loggedInUser.username).then((bookings) => {
-           $scope.bookings = bookings;
+           $scope.bookings = bookings.filter((booking)=>{
+               return booking.status === "pending";
+           });
            console.log($scope.bookings);
      }).catch((err)=>{
                console.log(err);
@@ -14,13 +16,16 @@ angular.module('myApp').controller('ownerBookingsCtrl', function($scope, $state,
           }
           return false;
      }
+
      $scope.approveBidding = function(bidID, status= "approved") {
           // Logic to approve the bidding
           console.log("Bidding ID:", bidID);
           console.log("Status:", status);
           IDB.updateBookingStatus(bidID, status).then((response) => {
                alert("Bidding approved successfully");
+               
                $scope.approved = true;
+               $state.reload();
           }).catch((err) => {console.log(err)});
       };
           $scope.rejectBidding = function(bidID, status= "rejected") {

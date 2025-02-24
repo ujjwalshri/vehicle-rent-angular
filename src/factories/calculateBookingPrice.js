@@ -26,12 +26,12 @@ app.factory('calculateBookingPrice', function(){
             var diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
             // Ensure positive number of days
-            if (diffDays <= 0) {
+            if (diffDays < 0) {
                 console.error("❌ End date must be after start date");
                 return 0;
             }
 
-            var totalPrice = diffDays * carPrice;
+            var totalPrice = (diffDays+1) * carPrice;
             
 
             return totalPrice;
