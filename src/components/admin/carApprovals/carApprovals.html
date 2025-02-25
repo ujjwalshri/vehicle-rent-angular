@@ -4,7 +4,7 @@
 
 <div class="car-container">
     <!-- Loop through cars dynamically -->
-    <div ng-repeat="car in cars" class="car-container">
+    <div ng-repeat="car in cars |orderBy:'-createdAt'" class="car-container">
         <div class="car-card">
             <img ng-src="{{ car.vehicleImages[0]  }}" alt="{{ car.carName }}">
             <div class="car-details">

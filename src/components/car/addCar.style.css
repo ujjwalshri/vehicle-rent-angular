@@ -1,4 +1,4 @@
-/* Form Container */
+
 .form-container {
     background: white;
     padding: 30px;
@@ -11,7 +11,7 @@
     margin-top: 10px;
 }
 
-/* Form Title */
+
 .form-container h2 {
     margin-bottom: 20px;
     font-size: 1.8rem;
@@ -19,14 +19,14 @@
    
 }
 
-/* Form Grid Layout */
+
 form {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 15px;
 }
 
-/* Full Width Inputs */
+
 .form-group {
     display: flex;
     flex-direction: column;
@@ -49,7 +49,7 @@ form {
     transition: 0.3s ease-in-out;
 }
 
-/* Input Focus Effect */
+
 .form-group input:focus,
 .form-group select:focus {
     border-color: #4CAF50;
@@ -57,12 +57,12 @@ form {
     box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
 }
 
-/* File Upload */
+
 .form-group input[type="file"] {
     border: none;
 }
 
-/* Features Section */
+
 #featuresList {
     display: flex;
     flex-wrap: wrap;
@@ -78,7 +78,7 @@ form {
     font-size: 0.9rem;
 }
 
-/* Feature Input and Button */
+
 #featureInput {
     width: 75%;
     display: inline-block;
@@ -98,7 +98,7 @@ button[type="button"]:hover {
     background: #2E7D32;
 }
 
-/* Toggle Switches */
+
 .toggle-group {
     grid-column: span 2;
     display: flex;
@@ -113,7 +113,7 @@ button[type="button"]:hover {
     gap: 8px;
 }
 
-/* Submit Button */
+
 .submit-btn {
     grid-column: span 2;
     background: #4CAF50;
@@ -130,7 +130,7 @@ button[type="button"]:hover {
     background: #388E3C;
 }
 
-/* Responsive Design */
+
 @media (max-width: 768px) {
     form {
         grid-template-columns: 1fr;

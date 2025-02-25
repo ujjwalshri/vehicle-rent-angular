@@ -6,16 +6,16 @@
 
 <div class="outer-div">
     <div class="car-booking-container">
-        <!-- Left: Car Details -->
+
         <div class="single-car-container" ng-if="car">
             <h1>{{ car.carName }} ({{ car.carModel }})</h1>
     
-            <!-- Car Image (Clickable for Modal) -->
+
             <div class="car-image" ng-click="openModal(car.vehicleImages)">
                 <img ng-src="{{ car.vehicleImages[0] }}" alt="{{ car.carName }}">
             </div>
     
-            <!-- Car Details -->
+
             <div class="car-info">
                 <p><strong>Price:</strong> ${{ car.carPrice }} per day or bid </p>
                 <p><strong>Type:</strong> {{ car.carType }}</p>
@@ -24,7 +24,7 @@
                 <p><strong>Car No:</strong> {{ car.car_no }}</p>
                 <p><strong>Location:</strong> {{ car.location }}</p>
     
-                <!-- Features -->
+
                 <div class="features">
                     <strong>Features:</strong>
                     <span ng-if="car.features.GPS">GPS,</span>
@@ -35,7 +35,7 @@
                 </div>
             </div>
     
-            <!-- Owner Details -->
+
             <div class="owner-info">
                 <h3>Owner Information</h3>
                 <p><strong>Name:</strong> {{ car.owner.firstName }} {{ car.owner.lastName }}</p>
@@ -46,7 +46,7 @@
             </div>
         </div>
     
-        <!-- Right: Book Car Form -->
+
         <div class="book-car-form" ng-hide="isSeller">
             <h2>Book This Car</h2>
             <form >
@@ -59,7 +59,7 @@
                 <label for="createdAt">Booking EndDate :</label>
                 <input type="date" id="createdAt" ng-model="bidding.endDate" required>
     
-                <button type="submit" ng-click="placeBid()">Place Booking at $ {{calculateBookingPrice(bidding.startDate, bidding.endDate, bidding.amount)}}</button>
+                <button type="submit" ng-click="placeBid()">Place Bid at $ {{calculateBookingPrice(bidding.startDate, bidding.endDate, bidding.amount)}}</button>
             </form>
         </div>
         <div class="review-form" ng-hide="isSeller">
@@ -83,7 +83,7 @@
         </div>
         
     
-        <!-- Modal for Image Gallery -->
+
         <div class="modal" ng-if="isModalOpen">
             <div class="modal-content">
                 <span class="close" ng-click="closeModal()">&times;</span>
@@ -92,12 +92,9 @@
                 </div>
             </div>
         </div>
-        
-        
-        
 
 </div>
-<!-- Add a Review -->
+
 
 
 <div class="reviews-container">

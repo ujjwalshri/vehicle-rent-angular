@@ -2,7 +2,7 @@
 <head>
     <link rel="stylesheet" href="components/home/home.style.css">
 </head>
-<div class="filter-container">
+<div class="filter-container" ng-init='init()'>
     <input type="text" ng-model="search" placeholder="Search for cars">
     <label>Price Range:</label>
     <select ng-model="priceFilter">
@@ -44,8 +44,6 @@
     <button ng-click="resetFilters()">Reset Filters</button>
 </div>
 <div id="cars-listing" >
-    <h2>Available Cars {{test}}</h2>
-    
 
     <div id="cars" class="car-container"> 
         <div class="car-card" ng-repeat="car in allCars| orderBy: '-createdAt' | carFilters: search:priceFilter:category:carLocation" ng-click="redirectCarPage(car.id)">

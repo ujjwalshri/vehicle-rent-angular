@@ -1,21 +1,14 @@
 // this is the home controller used for the listing of all the cars on tha platform
 angular.module("myApp").controller("homeCtrl", function($scope, $state, IDB) {
-
-
+    
+    $scope.init = function (){
     $scope.allCars = [];
-    $scope.test = "Hello World!";
     $scope.priceFilter = '';
     $scope.search = '';
     $scope.category='';
     $scope.carLocation = '';
-
-    $scope.resetFilters = ()=>{
-        $scope.priceFilter = '';
-        $scope.search = '';
-        $scope.category='';
-        $scope.carLocation = '';
-    }
-
+   }
+   // function to get all the cars that have status === approved
     IDB.getApprovedCars().then((cars)=>{
         $scope.allCars = cars.filter((car)=>{
             return car.deleted === undefined;
@@ -27,6 +20,14 @@ angular.module("myApp").controller("homeCtrl", function($scope, $state, IDB) {
         alert(err);
     });
 
+    // function to reset all the filters on the page
+      $scope.resetFilters = ()=>{
+        $scope.priceFilter = '';
+        $scope.search = '';
+        $scope.category='';
+        $scope.carLocation = '';
+    }
+     // function to redirect to the single car page
     $scope.redirectCarPage = (carID)=>{
         $state.go("singleCar", {id: carID});
     }

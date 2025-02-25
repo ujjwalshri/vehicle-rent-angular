@@ -47,7 +47,6 @@
     <script src="/src/factories/calculateBookingPrice.js"></script>
     <!--importing the factory for getting the isValid bidding details-->
     <script src="/src/factories/validateBidding.js"></script>
-
     <!--importing the owner confirmed booking controller -->
     <script src="/src/components/booking/ownerBookings/confirmedBookings.controller.js"></script>
     <!--importing the myBiddings controller -->
@@ -61,7 +60,7 @@
     <!--importing the owner Bookings filter-->
     <script src="/src/filters/ownerBooking.js"></script>
 </head>
-<body ng-controller="appCtrl">
+<body ng-controller="appCtrl" ng-init="init()">
    <!-- Navbar -->
 <nav class="navbar" ng-hide="adminLogged">
     <a ui-sref="home" class="logo">Car.com</a>
@@ -69,7 +68,7 @@
     <ul class="nav-links">
         <li><a ui-sref="home">Home</a></li>
         <!-- Dropdown -->
-        <li class="dropdown" ng-show="logged">
+        <li class="dropdown" ng-show="isLogged">
             <a href="#">More ▾</a>
             <ul class="dropdown-menu">
                 <li id="profile" ><a ui-sref="myProfile">Profile</a></li>
@@ -83,9 +82,8 @@
             </ul>
         </li>
     </ul>
-  
     <!-- Login Button -->
-    <a ui-sref="login" class="login-btn" ng-show="!logged">Login</a>
+    <a ui-sref="login" class="login-btn" ng-show="!isLogged">Login</a>
 </nav>
     <div id="main-view" ui-view></div>
 </body>

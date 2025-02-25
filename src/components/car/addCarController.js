@@ -1,13 +1,12 @@
 angular
   .module("myApp")
-  .controller("addCarCtrl", function ($scope, $state, IDB) {
+  .controller("addCarCtrl", function ($scope, $state, IDB, $timeout) {
     $scope.test = "Hello World!";
     const loggedInUser = JSON.parse(sessionStorage.getItem("user"));
 
-    $scope.images = []; // Array to store image objects { file: File, base64: "data:image/png;base64,..." }
+    $scope.images = []; 
 
     $scope.car = {
-      id: crypto.randomUUID(),
       car_no: "",
       carType: "",
       carName: "",
@@ -15,7 +14,14 @@ angular
       category: "",
       location: "",
       isApproved: "pending",
-      owner: loggedInUser,
+      owner: {
+        username : loggedInUser.username,
+        firstName: loggedInUser.firstName,
+        lastName: loggedInUser.lastName,
+        email: loggedInUser.email,
+        adhaar: loggedInUser.adhaar,
+        city: loggedInUser.city,
+      },
       carPrice: "",
       mileage: "",
       vehicleImages: [], // This will store the base64 images
@@ -35,29 +41,31 @@ angular
         let files = Array.from(input.files); // Convert FileList to an array
         let totalFiles = files.length;
         let processedFiles = 0;
-
+    
         files.forEach((file) => {
           let reader = new FileReader();
+          reader.readAsDataURL(file);
           
           reader.onload = function (e) {
-            $scope.$apply(() => {
-              $scope.images.push({ file: file, base64: e.target.result });
-              processedFiles++;
-
-              // Log to confirm images are being added
-              console.log("Image added:", file.name);
-              
-              // Ensure all images are processed before allowing submission
-              if (processedFiles === totalFiles) {
-                console.log("All images processed:", $scope.images);
-              }
-            });
+         
+            $scope.images.push({ file: file, base64: e.target.result });
+            processedFiles++;
+    
+        
+            console.log("Image added:", file.name);
+    
+            
+            if (processedFiles === totalFiles) {
+              console.log("All images processed:", $scope.images);
+            }
+    
+            // using timeout for no delay to the angualrr digest cycle
+            $timeout();
           };
-
-          reader.readAsDataURL(file);
         });
       }
     };
+    
 
     // Submit form function
     $scope.submitCarForm = function () {
@@ -72,30 +80,24 @@ angular
 
       console.log("Selected Images:", $scope.images);
       console.log("Car Data before submission:", $scope.car);
-
-      // Convert image objects to just base64 strings for storage
+       // adding the base64 strings from the images to the car object's vehicleImages array
       $scope.car.vehicleImages = $scope.images.map((image) => image.base64);
 
-      // Save to IndexedDB
       if($scope.car.carPrice < 0 || $scope.car.carPrice == null || $scope.car.carPrice > 10000 || $scope.car.carPrice <500){ r 
         alert("Please enter a valid price");
         return;
       }
-
       IDB.addCar($scope.car)
-        .then(function (response) {
-          console.log("Car added successfully:", response);
-
-          IDB.makeUserSeller(loggedInUser.username).then((response) => {
-            console.log("User updated to seller:", response);
-          }).catch((error) => {
-            console.error("Error making user seller:", error);
-          });
-          $state.go("home");
-
-        })
-        .catch(function (error) {
-          console.error("Error adding car:", error);
-        });
+      .then((response) => {
+        console.log("Car added successfully:", response);
+        return IDB.makeUserSeller(loggedInUser.username); // Return the next promise
+      })
+      .then((response) => {
+        console.log("User updated to seller:", response);
+        $state.go("home"); 
+      })
+      .catch((error) => {
+        alert("error adding car");
+      });    
     };
   });

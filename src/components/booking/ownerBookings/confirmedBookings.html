@@ -41,7 +41,7 @@
                 </td>
                 <td>
                     <button ng-click="handleManageBookings(booking.id) " ng-if="todayBooking(booking)">Manage Booking</button>
-                    <h1 ng-if="!todayBooking(booking)">not for today</h1>
+                    <h1 ng-if="!todayBooking(booking)">{{booking.startDate | date: 'yyyy-MM-dd'}}</h1>
                 </td>
                 <td>
                     <div ng-repeat="image in booking.vehicle.vehicleImages">

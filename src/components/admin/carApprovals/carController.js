@@ -1,5 +1,8 @@
 angular.module("myApp").controller("carCtrl", function($scope, $state, IDB) {
+    // initially empty 
     $scope.cars = [];
+
+    // calling db to get the pending cars 
     IDB.getPendingCars().then((cars)=>{
        $scope.cars = cars;
        console.log($scope.cars);
@@ -7,6 +10,8 @@ angular.module("myApp").controller("carCtrl", function($scope, $state, IDB) {
            console.log(err);
            alert(err);
     })
+
+    // function to approve a car
     $scope.approveCar = (carID)=>{
         console.log(carID);
            IDB.approveCar(carID).then(()=>{

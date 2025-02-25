@@ -1,7 +1,8 @@
 angular.module('myApp').controller('confirmedBookingsCtrl', function($scope, $state,IDB,calculateBookingPrice ){
-    $scope.test = "hello";
+
     $scope.calculateBookingPrice = calculateBookingPrice.calculate;
     const loggedInUser = JSON.parse(sessionStorage.getItem('user'));
+  
     // fetch the biddings at a particular owner.username
     IDB.getBookingsByOwnerId(loggedInUser.username).then((bookings) => {
         $scope.bookings = bookings.filter((booking)=>{
@@ -11,7 +12,7 @@ angular.module('myApp').controller('confirmedBookingsCtrl', function($scope, $st
   }).catch((err)=>{
             console.log(err);
   })
-
+// function to get if a booking is sheduled to start at today
   $scope.todayBooking = (booking) => {
     const bookingDate = new Date(booking.startDate);
     const today = new Date();
@@ -24,7 +25,7 @@ angular.module('myApp').controller('confirmedBookingsCtrl', function($scope, $st
         return false;
     }
 }
-
+   
    $scope.handleManageBookings = (bookingID)=>{
       $state.go('manageBookings', {id:bookingID});
    }

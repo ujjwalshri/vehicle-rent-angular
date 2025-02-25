@@ -10,7 +10,7 @@
                 <th>Owner Details</th>
                 <th>Vehicle Details</th>
               
-                <th>Vehicle Images</th>
+               
             </tr>
         </thead>
         <tbody>
@@ -35,11 +35,7 @@
                     <p>Mileage: {{booking.vehicle.mileage}} kmpl</p>
                 </td>
                 
-                <td>
-                    <div ng-repeat="image in booking.vehicle.vehicleImages">
-                        <img ng-src="{{image}}" alt="Vehicle Image" width="100">
-                    </div>
-                </td>
+               
             </tr>
         </tbody>
     </table>

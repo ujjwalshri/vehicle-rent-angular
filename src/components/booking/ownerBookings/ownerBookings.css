@@ -1,11 +1,9 @@
-/* ownerBookings.css */
 
-/* Add your CSS styles here */
-/* Container for bookings */
+
 .bidding-requests {
     display: flex;
     flex-wrap: wrap;
-    gap: 20px; /* Space between cards */
+    gap: 20px; 
     justify-content: space-between;
     padding: 80px;
 }
@@ -13,46 +11,46 @@
 
 
 .bidding-requests h1 {
-    /* Your styles for the h1 element */
+
     font-size: 24px;
     color: #333;
 }
 
-/* Each booking card */
+
 .bidding-details {
-    flex: 1 1 calc(33.33% - 20px); /* Ensures 3 cards per row */
+    flex: 1 1 calc(33.33% - 20px); 
     background-color: #f5f5f5;
     padding: 15px;
     border: 1px solid #ccc;
-    box-sizing: border-box; /* Prevents width issues */
+    box-sizing: border-box; 
 }
 
 .bidding-details h2 {
-    /* Your styles for the h2 elements */
+
     font-size: 18px;
     color: #666;
     margin-bottom: 10px;
 }
 
 .bidding-details p {
-    /* Your styles for the p elements */
+
     margin-bottom: 5px;
 }
 
 .bidding-details ul {
-    /* Your styles for the ul element */
+
     list-style-type: none;
     padding: 0;
     margin: 0;
 }
 
 .bidding-details li {
-    /* Your styles for the li elements */
+
     margin-bottom: 5px;
 }
 
 .bidding-details button {
-    /* Your styles for the button element */
+
     background-color: #007bff;
     color: #fff;
     padding: 10px 20px;

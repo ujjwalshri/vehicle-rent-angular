@@ -22,6 +22,7 @@
             <p><strong>car status:</strong> {{ car.isApproved }}</p>
             
             <button ng-click="deleteCar(car.id)" ng-hide="car.deleted" >deleteCar</button>
+            <h1 ng-show="car.deleted">deleted</h1>
         </li>
     </ul>
 </div>

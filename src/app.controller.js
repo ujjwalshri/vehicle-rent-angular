@@ -1,25 +1,21 @@
 const app = angular.module("myApp", ["ui.router"]);
 
-app.controller("appCtrl", function($scope, $state) {
-    $scope.hi = "Hello World!";
-    
-    const loggedInUser = JSON.parse(sessionStorage.getItem("user"));
-    if(loggedInUser && loggedInUser.role === "admin"){
-        $scope.adminLogged = true;
-    }
-    $scope.isSeller = false;
-    if(loggedInUser && loggedInUser.isSeller === true){
-        $scope.isSeller = true;
-    }
-    $scope.logged = !!loggedInUser; // Attach logged to $scope
+app.controller("appCtrl", function($scope, $state, $timeout,$rootScope) {
+
+    $scope.init = function() {
+        $scope.adminLogged  = false;
+       $scope.logged = false;
+       $rootScope.isLogged = false;
+        $scope.isSeller = false;
+            const loggedInUser = JSON.parse(sessionStorage.getItem("user"));
+            $scope.adminLogged = loggedInUser && loggedInUser.role === "admin";
+            $scope.isSeller = loggedInUser && loggedInUser.isSeller === true;
+            $scope.logged = loggedInUser ? true : false;
+            $rootScope.isLogged = loggedInUser;
+            console.log('$rootScope.logged', $rootScope.isLogged);
+    };
     $scope.logout = () => {
         sessionStorage.removeItem("user");
-        $scope.logged = false;
-        $state.reload();
+        $rootScope.isLogged = false;
     };
-
-    // Uncomment this if you want to redirect to login if not logged in
-    // if (!loggedInUser && $state.current.name !== 'login') {
-    //     $state.go("login");
-    // }
 });

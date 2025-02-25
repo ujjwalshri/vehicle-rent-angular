@@ -2,7 +2,7 @@ angular.module("myApp").controller("userManagementCtrl", function($scope, $state
     $scope.allUsers = [];
     $scope.buyers = [];
     $scope.sellers = [];
-
+   // call database function to get all the users 
     IDB.getAllUsers().then((users)=>{
          $scope.allUsers = users;
          $scope.buyers =  $scope.allUsers.filter((user)=>{

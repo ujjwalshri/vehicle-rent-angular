@@ -59,22 +59,20 @@
             <input type="number" id="mileage" name="mileage" ng-model="car.mileage" required>
         </div>
 
-       <!-- File Upload -->
+
 <div class="form-group">
     <label for="imageUpload">Car Images:</label>
     <input type="file" id="imageUpload" accept=".jpg, .jpeg, .png" multiple
         onchange="angular.element(this).scope().previewImages(this)">
 </div>
 
-<!-- Image Preview Section -->
+
 <div id="imagePreview">
     <div ng-repeat="image in images">
         <img ng-src="{{image.base64}}" style="max-width: 100px; max-height: 100px; margin: 5px;">
     </div>
 </div>
 
-
-        <!-- Multi-Select Checkboxes -->
         <fieldset>
             <legend>Select Car Features:</legend>
             <label class="checkbox"><input type="checkbox" name="feature" value="GPS" ng-model="car.features.GPS"> GPS Navigation</label>
@@ -84,7 +82,6 @@
             <label class="checkbox"><input type="checkbox" name="feature" value="Heated Seats" ng-model="car.features.HeatedSeats"> Heated Seats</label>
         </fieldset>
 
-        <!-- Submit Button -->
         <button type="submit" ng-click="submitCarForm()" id="addCar-btn">Add Car</button>
 
     </form>

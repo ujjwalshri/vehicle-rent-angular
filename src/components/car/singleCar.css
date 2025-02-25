@@ -15,15 +15,15 @@
     box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
 }
 
-/* Car Image Section */
+
 .car-image {
     flex: 1;
     display: flex;
     align-items: center;
     justify-content: center;
     background: #f0f0f0;
-    width: 100%;  /* Ensure full width */
-    max-width: 600px; /* Prevent overflow */
+    width: 100%; 
+    max-width: 600px;
     height: auto;
     padding: 30px;
 }
@@ -43,7 +43,7 @@
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
 }
 
-/* Car Information */
+
 .car-info {
     flex: 1.5;
     padding: 30px;
@@ -67,7 +67,7 @@
     color: #0056b3;
 }
 
-/* Features Section */
+
 .features {
     margin-top: 25px;
 }
@@ -90,7 +90,7 @@
     margin-bottom: 8px;
 }
 
-/* Owner Information */
+
 .owner-info {
     flex: 1;
     padding: 30px;
@@ -116,7 +116,7 @@
     color: #0056b3;
 }
 
-/* Responsive Design */
+
 @media (max-width: 1024px) {
     .single-car-container {
         flex-direction: column;
@@ -134,7 +134,7 @@
     }
 }
 
-/* 🔹 Modal Overlay */
+
 .modal-overlay {
     position: fixed;
     top: 0;
@@ -176,7 +176,7 @@
 }
 
 
-/* 🔹 Image Grid */
+
 .image-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
@@ -198,7 +198,7 @@
     transform: scale(1.1);
 }
 
-/* 🔹 Layout for Car Details & Booking Form */
+
 .car-booking-container {
     display: flex;
     gap: 30px;
@@ -207,12 +207,11 @@
     justify-content: space-between;
 }
 
-/* 🔹 Left: Car Details */
+
 .single-car-container {
     width: 60%;
 }
 
-/* 🔹 Right: Booking Form */
 .book-car-form {
     width: 35%;
     max-height: 600px;
@@ -256,7 +255,7 @@
     background-color: #0056b3;
 }
 
-/* 🔹 Modal Styling */
+
 .modal {
     position: fixed;
     top: 0;
@@ -298,7 +297,7 @@
     cursor: pointer;
 }
 
-/* 🔹 Responsive Design */
+
 @media (max-width: 768px) {
     .car-booking-container {
         flex-direction: column;
@@ -369,7 +368,7 @@
 }
 
 
-/* Reviews Container */
+
 .reviews-container {
     max-width: 800px;
     margin: 40px auto;
@@ -389,7 +388,7 @@
     display: inline-block;
 }
 
-/* Individual Review Card */
+
 .review-card {
     background: #f9f9f9;
     border-radius: 8px;
@@ -405,7 +404,7 @@
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-/* Review Header */
+
 .review-header {
     display: flex;
     justify-content: space-between;
@@ -416,13 +415,13 @@
     margin-bottom: 10px;
 }
 
-/* Star Rating */
+
 .review-rating {
     font-size: 16px;
     color: #ffa500;
 }
 
-/* Review Text */
+
 .review-text {
     font-size: 16px;
     font-style: italic;
@@ -432,7 +431,7 @@
     padding-left: 10px;
 }
 
-/* Review Date */
+
 .review-date {
     font-size: 14px;
     color: #777;
@@ -440,7 +439,7 @@
     margin-top: 5px;
 }
 
-/* No Reviews Message */
+
 .no-reviews {
     font-size: 16px;
     color: #888;
