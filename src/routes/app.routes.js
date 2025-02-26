@@ -40,7 +40,8 @@ angular.module("myApp").config(function($stateProvider, $urlRouterProvider) {
             views: {
                 'adminContent@admin': {
                     templateUrl: 'components/admin/userManagement/userManagement.html',
-                    controller: 'userManagementCtrl'
+                    controller: 'userManagementCtrl',
+                    controllerAs: 'vm'
                 }
             }
         })

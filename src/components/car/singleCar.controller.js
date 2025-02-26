@@ -159,27 +159,44 @@ fetchCar();
   });
 
 
-  // handling the user clicking on chat with owner button 
-  $scope.chatWithOwner = (owner) => {
-      // create a new conversation object and then we will fetch the conversations on the basis of latest at the conversations page
-      const conversation = {
-          sender: loggedInUser,
-          receiver: owner,
-          car: $scope.car,
-          createdAt: new Date(),
-      };
+// function to chat with the owner of the car which creates a new chat if the conversation does not exist on the car and the buyer and seller and redirects to the conversation page 
+// if the conversation does not exist then it creates a new conversation and then redirects to the conversation page
+$scope.chatWithOwner = (owner) => {
+  const loggedInUser = JSON.parse(sessionStorage.getItem("user"));
+  IDB.getUserConversations(loggedInUser.username)
+  .then((conversations) => {
+      const existingConversation = conversations.find(conversation => 
+          conversation.receiver.username === owner.username && 
+          conversation.car.id === $scope.car.id
+      );
 
-      IDB.addConversation(conversation)
-      .then((response) => {
-          console.log("Conversation created successfully", response);
-          // go to the conversation of that particular car id
+      if (existingConversation) {
+          console.log("Existing conversation found", existingConversation);
           $state.go("conversations", { id: $scope.car.id });
-      })
-      .catch((error) => {
-          console.log("Error creating conversation", error);
-          alert("There was an error creating the conversation. Please try again.");
-      });
-  };
+      } else {
+          const conversation = {
+              sender: loggedInUser,
+              receiver: owner,
+              car: $scope.car,
+              createdAt: new Date(),
+          };
+
+          IDB.addConversation(conversation)
+          .then((response) => {
+              console.log("Conversation created successfully", response);
+              $state.go("conversations", { id: $scope.car.id });
+          })
+          .catch((error) => {
+              console.log("Error creating conversation", error);
+              alert("There was an error creating the conversation. Please try again.");
+          });
+      }
+  })
+  .catch((error) => {
+      console.log("Error fetching conversations", error);
+      alert("There was an error fetching conversations. Please try again.");
+  });
+};
 });
 
 

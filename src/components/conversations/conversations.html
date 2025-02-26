@@ -1,50 +1,38 @@
 <head>
     <link rel="stylesheet" href="components/conversations/conversations.css">
 </head>
-  <div class="chat-container">
-        <!-- Sidebar for Conversations -->
-        <div class="sidebar" >
-            <h2>Chats</h2>
-            <div class="conversation">
-             
-                <div class="conversation-info">
-                    <h3>John Doe</h3>
-                    <p>Hey, how are you?</p>
-                </div>
-            </div>
-            <div class="conversation">
-                <div class="conversation-info">
-                    <h3>Jane Smith</h3>
-                    <p>See you tomorrow!</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Chat Area -->
-        <div class="chat-area" ng-view="chats">
-            <!-- Chat Header -->
-            <div class="chat-header">
-                
-                <h3>John Doe</h3>
-            </div>
-
-            <!-- Chat Messages -->
-            <div class="chat-messages">
-                <div class="message received">
-                    <p>Hey! How's it going?</p>
-                    <span class="time">10:45 AM</span>
-                </div>
-                <div class="message sent">
-                    <p>All good! What about you?</p>
-                    <span class="time">10:46 AM</span>
-                </div>
-            </div>
-
-            <!-- Chat Input -->
-            <div class="chat-input">
-                <input type="text" placeholder="Type a message...">
-                <button>Send</button>
+<div class="chat-container">
+    <!-- Sidebar for Conversations -->
+    <div class="sidebar">
+        <h2 ui-sref="conversations">Chats</h2>
+        <div class="conversation" ng-repeat="conversation in myConversations" ng-click="fetchMessages(conversation.id)">
+            <div class="conversation-info">
+                <h3>{{conversation.receiver.username}}</h3>
             </div>
         </div>
     </div>
 
+    <!-- Chat Area -->
+    <div class="chat-area">
+        <!-- Chat Header -->
+        <div class="chat-header">
+            <h3>{{selectedConversation.receiver.username}}</h3>
+        </div>
+
+        <!-- Chat Messages -->
+        <div class="chat-messages">
+            <div class="message" ng-repeat="message in messages">
+                <div ng-class="{'received': message.sender !== loggedInUser.username, 'sent': message.sender === loggedInUser.username}">
+                    <p>{{message.message}}</p>
+                    <span class="time">{{message.createdAt | date:'shortTime'}}</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chat Input -->
+        <div class="chat-input">
+            <input type="text" placeholder="Type a message..." ng-model="inputMessage">
+            <button ng-click="sendMessage()">Send</button>
+        </div>
+    </div>
+</div>

@@ -4,8 +4,8 @@
 </head>
 <h1>Users</h1>
 
-<div class="users">
-    <div class="buyers" ng-repeat="user in buyers " ng-init="init()">
+<div class="users" ng-init="init()">
+    <div class="buyers" ng-repeat="user in buyers " >
         <h2>{{user.firstName}} {{user.lastName}}</h2>
         <p>Username: {{user.username}}</p>
         <p>Email: {{user.email}}</p>

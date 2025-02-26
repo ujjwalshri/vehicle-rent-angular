@@ -5,10 +5,10 @@ app.controller("appCtrl", function($scope, $state, $timeout,$rootScope) {
     $scope.init = function() {
         $rootScope.adminLogged  = false;
        $rootScope.isLogged = false;
-        $scope.isSeller = false;
+        $rootScope.isSeller = false;
             const loggedInUser = JSON.parse(sessionStorage.getItem("user"));
             $rootScope.adminLogged = loggedInUser && loggedInUser.role === "admin";
-            $scope.isSeller = loggedInUser && loggedInUser.isSeller === true;
+            $rootScope.isSeller = loggedInUser && loggedInUser.isSeller === true;
             $rootScope.isLogged = loggedInUser;
             console.log('$rootScope.logged', $rootScope.isLogged);
     };

@@ -5,7 +5,10 @@ angular.module("myApp").controller("userManagementCtrl", function($scope, $state
     $scope.sellers = [];
    // call database function to get all the users 
    $scope.users = [];
-   fetchUsers();  // initial fetch of users
+   $scope.init = ()=>{
+      fetchUsers();  // initial fetch of users
+   }
+   
 
    function fetchUsers(){
       IDB.getAllUsers().then((users)=>{

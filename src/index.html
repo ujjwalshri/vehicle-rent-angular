@@ -75,7 +75,7 @@
             <ul class="dropdown-menu">
                 <li id="profile" ><a ui-sref="myProfile">Profile</a></li>
                 <li id="addCar" ><a ui-sref="car">Add a car</a></li>
-                <li id="chats"><a ui-sref="conversations">Chats</a></li>
+                <li id="chats"><a ui-sref="conversations({id:0})">Chats</a></li>
                 <li id="chats" ng-if="!isSeller"><a ui-sref="userBookings">bookings</a></li>
                 <li id="chats" ng-if="isSeller"><a ui-sref="ownerBookings">biddings</a></li>
                 <li  ng-if="!isSeller"><a ui-sref="myBiddings">my Biddings</a></li>

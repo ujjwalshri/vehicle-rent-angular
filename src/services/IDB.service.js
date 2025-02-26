@@ -1,10 +1,11 @@
 
 
+
 // this file contains the service that will be used to interact with the IndexedDB database.
 angular.module('myApp').service("IDB", function ($q, hashPassword) {
   let db = null;
   let DB_NAME = "vehicalRental";
-  let DB_VERSION = 4;
+  let DB_VERSION = 5;
   function openDB() {
     let deferred = $q.defer();
     // If database is already open, return it immediately
@@ -17,8 +18,26 @@ angular.module('myApp').service("IDB", function ($q, hashPassword) {
     }
     let request = indexedDB.open(DB_NAME, DB_VERSION);
     request.onupgradeneeded = function (event) {
+      console.log("db updated");
       db = event.target.result;
-      // Create or upgrade object stores
+      if(!db.objectStoreNames.contains('messages')){
+        const messagesObjectStore = db.createObjectStore("messages", {
+          keyPath: "id", 
+        })
+        messagesObjectStore.createIndex('conversationIDIndex', 'conversation.id', {
+          unique: false
+        })
+        messagesObjectStore.createIndex('createdAtIndex', 'createdAt', {
+          unique: false
+        })
+        messagesObjectStore.createIndex('senderIndex', 'sender.id', {
+          unique :false
+        })
+        messagesObjectStore.createIndex('receiverIndex', 'receiver.id', {
+          unique: false
+        })
+      }
+      //Create or upgrade object stores
       if (!db.objectStoreNames.contains("users")) {
         const userObjectStore = db.createObjectStore("users", {
           keyPath: "username",
@@ -764,6 +783,45 @@ this.addReview = (review)=>{
       };
       request.onerror = function(event) {
         deferred.reject("Error getting conversations: " + event.target.errorCode);
+      };
+    });
+    return deferred.promise;
+  }
+
+
+  /// add a message to the database 
+  this.addMessage = (message)=>{
+    message.id = crypto.randomUUID();
+    let deferred = $q.defer();
+    openDB().then(function (db) {
+      let transaction = db.transaction(["messages"], "readwrite");
+      let objectStore = transaction.objectStore("messages");
+      let addRequest = objectStore.add(message);
+      addRequest.onsuccess = function(event) {
+        deferred.resolve(event.target.result);
+      };
+      addRequest.onerror = function(event) {
+        deferred.reject("Error adding message: " + event.target.errorCode);
+      };
+    }).catch(function(error) {
+      deferred.reject("Error opening database: " + error);
+    });
+
+    return deferred.promise;
+  }
+   // get messages of a particular conversation
+  this.getMessagesAtConversationID = ( conversationID)=>{
+    let deferred = $q.defer();
+    openDB().then(function (db) {
+      let transaction = db.transaction(["messages"], "readonly");
+      let objectStore = transaction.objectStore("messages");
+      let index = objectStore.index("conversationIDIndex");
+      let request = index.getAll(conversationID);
+      request.onsuccess = function(event) {
+        deferred.resolve(event.target.result);
+      };
+      request.onerror = function(event) {
+        deferred.reject("Error getting messages: " + event.target.errorCode);
       };
     });
     return deferred.promise;
