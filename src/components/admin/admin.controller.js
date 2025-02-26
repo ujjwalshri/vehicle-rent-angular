@@ -1,4 +1,4 @@
-angular.module("myApp").controller("adminCtrl", function($scope, $state, IDB) {
+angular.module("myApp").controller("adminCtrl", function($scope, $state, IDB, $rootScope) {
 
   
     const loggedInUser = JSON.parse(sessionStorage.getItem("user"));
@@ -12,5 +12,7 @@ angular.module("myApp").controller("adminCtrl", function($scope, $state, IDB) {
     $scope.adminLogout = ()=>{
         sessionStorage.removeItem("user");
         $state.go("login");
+        $rootScope.isLogged = false;
+        $rootScope.adminLogged = false;
     }
 });

@@ -53,6 +53,16 @@ angular.module("myApp").config(function($stateProvider, $urlRouterProvider) {
                 }
             }
         })
+        .state('admin.blockedUsers',{
+            url: '/blockedUsers',
+            views: {
+                'adminContent@admin': {
+                    templateUrl: 'components/admin/userManagement/blockedUsers.html',
+                    controller: ''
+                }
+            }
+        }
+        )
         .state('singleCar',{
             url: '/singleCar/:id',
             templateUrl: 'components/car/singleCar.html',
@@ -93,4 +103,6 @@ angular.module("myApp").config(function($stateProvider, $urlRouterProvider) {
             templateUrl: 'components/booking/userBookings/myBiddings.html',
             controller: 'myBiddingsCtrl'
         })
+        
+        
 });

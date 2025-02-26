@@ -2,23 +2,21 @@
     <title>User Management</title>
     <link rel="stylesheet" href="components/admin/userManagement/userManagement.css">
 </head>
+<h1>Users</h1>
 
 <div class="users">
-
-    <h1>Users</h1>
-    
-    <div class="buyers" ng-repeat="user in buyers ">
+    <div class="buyers" ng-repeat="user in buyers " ng-init="init()">
         <h2>{{user.firstName}} {{user.lastName}}</h2>
         <p>Username: {{user.username}}</p>
         <p>Email: {{user.email}}</p>
         <p>Role: {{user.isSeller === true ? "seller" : "buyer"}}</p>
-        <button ng-click="handleUserManagement(user.id)">Manage User</button>
+        <button ng-click="block(user.username)">block user</button>
     </div>
     <div class="seller" ng-repeat="user in sellers">
         <h2>{{user.firstName}} {{user.lastName}}</h2>
         <p>Username: {{user.username}}</p>
         <p>Email: {{user.email}}</p>
         <p>Role: {{user.isSeller === true ? "seller" : "buyer"}}</p>
-        <button ng-click="handleUserManagement(user.id)">Manage User</button>
+        <button ng-click="block(user.username)" >block User</button>
     </div>
 </div>

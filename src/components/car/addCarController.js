@@ -21,6 +21,7 @@ angular
         email: loggedInUser.email,
         adhaar: loggedInUser.adhaar,
         city: loggedInUser.city,
+        isBlocked : loggedInUser.isBlocked
       },
       carPrice: "",
       mileage: "",

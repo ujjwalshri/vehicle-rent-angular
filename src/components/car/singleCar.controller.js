@@ -158,6 +158,12 @@ IDB.getCarByID($stateParams.id).then((car) => {
   // handling the user clicking on chat with owner button 
   $scope.chatWithOwner = () => {
       // create a new conversation object and then we will fetch the conversations on the basis of latest at the conversations page
+      const conversation = {
+
+
+
+      }
+
       $state.go("conversations");
   };
 });

@@ -209,7 +209,7 @@ angular.module('myApp').service("IDB", function ($q, hashPassword) {
       let index = objectStore.index("usernameIndex");
       let request = index.get(username);
       request.onsuccess = function (event) {
-        if (event.target.result) {
+        if (event.target.result && event.target.result.isBlocked === false) {
           if (event.target.result.password === hashPassword(password)) {
             sessionStorage.setItem("user", JSON.stringify(event.target.result));
             deferred.resolve();
@@ -679,6 +679,38 @@ this.addReview = (review)=>{
     request.onerror = function(event) {
       deferred.reject("Error getting reviews: " + event.target.errorCode);
     };
+  });
+  return deferred.promise;
+ }
+
+ // block the user at a particular userID
+ this.blockUserByUsername = (username)=>{
+  let deferred = $q.defer();
+  openDB().then(function (db) {
+    let transaction = db.transaction(["users"], "readwrite");
+    let objectStore = transaction.objectStore("users");
+    let index = objectStore.index("usernameIndex");
+    let request = index.get(username);
+    request.onsuccess = function(event) {
+      let user = event.target.result;
+      if (user) {
+        user.isBlocked = true;
+        let updateRequest = objectStore.put(user);
+        updateRequest.onsuccess = function(event) {
+          deferred.resolve();
+        };
+        updateRequest.onerror = function(event) {
+          deferred.reject("Error blocking user: " + event.target.errorCode);
+        };
+      } else {
+        deferred.reject("User not found");
+      }
+    };
+    request.onerror = function(event) {
+      deferred.reject("Error retrieving user: " + event.target.errorCode);
+    };
+  }).catch(function(error) {
+    deferred.reject("Error opening database: " + error);
   });
   return deferred.promise;
  }
