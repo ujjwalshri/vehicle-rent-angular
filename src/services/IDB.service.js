@@ -1,3 +1,5 @@
+
+
 // this file contains the service that will be used to interact with the IndexedDB database.
 angular.module('myApp').service("IDB", function ($q, hashPassword) {
   let db = null;
@@ -714,4 +716,56 @@ this.addReview = (review)=>{
   });
   return deferred.promise;
  }
+ 
+
+ // ----->>> conversations  <<<<---------
+
+ // function to add a conversation to the database
+ this.addConversation = (conversation)=>{
+  conversation.id = crypto.randomUUID();
+  let deferred = $q.defer();
+  openDB().then(function (db) {
+    let transaction = db.transaction(["conversations"], "readwrite");
+    let objectStore = transaction.objectStore("conversations");
+    let addRequest = objectStore.add(conversation);
+    console.log(conversation);
+    addRequest.onsuccess = function(event) {
+      deferred.resolve(event.target.result);
+    };
+    addRequest.onerror = function(event) {
+      deferred.reject("Error adding conversation: " + event.target.errorCode);
+    };
+  }).catch(function(error) {
+    deferred.reject("Error opening database: " + error);
+  });
+  return deferred.promise;
+ }
+
+ // function to get all the conversations of a particular user which means fetching all the conversations where the either the sender or the receiver is the user
+ this.getUserConversations  = (username)=>{
+    let deferred = $q.defer();
+
+    openDB().then(function (db) {
+      let transaction = db.transaction(["conversations"], "readonly");
+      let objectStore = transaction.objectStore("conversations");
+      let index = objectStore.index("senderIndex");
+      let request = index.getAll(username);
+      request.onsuccess = function(event) {
+        let conversations = event.target.result;
+        let receiverIndex = objectStore.index("receiverIndex");
+        let request2 = receiverIndex.getAll(username);
+        request2.onsuccess = function(event) {
+          conversations = conversations.concat(event.target.result);
+          deferred.resolve(conversations);
+        };
+        request2.onerror = function(event) {
+          deferred.reject("Error getting conversations: " + event.target.errorCode);
+        };
+      };
+      request.onerror = function(event) {
+        deferred.reject("Error getting conversations: " + event.target.errorCode);
+      };
+    });
+    return deferred.promise;
+  }
 });

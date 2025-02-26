@@ -3,17 +3,16 @@
 </head>
   <div class="chat-container">
         <!-- Sidebar for Conversations -->
-        <div class="sidebar">
+        <div class="sidebar" >
             <h2>Chats</h2>
             <div class="conversation">
-                <img src="user1.jpg" alt="User">
+             
                 <div class="conversation-info">
                     <h3>John Doe</h3>
                     <p>Hey, how are you?</p>
                 </div>
             </div>
             <div class="conversation">
-                <img src="user2.jpg" alt="User">
                 <div class="conversation-info">
                     <h3>Jane Smith</h3>
                     <p>See you tomorrow!</p>
@@ -22,10 +21,10 @@
         </div>
 
         <!-- Chat Area -->
-        <div class="chat-area">
+        <div class="chat-area" ng-view="chats">
             <!-- Chat Header -->
             <div class="chat-header">
-                <img src="user1.jpg" alt="User">
+                
                 <h3>John Doe</h3>
             </div>
 

@@ -5,6 +5,7 @@ angular.module("myApp").controller("singleCarCtrl", function($scope, $state, IDB
   $scope.isSeller = loggedInUser && loggedInUser.isSeller === true;
   $scope.isModalOpen = false;
   $scope.calculateBookingPrice = calculateBookingPrice.calculate;
+  $scope.user = loggedInUser.username;
   $scope.car = {};
   $scope.carReviews = [];
   $scope.bidding = {
@@ -47,11 +48,14 @@ angular.module("myApp").controller("singleCarCtrl", function($scope, $state, IDB
 
 
 // function to get the car at particular car ID
-IDB.getCarByID($stateParams.id).then((car) => {
+function fetchCar() {
+  IDB.getCarByID($stateParams.id).then((car) => {
     $scope.car = car;
 }).catch((err) => {
     alert(err);
 });
+}
+fetchCar();
 
 
 
@@ -156,15 +160,25 @@ IDB.getCarByID($stateParams.id).then((car) => {
 
 
   // handling the user clicking on chat with owner button 
-  $scope.chatWithOwner = () => {
+  $scope.chatWithOwner = (owner) => {
       // create a new conversation object and then we will fetch the conversations on the basis of latest at the conversations page
       const conversation = {
+          sender: loggedInUser,
+          receiver: owner,
+          car: $scope.car,
+          createdAt: new Date(),
+      };
 
-
-
-      }
-
-      $state.go("conversations");
+      IDB.addConversation(conversation)
+      .then((response) => {
+          console.log("Conversation created successfully", response);
+          // go to the conversation of that particular car id
+          $state.go("conversations", { id: $scope.car.id });
+      })
+      .catch((error) => {
+          console.log("Error creating conversation", error);
+          alert("There was an error creating the conversation. Please try again.");
+      });
   };
 });
 

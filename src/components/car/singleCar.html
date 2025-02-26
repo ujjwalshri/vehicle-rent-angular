@@ -42,10 +42,9 @@
                 <p><strong>Username:</strong> {{ car.owner.username }}</p>
                 <p><strong>City:</strong> {{ car.owner.city }}</p>
                 <p><strong>Email:</strong> {{ car.owner.email }}</p>
-                <p> <strong>chat with owner? : <span ng-click="chatWithOwner()">Chat 💬</span> </strong></p>
+                <p  ng-hide="user===car.owner.username ">  <strong>chat with owner? : <span ng-click="chatWithOwner(car.owner)">Chat 💬</span> </strong></p>
             </div>
         </div>
-    
 
         <div class="book-car-form" ng-hide="isSeller">
             <h2>Book This Car</h2>

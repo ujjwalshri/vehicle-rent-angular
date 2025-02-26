@@ -69,9 +69,9 @@ angular.module("myApp").config(function($stateProvider, $urlRouterProvider) {
             controller: 'singleCarCtrl'
         })
         .state('conversations', {
-            url: '/conversations',
+            url: '/conversations:id',
             templateUrl: 'components/conversations/conversations.html',
-            controller: ''
+            controller: 'conversationsCtrl'
         }) 
         .state('myProfile', {
             url: '/myProfile',
