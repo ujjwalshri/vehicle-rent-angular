@@ -3,7 +3,7 @@
     <title>Confirmed Bookings</title>
     <link rel="stylesheet" href="/src/components/booking/ownerBookings/confirmedBookings.css">
 </head>
-<body ng-controller="confirmedBookingsCtrl" .class="confimed-Bookings">
+<body ng-controller="confirmedBookingsCtrl" .class="confimed-Bookings" >
     <h1>Confirmed Bookings</h1>
     <table border="1" cellpadding="10" cellspacing="0">
         <thead>
@@ -44,8 +44,8 @@
                     <h1 ng-if="!todayBooking(booking)">{{booking.startDate | date: 'yyyy-MM-dd'}}</h1>
                 </td>
                 <td>
-                    <div ng-repeat="image in booking.vehicle.vehicleImages">
-                        <img ng-src="{{image}}" alt="Vehicle Image" width="100">
+                    <div>
+                        <img ng-src="{{booking.vehicle.vehicleImages[0]}}" alt="Vehicle Image" width="100">
                     </div>
                 </td>
             </tr>

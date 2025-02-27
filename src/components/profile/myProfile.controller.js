@@ -6,13 +6,15 @@ angular.module("myApp").controller("myProfileCtrl", function($scope, $state, IDB
     
 
    // get all cars by a particular username
+
+   $scope.init = ()=>{
     IDB.getAllCarsByUser(loggedInUser.username).then((cars)=>{
         $scope.userCars = cars;
-        
     }).catch((err)=>{
-
         alert(err);
     });
+   }
+   
 
     // delete a car with a particular carID
     $scope.deleteCar = (carID)=>{

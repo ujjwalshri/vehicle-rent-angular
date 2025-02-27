@@ -37,15 +37,12 @@
     <!--importing the IDB service -->
     <script src="/src/services/IDB.service.js"></script>
 
-    
+
     <!--importing the flat picker service -->
      <!-- Flatpickr CSS -->
-     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-     <!-- Flatpickr JS -->
-     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-
-
-
+     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"> 
+      <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+ 
 
     <!--hashing the password-->
     <script src="/src/factories/hashPassword.js"></script>
@@ -54,7 +51,6 @@
     <!--importing the factory for getting the isValid bidding details-->
     <script src="/src/factories/validateBidding.js"></script>
     <!--importing the factory for converting image to base64-->
-    <script src="/src/factories/previewImages.js"></script>
 
 
 
@@ -74,6 +70,16 @@
     <script src="/src/filters/ownerBooking.js"></script>
     <!--importing the conversations contorller-->
     <script src="/src/components/conversations/conversations.controller.js"></script>
+
+
+
+    <!--importing the async library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/async/3.2.6/async.min.js" integrity="sha512-Ps4UroO9GAII8QTM2IE4KcHjslTEZjoZY6OhztAFKSnnqshNnPR8PQl1usQpGiHQXnyRCwEMZAsVJgGg2z8Kog==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <!--importing the pdfKit lib to download the pdf of the bill generated-->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.56/pdfmake.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.56/vfs_fonts.js"></script>
+
 </head>
 <body ng-controller="appCtrl" ng-init="init()">
    <!-- Navbar -->

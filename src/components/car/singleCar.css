@@ -1,450 +1,184 @@
-.single-car-container {
-    width: 100%;
+
+.outer-div {
     max-width: 1200px;
-    background: #ffffff;
-    border-radius: 16px;
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    padding:80px;
-}
-
-.single-car-container:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
-}
-
-
-.car-image {
-    flex: 1;
+    margin: 20px auto;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
     display: flex;
-    align-items: center;
     justify-content: center;
-    background: #f0f0f0;
-    width: 100%; 
-    max-width: 600px;
-    height: auto;
-    padding: 30px;
+    gap: 100px;
+    padding-right: 100px;
+    padding-top:20px;
+    padding-bottom: 20px;
 }
 
-.car-image img {
-    max-width: 100%;
-    max-height: 100%;
-    width: auto;
-    height: auto;
-    border-radius: 16px;
-    object-fit: contain;
-}
-
-
-.car-image img:hover {
-    transform: scale(1.08);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-}
-
-
-.car-info {
-    flex: 1.5;
-    padding: 30px;
-    background: #fafafa;
-}
-
-.car-info h1 {
-    font-size: 32px;
+.single-car-container h1 {
+    font-size: 2em;
     margin-bottom: 20px;
-    color: #222;
-    text-align: center;
-}
-
-.car-info p {
-    font-size: 20px;
-    margin-bottom: 15px;
-    color: #444;
-}
-
-.car-info p strong {
-    color: #0056b3;
-}
-
-
-.features {
-    margin-top: 25px;
-}
-
-.features strong {
-    display: block;
-    margin-bottom: 15px;
-    font-size: 22px;
-    color: #0056b3;
-}
-
-.features span {
-    background: #0056b3;
-    color: white;
-    padding: 10px 18px;
-    border-radius: 10px;
-    font-size: 16px;
-    margin-right: 10px;
-    display: inline-block;
-    margin-bottom: 8px;
-}
-
-
-.owner-info {
-    flex: 1;
-    padding: 30px;
-    background: #f8f9fa;
-    border-top: 5px solid #0056b3;
-    border-radius: 0 0 16px 16px;
-    text-align: center;
-}
-
-.owner-info h3 {
-    font-size: 26px;
-    margin-bottom: 20px;
-    color: #0056b3;
-}
-
-.owner-info p {
-    font-size: 18px;
-    margin-bottom: 10px;
     color: #333;
 }
 
-.owner-info p strong {
-    color: #0056b3;
+.car-image img {
+    width: 100%;
+    max-width: 600px;
+    height: auto;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: transform 0.3s ease;
 }
 
-
-@media (max-width: 1024px) {
-    .single-car-container {
-        flex-direction: column;
-        text-align: center;
-    }
-
-    .car-image img {
-        width: 90%;
-    }
-
-    .owner-info {
-        border-left: none;
-        border-top: 5px solid #0056b3;
-        border-radius: 0 0 16px 16px;
-    }
+.car-image img:hover {
+    transform: scale(1.05);
 }
 
+.car-info, .owner-info, .book-car-form, .review-form {
+    margin-top: 20px;
+}
 
-.modal-overlay {
+.car-info p, .owner-info p {
+    font-size: 1.1em;
+    margin: 10px 0;
+}
+
+.features {
+    margin-top: 10px;
+}
+
+.features span {
+    display: inline-block;
+    margin-right: 10px;
+    background-color: #e0e0e0;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+.book-car-form h2, .review-form h2 {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+}
+
+.book-car-form form, .review-form form {
+    display: flex;
+    flex-direction: column;
+}
+
+.book-car-form label, .review-form label {
+    margin-top: 10px;
+}
+
+.book-car-form input, .review-form textarea, .review-form select, .book-car-form select {
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.book-car-form button, .review-form button {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.book-car-form button:hover, .review-form button:hover {
+    background-color: #0056b3;
+}
+
+.modal {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.7);
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    background-color: rgba(0, 0, 0, 0.8);
     z-index: 1000;
 }
 
-/* 🔹 Modal Content */
 .modal-content {
-    background: white;
+    background-color: #fff;
     padding: 20px;
-    border-radius: 10px;
-    width: 80%;
-    max-width: 900px;
-    position: relative;
-    text-align: center;
-    animation: fadeIn 0.3s ease-in-out;
+    border-radius: 8px;
+    max-width: 90%;
+    max-height: 90%;
+    overflow-y: auto;
 }
 
-/* 🔹 Close Button */
-.close-btn {
+.modal-content .close {
     position: absolute;
     top: 10px;
-    right: 15px;
-    font-size: 30px;
+    right: 20px;
+    font-size: 2em;
     cursor: pointer;
-    color: #333;
-    transition: color 0.3s;
 }
-
-.close-btn:hover {
-    color: red;
-}
-
-
 
 .image-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    
+    display: flex;
+    flex-wrap: wrap;
     gap: 10px;
-    margin-top: 20px;
 }
 
 .image-grid img {
     width: 100%;
-    height: 150px;
-    object-fit: contain;
+    max-width: 200px;
+    height: auto;
     border-radius: 8px;
     cursor: pointer;
     transition: transform 0.3s ease;
 }
 
 .image-grid img:hover {
-    transform: scale(1.1);
+    transform: scale(1.05);
 }
-
-
-.car-booking-container {
-    display: flex;
-    gap: 30px;
-    width: 100%;
-    padding: 20px;
-    justify-content: space-between;
-}
-
-
-.single-car-container {
-    width: 60%;
-}
-
-.book-car-form {
-    width: 35%;
-    max-height: 600px;
-    background: #f8f9fa;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-.book-car-form h2 {
-    text-align: center;
-}
-
-.book-car-form label {
-    display: block;
-    font-weight: bold;
-    margin-top: 10px;
-}
-
-.book-car-form input {
-    width: 100%;
-    padding: 10px;
-    
-    margin-top: 5px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
-.book-car-form button {
-    width: 100%;
-    padding: 10px;
-    margin-top: 15px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.book-car-form button:hover {
-    background-color: #0056b3;
-}
-
-
-.modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.7);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.modal-content {
-    background: white;
-    padding: 20px;
-    border-radius: 10px;
-    text-align: center;
-}
-
-.image-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 10px;
-}
-
-.image-grid img {
-    width: 100%;
-    height: 150px;
-    object-fit: contain;
-    border-radius: 8px;
-    cursor: pointer;
-}
-
-.close {
-    position: absolute;
-    top: 10px;
-    right: 20px;
-    font-size: 30px;
-    cursor: pointer;
-}
-
-
-@media (max-width: 768px) {
-    .car-booking-container {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .single-car-container,
-    .book-car-form {
-        width: 100%;
-    }
-}
-
-.review-form {
-    background: #ffffff;
-    border-radius: 10px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    max-width: 400px;
-    height: 50%;
-    margin: 20px auto;
-    text-align: center;
-}
-
-.review-form h2 {
-    font-size: 20px;
-    color: #333;
-    margin-bottom: 15px;
-}
-
-.review-form label {
-    display: block;
-    font-weight: bold;
-    margin-top: 10px;
-    color: #555;
-    text-align: left;
-}
-
-.review-form input {
-    width: 100%;
-    padding: 8px;
-    margin-top: 5px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 14px;
-}
-
-.review-form input:focus {
-    border-color: #007bff;
-    outline: none;
-}
-
-.review-form button {
-    width: 100%;
-    padding: 10px;
-    margin-top: 15px;
-    background: #007bff;
-    border: none;
-    color: white;
-    font-size: 16px;
-    font-weight: bold;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-.review-form button:hover {
-    background: #0056b3;
-}
-
-
 
 .reviews-container {
-    max-width: 800px;
-    margin: 40px auto;
-    background: #ffffff;
-    border-radius: 10px;
-    padding: 20px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-    text-align: center;
+    margin-top: 40px;
 }
 
 .reviews-container h2 {
-    font-size: 24px;
-    color: #333;
+    font-size: 1.8em;
     margin-bottom: 20px;
-    border-bottom: 2px solid #007bff;
-    padding-bottom: 10px;
-    display: inline-block;
 }
-
 
 .review-card {
-    background: #f9f9f9;
+    background-color: #fff;
+    padding: 20px;
+    margin-bottom: 20px;
     border-radius: 8px;
-    padding: 15px;
-    margin-bottom: 15px;
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-    text-align: left;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
-
-.review-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-}
-
 
 .review-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-size: 16px;
-    font-weight: bold;
-    color: #555;
     margin-bottom: 10px;
 }
 
-
 .review-rating {
-    font-size: 16px;
-    color: #ffa500;
+    background-color: #ffd700;
+    padding: 5px 10px;
+    border-radius: 5px;
 }
-
 
 .review-text {
-    font-size: 16px;
-    font-style: italic;
-    color: #444;
-    padding: 8px 0;
-    border-left: 3px solid #007bff;
-    padding-left: 10px;
+    font-size: 1.1em;
+    margin-bottom: 10px;
 }
-
 
 .review-date {
-    font-size: 14px;
+    font-size: 0.9em;
     color: #777;
-    text-align: right;
-    margin-top: 5px;
 }
-
 
 .no-reviews {
-    font-size: 16px;
-    color: #888;
-    font-style: italic;
-    margin-top: 10px;
+    font-size: 1.2em;
+    color: #777;
 }
-
-

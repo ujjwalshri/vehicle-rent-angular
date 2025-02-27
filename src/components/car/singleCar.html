@@ -4,13 +4,10 @@
         <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 </head>
 
-<div class="outer-div">
-    <div class="car-booking-container">
-
+<div class="outer-div" ng-init="init()">
+    <div class="car-booking-container"></div>
         <div class="single-car-container" ng-if="car">
             <h1>{{ car.carName }} ({{ car.carModel }})</h1>
-    
-
             <div class="car-image" ng-click="openModal(car.vehicleImages)">
                 <img ng-src="{{ car.vehicleImages[0] }}" alt="{{ car.carName }}">
             </div>
@@ -48,19 +45,24 @@
 
         <div class="book-car-form" ng-hide="isSeller">
             <h2>Book This Car</h2>
-            <form >
-    
+            <form>
                 <label for="amount">Bid Amount:</label>
                 <input type="number" id="amount" ng-model="bidding.amount" required>
-    
-                <label for="createdAt">Booking StartDate :</label>
-                <input type="date" id="createdAt" ng-model="bidding.startDate" required>
-                <label for="createdAt">Booking EndDate :</label>
-                <input type="date" id="createdAt" ng-model="bidding.endDate" required>
-    
-                <button type="submit" ng-click="placeBid()">Place Bid at $ {{calculateBookingPrice(bidding.startDate, bidding.endDate, bidding.amount)}}</button>
+        
+                <label for="dateRangePicker">Booking Dates:</label>
+                <input type="text" id="dateRangePicker" placeholder="Select Start & End Date" required>
+                <label for="location">select location</label>
+                <select id="location" ng-model="bidding.location" required>
+                    <option value="local">Local</option>
+                    <option value="outstation">Outstation</option>
+                    <option value="both">both</option>
+                </select>
+                <button type="submit" ng-click="placeBid()">
+                    Place Bid at ${{ calculateBookingPrice(bidding.startDate, bidding.endDate, bidding.amount) }}
+                </button>
             </form>
         </div>
+        
         <div class="review-form" ng-hide="isSeller">
             <h2>Review This Car</h2>
             <form>
@@ -83,9 +85,9 @@
         
     
 
-        <div class="modal" ng-if="isModalOpen">
+        <div class="modal" ng-if="isModalOpen" ng-click="closeModal()">
             <div class="modal-content">
-                <span class="close" ng-click="closeModal()">&times;</span>
+                <span class="close" >&times; X</span>
                 <div class="image-grid">
                     <img ng-repeat="img in car.vehicleImages" ng-src="{{ img }}" alt="Car Image">
                 </div>

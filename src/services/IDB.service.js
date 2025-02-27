@@ -629,6 +629,8 @@ this.getAllBookings = ()=>{
   });
   return deferred.promise;
 }
+
+
 // function to getBookings at particular booking id
 this.getBookingByID = (bookingID)=>{
   let deferred = $q.defer();
@@ -663,6 +665,72 @@ this.getBookingsByCarId = (carID)=>{
   });
   return deferred.promise;
   
+}
+// function to update booking at a bookingID and add started == true and add startOdometerValue
+this.updateBookingAndAddStartOdometerValue = (bookingID, startOdometerValue)=>{
+  let deferred = $q.defer();
+  openDB().then(function (db) {
+    let transaction = db.transaction(["biddings"], "readwrite");
+    let objectStore = transaction.objectStore("biddings");
+    let index = objectStore.index("idIndex");
+    let request = index.get(bookingID);
+    request.onsuccess = function(event) {
+      let booking = event.target.result;
+      if (booking) {
+        booking.started = true;
+        booking.startOdometerValue = startOdometerValue;
+        let updateRequest = objectStore.put(booking);
+        updateRequest.onsuccess = function(event) {
+          deferred.resolve();
+        };
+        updateRequest.onerror = function(event) {
+          deferred.reject("Error updating booking: " + event.target.errorCode);
+        };
+      } else {
+        deferred.reject("Booking not found");
+      }
+    };
+    request.onerror = function(event) {
+      deferred.reject("Error retrieving booking: " + event.target.errorCode);
+    };
+  }).catch(function(error) {
+    deferred.reject("Error opening database: " + error);
+  });
+  return deferred.promise;
+
+}
+
+// function to update booking at a bookingID and add ended == true and add endOdometerValue
+this.updateBookingAndAddEndOdometerValue = (bookingID, endOdometerValue) =>{
+  let deferred = $q.defer();
+  openDB().then(function (db) {
+    let transaction = db.transaction(["biddings"], "readwrite");
+    let objectStore = transaction.objectStore("biddings");
+    let index = objectStore.index("idIndex");
+    let request = index.get(bookingID);
+    request.onsuccess = function(event) {
+      let booking = event.target.result;
+      if (booking) {
+        booking.ended = true;
+        booking.endOdometerValue = endOdometerValue;
+        let updateRequest = objectStore.put(booking);
+        updateRequest.onsuccess = function(event) {
+          deferred.resolve();
+        };
+        updateRequest.onerror = function(event) {
+          deferred.reject("Error updating booking: " + event.target.errorCode);
+        };
+      } else {
+        deferred.reject("Booking not found");
+      }
+    };
+    request.onerror = function(event) {
+      deferred.reject("Error retrieving booking: " + event.target.errorCode);
+    };
+  }).catch(function(error) {
+    deferred.reject("Error opening database: " + error);
+  });
+  return deferred.promise;
 }
 
 // function to add a review to the database

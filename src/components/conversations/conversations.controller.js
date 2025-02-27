@@ -5,24 +5,31 @@ angular.module('myApp').controller('conversationsCtrl', function($scope, $stateP
     const loggedInUser = JSON.parse(sessionStorage.getItem("user"));
     $scope.loggedUser = loggedInUser.username;
     $scope.images = [];
+    $scope.inputMessage = "";
 
     // Fetch all conversations for the logged-in user
     // if stateParams.id is 0, fetch all conversations for the user because he is seeing all his chats on the chats section
     // if stateParams.id is not 0, fetch all conversations for the user where the car id is equal to the stateParams.id because he want to communicate at a particular car
-    if($stateParams.id == 0){
-        IDB.getUserConversations(loggedInUser.username).then((conversations) => {
-            $scope.myConversations = conversations;
-            console.log($scope.myConversations);
-        }).catch((err) => {
-            console.log(err);
-            alert(err);
-        });
-    } else {
-        IDB.getUserConversations(loggedInUser.username).then((conversations) => {
-            $scope.myConversations = conversations.filter(conversation => conversation.car.id === $stateParams.id);
-            console.log($scope.myConversations);
-        });
+
+    $scope.init = ()=>{
+        if($stateParams.id == 0){
+            IDB.getUserConversations(loggedInUser.username).then((conversations) => {
+                $scope.myConversations = conversations;
+                console.log($scope.myConversations);
+            }).catch((err) => {
+                console.log(err);
+                alert(err);
+            });
+        } else {
+            IDB.getUserConversations(loggedInUser.username).then((conversations) => {
+                $scope.myConversations = conversations.filter(conversation => conversation.car.id === $stateParams.id);
+                console.log($scope.myConversations);
+            });
+        }
     }
+
+
+    
 
     // Fetch messages for a selected conversation
     $scope.fetchMessages = (conversationId) => {
@@ -64,27 +71,29 @@ angular.module('myApp').controller('conversationsCtrl', function($scope, $stateP
         }
       };
 
-    // Send a new message
-    $scope.inputMessage = "";
-    $scope.sendMessage = () => {
-        $scope.images = $scope.images.map(image => image.base64);
-        console.log($scope.images);
-        const message = {
-            message: $scope.inputMessage,
-            sender: loggedInUser.username,
-            images: $scope.images,
-            receiver: $scope.selectedConversation.receiver,
-            conversation: $scope.selectedConversation,
-            createdAt: new Date()
-        };
-
-        IDB.addMessage(message).then((response) => {
-            
-            $scope.fetchMessages($scope.selectedConversation.id);            
-            $scope.inputMessage = "";
-        }).catch((error) => {
-            console.log("Error sending message", error);
-            alert("There was an error sending the message. Please try again.");
-        });
+    // function to add a message into the database with a particular conversation id
+   // function to add a message into the database with a particular conversation id
+$scope.sendMessage = () => {
+    $scope.images = $scope.images.map(image => image.base64);
+    console.log($scope.images);
+    const message = {
+        message: $scope.inputMessage,
+        sender: loggedInUser.username,
+        receiver: $scope.selectedConversation.receiver,
+        conversation: $scope.selectedConversation,
+        createdAt: new Date()
     };
+    if ($scope.images.length > 0) {
+        message.images = $scope.images;
+    } 
+
+    IDB.addMessage(message).then((response) => {
+        $scope.messages.push(message);
+        $scope.inputMessage = "";
+        $scope.images = []; // Reset images after sending the message
+    }).catch((error) => {
+        console.log("Error sending message", error);
+        alert("There was an error sending the message. Please try again.");
+    });
+};
 });

@@ -1,11 +1,11 @@
 <head>
     <link rel="stylesheet" href="components/conversations/conversations.css">
 </head>
-<div class="chat-container">
+<div class="chat-container" ng-init="init()">
     <!-- Sidebar for Conversations -->
     <div class="sidebar">
         <h2 ui-sref="conversations">Chats</h2>
-        <div class="conversation" ng-repeat="conversation in myConversations" ng-click="fetchMessages(conversation.id)">
+        <div class="conversation" ng-repeat="conversation in myConversations | orderBy : '-createdAt'" ng-click="fetchMessages(conversation.id)">
             
             <div class="conversation-info">
                 <div class="car">
@@ -21,26 +21,29 @@
     <!-- Chat Area -->
     <div class="chat-area">
         <!-- Chat Header -->
+         <p >click on conversation to view messages</p>
         <div class="chat-header">
             <h3>{{selectedConversation.participants[1].username === loggedUser ? selectedConversation.participants[0].username : selectedConversation.participants[1].username}}</h3>
         </div>
         <!-- Chat Messages -->
         <div class="chat-messages">
+            
             <div class="message" ng-repeat="message in messages | orderBy: 'createdAt'"  ng-class="{'right': message.sender === loggedUser, 'left': message.sender !== loggedUser}">
+
                 <div class="message-content" >
-                    <img ng-src="{{message.images[0]}}" ng-show="message.images" alt="image" class="image">
+                    <img src="{{message.images[0]}}" ng-show="message.images"  class="image">
                     <p><strong>{{message.sender}} </strong> </p>
                     <p>{{message.message}}</p>
                     <span class="time">{{message.createdAt | date:'shortTime'}}</span>
                 </div>
-                
             </div>
         </div>
         <!-- Chat Input -->
         <div class="chat-input" ng-show="selectedConversation">
             <input type="text" placeholder="Type a message..." ng-model="inputMessage">
+
             <!--adding an image to the message-->
-            <input type="file" id="file" name="file" accept="image/*" ng-model="image" ng-change="uploadImage()" onchange="angular.element(this).scope().previewImages(this)">
+            <input type="file" id="file" accept="image/*" ng-model="image" onchange="angular.element(this).scope().previewImages(this)">
             <button ng-click="sendMessage()">Send</button>
 
         </div>
