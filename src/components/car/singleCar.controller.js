@@ -177,6 +177,7 @@ $scope.chatWithOwner = (owner) => {
           const conversation = {
               sender: loggedInUser,
               receiver: owner,
+              participants: [loggedInUser, owner],
               car: $scope.car,
               createdAt: new Date(),
           };
