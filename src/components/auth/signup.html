@@ -4,7 +4,7 @@
 </head>
 
 <form id="userForm" ng-submit="signup()" ng-controller="signupCtrl">
-  {{test}}
+
   <h1>Sign up</h1>
   <label>Name:</label>
   <input
@@ -12,7 +12,7 @@
     id="firstName"
     name="firstName"
     placeholder="enter your first name"
-    ng-model="user.firstName"
+    ng-model="firstName"
     required
   />
   <label>LastName:</label>
@@ -21,7 +21,7 @@
     id="lastName"
     name="lastName"
     placeholder="enter your lastName"
-    ng-model="user.lastName"
+    ng-model="lastName"
     required
   />
   <label>Username:</label>
@@ -30,7 +30,7 @@
     id="username"
     name="username"
     placeholder="enter your username"
-    ng-model="user.username"
+    ng-model="username"
     required
   />
   <label>email:</label>
@@ -39,7 +39,7 @@
     id="email"
     name="email"
     placeholder="enter your valid email"
-    ng-model="user.email"
+    ng-model="email"
     required
   />
   <label>Password:</label>
@@ -48,7 +48,7 @@
     id="password"
     name="password"
     placeholder="enter a password"
-    ng-model="user.password"
+    ng-model="password"
     required
   />
   <label>Confirm Password:</label>
@@ -57,15 +57,15 @@
     id="confirm-password"
     name="confirmPassword"
     placeholder="confirm your password"
-    ng-model="user.confirmPassword"
+    ng-model="confirmPassword"
     required
   />
   <label>City:</label>
-  <select id="city" name="city" ng-model="user.city" required>
+  <select id="city" name="city" ng-model="city" required>
     <option value="" disabled selected>Please select your city</option>
     <option value="Delhi">Delhi</option>
     <option value="Mumbai">Mumbai</option>
-    <option value="Gwalior">Gwalior</option>
+    <option value="Gwalior">Gwalior</option> 
     <option value="Bhind">Bhind</option>
     <option value="Gurugram">Gurugram</option>
     <option value="Agra">Agra</option>
@@ -78,7 +78,7 @@
     id="adhaar"
     name="adhaar"
     placeholder="adhar number"
-    ng-model="user.adhaar"
+    ng-model="adhaar"
     required
   />
   <span id="login-href">Already a user?? <a ui-sref="login">login</a></span>

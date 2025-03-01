@@ -4,17 +4,16 @@
 
 <div class="form-container" ng-app="carApp" ng-controller="addCarCtrl">
     <h2>Add a New Car</h2>
-    {{test}}
     <form id="addCarForm">
         
         <!-- Car Information -->
         <div class="form-group">
             <label for="car_no">Car Number:</label>
-            <input type="text" id="car_no" name="car_no" ng-model="car.car_no" required>
+            <input type="text" id="car_no" name="car_no" ng-model="car_no" placeholder="Please enter in format MP** TT ****" required>
         </div>
         <div class="form-group">
             <label for="carType">Car Type:</label>
-            <select id="carType" name="carType" ng-model="car.carType" required>
+            <select id="carType" name="carType" ng-model="carType" required>
                 <option value="" disabled selected>Select Car Type</option>
                 <option value="4-seater">4 Seater</option>
                 <option value="6-seater">6 Seater</option>
@@ -24,16 +23,16 @@
         
         <div class="form-group">
             <label for="carName">Car Name:</label>
-            <input type="text" id="carName" name="carName" ng-model="car.carName" required>
+            <input type="text" id="carName" name="carName" ng-model="carName" required>
         </div>
         <div class="form-group">
             <label for="carModel">Car Model year:</label>
-            <input type="number" id="carModel" name="carModel" ng-model="car.carModel" required>
+            <input type="number" id="carModel" name="carModel" ng-model="carModel" required>
         </div>
 
         <div class="form-group">
             <label for="category">Category:</label>
-            <select id="category" name="category" ng-model="car.category">
+            <select id="category" name="category" ng-model="category">
                 <option value="SUV">SUV</option>
                 <option value="Sedan">Sedan</option>
             </select>
@@ -41,7 +40,7 @@
 
         <div class="form-group">
             <label for="location">Location:</label>
-            <select id="location" name="location" ng-model="car.location" required>
+            <select id="location" name="location" ng-model="location" required>
                 <option value="" disabled selected>Select Location Type</option>
                 <option value="local">Local</option>
                 <option value="outstation">Outstation</option>
@@ -51,12 +50,12 @@
 
         <div class="form-group">
             <label for="carPrice">Car Price per day:</label>
-            <input type="number" id="carPrice" name="carPrice" ng-model="car.carPrice" placeholder="enter the price from 500 to 20000" required >
+            <input type="number" id="carPrice" name="carPrice" ng-model="carPrice" placeholder="enter the price from 500 to 20000" required >
         </div>
 
         <div class="form-group">
             <label for="mileage">Mileage (km):</label>
-            <input type="number" id="mileage" name="mileage" ng-model="car.mileage" required>
+            <input type="number" id="mileage" name="mileage" ng-model="mileage" required>
         </div>
 
 
@@ -75,11 +74,11 @@
 
         <fieldset>
             <legend>Select Car Features:</legend>
-            <label class="checkbox"><input type="checkbox" name="feature" value="GPS" ng-model="car.features.GPS"> GPS Navigation</label>
-            <label class="checkbox"><input type="checkbox" name="feature" value="Sunroof" ng-model="car.features.Sunroof"> Sunroof</label>
-            <label class="checkbox"><input type="checkbox" name="feature" value="Bluetooth" ng-model="car.features.Bluetooth"> Bluetooth Connectivity</label>
-            <label class="checkbox"><input type="checkbox" name="feature" value="Rear Camera" ng-model="car.features.RearCamera"> Rear Camera</label>
-            <label class="checkbox"><input type="checkbox" name="feature" value="Heated Seats" ng-model="car.features.HeatedSeats"> Heated Seats</label>
+            <label class="checkbox"><input type="checkbox" name="feature" value="GPS" ng-model="GPS"> GPS Navigation</label>
+            <label class="checkbox"><input type="checkbox" name="feature" value="Sunroof" ng-model= "Sunroof"> Sunroof</label>
+            <label class="checkbox"><input type="checkbox" name="feature" value="Bluetooth" ng-model="Bluetooth"> Bluetooth Connectivity</label>
+            <label class="checkbox"><input type="checkbox" name="feature" value="Rear Camera" ng-model="RearCamera"> Rear Camera</label>
+            <label class="checkbox"><input type="checkbox" name="feature" value="Heated Seats" ng-model="HeatedSeats"> Heated Seats</label>
         </fieldset>
 
         <button type="submit" ng-click="submitCarForm()" id="addCar-btn">Add Car</button>

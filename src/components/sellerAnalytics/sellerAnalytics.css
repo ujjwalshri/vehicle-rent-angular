@@ -1,0 +1,26 @@
+.charts-container{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+    padding: 40px;
+    background-color: #fff;
+    margin-left:200px;
+    margin-right:200px;
+    border-radius: 8px;
+    padding-left : 100px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.chartDiv{
+    background-color: #ecf0f1;
+    border: 1px solid #0b0b0b;
+    padding: 15px;
+    width: 500px;
+    height: 500px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+

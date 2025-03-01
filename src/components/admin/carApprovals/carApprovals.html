@@ -2,9 +2,10 @@
     <link rel="stylesheet" href="/src/components/admin/carApprovals/carApprovals.css">
 </head>
 
-<div class="car-container">
+<div class="car-container" ng-init="init()">
     <!-- Loop through cars dynamically -->
-    <div ng-repeat="car in cars |orderBy:'-createdAt'" class="car-container" >
+     <h2 ng-if="cars.length===0">No Car Approvals</h2>
+    <div ng-repeat="car in cars |orderBy:'-createdAt'" class="car-container" ng-if="cars.length>0" >
         <div class="car-card">
             <img ng-src="{{ car.vehicleImages[0]  }}" alt="{{ car.carName }}">
             <div class="car-details">

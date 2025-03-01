@@ -1,7 +1,21 @@
-.bidding-details{
-    border: 1px solid #0e0d0d;
-    padding: 20px;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap:10px;
+
+.bidding-table {
+    width: 80%;
+    border-collapse: collapse;
+    
+}
+
+.bidding-table th, .bidding-table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+}
+
+.bidding-table th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+}
+
+.bidding-table tr:nth-child(even) {
+    background-color: #f9f9f9;
 }

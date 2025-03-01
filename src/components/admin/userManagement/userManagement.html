@@ -10,13 +10,14 @@
         <p>Username: {{user.username}}</p>
         <p>Email: {{user.email}}</p>
         <p>Role: {{user.isSeller === true ? "seller" : "buyer"}}</p>
-        <button ng-click="block(user.username)">block user</button>
+        <button ng-click="block(user.username)">delete user</button>
     </div>
     <div class="seller" ng-repeat="user in sellers">
         <h2>{{user.firstName}} {{user.lastName}}</h2>
         <p>Username: {{user.username}}</p>
         <p>Email: {{user.email}}</p>
         <p>Role: {{user.isSeller === true ? "seller" : "buyer"}}</p>
-        <button ng-click="block(user.username)" >block User</button>
+        <button ng-click="block(user.username)" >delete User</button>
     </div>
 </div>
+

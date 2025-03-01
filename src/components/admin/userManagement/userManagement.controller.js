@@ -35,8 +35,8 @@ angular
     // function to block a user and then getting all the cars of that user and then deleting all the cars of that user
     // function to block a user and then getting all the cars of that user and then deleting all the cars of that user
     // using the async libary to do the task in a waterfall manner
-    $scope.block = (username) => {
-      async.waterfall(
+    $scope.block = (username) => { // blocking function 
+      async.waterfall(    // using async.waterfall() to run the functions in a waterfall manner
         [
           function (callback) {
             IDB.blockUserByUsername(username)
@@ -63,7 +63,7 @@ angular
               });
           },
           function (cars, callback) {
-            async.each(
+            async.each(  // using async.each() to iterate over the cars and delete them parallely
               cars,
               (car, cb) => {
                 IDB.deleteCar(car.id)

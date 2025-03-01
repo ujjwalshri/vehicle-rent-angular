@@ -1,41 +1,9 @@
 angular
   .module("myApp")
-  .controller("addCarCtrl", function ($scope, $state, IDB, $timeout) {
-    $scope.test = "Hello World!";
+  .controller("addCarCtrl", function ($scope, $state, IDB, $timeout,carValidation ) {
+    
     const loggedInUser = JSON.parse(sessionStorage.getItem("user"));
-
-    $scope.images = []; 
-
-    $scope.car = {
-      car_no: "",
-      carType: "",
-      carName: "",
-      carModel: "",
-      category: "",
-      location: "",
-      isApproved: "pending",
-      owner: {
-        username : loggedInUser.username,
-        firstName: loggedInUser.firstName,
-        lastName: loggedInUser.lastName,
-        email: loggedInUser.email,
-        adhaar: loggedInUser.adhaar,
-        city: loggedInUser.city,
-        isBlocked : loggedInUser.isBlocked
-      },
-      carPrice: "",
-      mileage: "",
-      vehicleImages: [], // This will store the base64 images
-      features: {
-        GPS: false,
-        Sunroof: false,
-        Bluetooth: false,
-        RearCamera: false,
-        HeatedSeats: false,
-      },
-      createdAt: new Date(),
-    };
-
+    $scope.images = []; // This will store the selected images
     // Function to handle image preview and Base64 conversion
     $scope.previewImages = function (input) {
       if (input.files) {
@@ -70,35 +38,65 @@ angular
 
     // Submit form function
     $scope.submitCarForm = function () {
-      if ($scope.images.length === 0) {
-        alert("Please upload at least one image.");
-        return;
-      }
-      if($scope.images.length > 5){
-        alert("Please upload a maximum of 5 images.");
-        return;
-      }
-
+      const car = {
+        car_no: $scope.car_no,
+        carType: $scope.carType,
+        carName: $scope.carName,
+        carModel: $scope.carModel,
+        category: $scope.category,
+        location: $scope.location,
+        isApproved: "pending",
+        owner: {
+          username: loggedInUser.username,
+          firstName: loggedInUser.firstName,
+          lastName: loggedInUser.lastName,
+          email: loggedInUser.email,
+          adhaar: loggedInUser.adhaar,
+          city: loggedInUser.city,
+          isBlocked: loggedInUser.isBlocked
+        },
+        carPrice: $scope.carPrice,
+        mileage: $scope.mileage,
+        vehicleImages: [], // This will store the base64 images
+        features: {
+          GPS: $scope.GPS,
+          Sunroof: $scope.Sunroof,
+          Bluetooth: $scope.Bluetooth,
+          RearCamera: $scope.RearCamera,
+          HeatedSeats: $scope.HeatedSeats,
+        },
+        createdAt: new Date(),
+      };
+    
+      
+    
       console.log("Selected Images:", $scope.images);
-      console.log("Car Data before submission:", $scope.car);
-       // adding the base64 strings from the images to the car object's vehicleImages array
-      $scope.car.vehicleImages = $scope.images.map((image) => image.base64);
+      console.log(car);
+    
+      // adding the base64 strings from the images to the car object's vehicleImages array
+      car.vehicleImages = $scope.images.map((image) => image.base64);
 
-      if($scope.car.carPrice < 0 || $scope.car.carPrice == null || $scope.car.carPrice > 10000 || $scope.car.carPrice <500){ r 
-        alert("Please enter a valid price");
+      // validation for the car object properties
+      if (!carValidation.validateCarSchema(car)) {
+        alert("invalid car schema");
         return;
       }
-      IDB.addCar($scope.car)
-      .then((response) => {
-        console.log("Car added successfully:", response);
-        return IDB.makeUserSeller(loggedInUser.username); // Return the next promise
-      })
-      .then((response) => {
-        console.log("User updated to seller:", response);
-        $state.go("home"); 
-      })
-      .catch((error) => {
-        alert("error adding car");
-      });    
+      if(!carValidation.validateCar(car)){
+        alert("invalid car data");
+        return;
+      }
+      // Add the car to the database
+      IDB.addCar(car)
+        .then((response) => {
+          console.log("Car added successfully:", response);
+          return IDB.makeUserSeller(loggedInUser.username); // Return the next promise
+        })
+        .then((response) => {
+          console.log("User updated to seller:", response);
+          $state.go("home");
+        })
+        .catch((error) => {
+          alert("error adding car");
+        });
     };
   });

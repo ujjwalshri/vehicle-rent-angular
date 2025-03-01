@@ -13,63 +13,15 @@
     cursor: pointer;
 }
 
-/* Sidebar Styling */
-/* .sidebar {
-    position: fixed;
-    top: 100px;
-    right: -300px;  /* Hidden by default */
-    /* width: 200px;
-    height: 100vh;
-    background: #333;
-    color: white;
-    padding: 20px;
-    transition: 0.3s ease-in-out;
-    box-shadow: -3px 0 5px rgba(0, 0, 0, 0.2); */
-
-/* side bar styling
-.sidebar-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid white;
-    padding-bottom: 10px;
-}
-
-.sidebar-header button {
-    background: transparent;
-    border: none;
-    color: white;
-    font-size: 1.5rem;
-    cursor: pointer;
-}
-
-.sidebar-content p {
-    margin: 15px 0;
-}
-
-/* Show Sidebar */
-/* .sidebar.active {
-    right: 0;
-}
-
-
-
-
- /*
-
-/* General Styles */
-
-
-/* Container for the cars */
 .car-container {
     display: grid;
-    grid-template-columns: repeat(4, 1fr); /* 3 columns per row */
+    grid-template-columns: repeat(4, 1fr);
     gap: 40px;
     width: 100%;
     padding: 10px;
 }
 
-/* Individual Car Card */
+
 .car-card {
     background: white;
     border-radius: 12px;
@@ -81,13 +33,13 @@
     flex-direction: column;
 }
 
-/* Hover effect */
+
 .car-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
 }
 
-/* Car Image */
+
 .car-card img {
     width: 100%;
     height: 200px;
@@ -95,7 +47,7 @@
     border-radius: 8px;
 }
 
-/* Car Details */
+
 .car-details {
     margin-top: 10px;
     padding: 10px;
@@ -113,7 +65,7 @@
     font-size: 14px;
 }
 
-/* Features */
+
 .features {
     margin-top: 10px;
     font-size: 14px;
@@ -137,7 +89,7 @@
     display: inline-block;
 }
 
-/* Owner Details */
+
 .owner {
     margin-top: 15px;
     padding: 10px;
@@ -154,7 +106,7 @@
     color: #007bff;
 }
 
-/* Buttons */
+
 .approve-reject-buttons {
     display: flex;
     gap: 10px;
@@ -203,15 +155,15 @@
     border-radius: 3px;
 }
 
-/* Responsive Design */
-@media (max-width: 1024px) { /* Tablets */
+
+@media (max-width: 1024px) { 
     .car-container {
-        grid-template-columns: repeat(2, 1fr); /* 2 columns */
+        grid-template-columns: repeat(2, 1fr); 
     }
 }
 
-@media (max-width: 768px) { /* Mobile */
+@media (max-width: 768px) { 
     .car-container {
-        grid-template-columns: repeat(1, 1fr); /* 1 column */
+        grid-template-columns: repeat(1, 1fr); 
     }
 }

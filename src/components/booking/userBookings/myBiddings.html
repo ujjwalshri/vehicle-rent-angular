@@ -3,33 +3,39 @@
 </head>
 
 
+<div class="container">
+    <h1>Your bookings</h1>
+<table class="bidding-table">
+    <thead>
+        <tr>
+            <th>Car Name</th>
+            <th>Model</th>
+            <th>Type</th>
+            <th>Category</th>
+            <th>Price/Day</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Total Price</th>
+            <th>Username</th>
+            <th>Email</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="booking in bookings | orderBy: '-createdAt'">
+            <td>{{booking.vehicle.carName}}</td>
+            <td>{{booking.vehicle.carModel}}</td>
+            <td>{{booking.vehicle.carType}}</td>
+            <td>{{booking.vehicle.car_no}}</td>
+            <td>{{booking.vehicle.carPrice}}</td>
+            <td>{{booking.startDate | date:'yyyy-MM-dd'}}</td>
+            <td>{{booking.endDate | date:'yyyy-MM-dd'}}</td>
+            <td>${{calculateBookingPrice(booking.startDate, booking.endDate, booking.amount)}}</td>
+   
+            <td>{{booking.owner.username}}</td>
+            <td>{{booking.owner.email}}</td>
+        </tr>
+    </tbody>
+</table>
 
-<h1> Biddings {{test}}</h1>
 
-<!-- Container for all bookings -->
-<div class="bidding-requests">
-    <!-- Loop through bookings -->
-    <div class="bidding-details" ng-repeat="booking in bookings | orderBy: '-createdAt'">
-        <h2>Car Details</h2>
-        <p><strong>Car Name:</strong> {{booking.vehicle.carName}}</p>
-        <p><strong>Car Model:</strong> {{booking.vehicle.carModel}} </p>
-        <p><strong>Car Type:</strong>  {{booking.vehicle.carType}}</p>
-        <p><strong>Car Number:</strong> {{booking.vehicle.car_no}}</p>
-        <p><strong>Category:</strong> {{booking.vehicle.category}}</p>
-        <p><strong>Price:</strong> ${{booking.vehicle.carPrice}} per day</p>
-        <h2>Bid details</h2>
-        <ul>
-            <li>$ {{booking.amount}} per day</li>
-            <li>Start Date: {{ booking.startDate | date:'yyyy-MM-dd' }}</li>
-            <li>End Date: {{booking.endDate | date: 'yyyy-MM-dd'}} </li>
-            <li>Total Payable Price: ${{calculateBookingPrice(booking.startDate, booking.endDate, booking.amount )}} </li>
-            <li>Booking Status: {{booking.status}}</li>
-        </ul>
-        <h2>User Details</h2>
-        <p><strong>First Name:</strong> {{booking.owner.firstName}}</p>
-        <p><strong>Last Name:</strong> {{booking.owner.lastName}}</p>
-        <p><strong>Username:</strong> {{booking.owner.username}}</p>
-        <p><strong>Email:</strong> {{booking.owner.email}}</p>
-       
-    </div>
 </div>

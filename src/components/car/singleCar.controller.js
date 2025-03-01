@@ -7,10 +7,18 @@ angular
       $state,
       IDB,
       $stateParams,
-      validateBidding,
+      Bidding,
       calculateBookingPrice,
       $timeout
     ) {
+
+
+      $scope.init = () => {
+        fetchCar();
+        fetchReviews();
+        fetchBlockedDates();
+      };
+
       const loggedInUser = JSON.parse(sessionStorage.getItem("user"));
       $scope.isSeller = loggedInUser && loggedInUser.isSeller === true;
       $scope.isModalOpen = false;
@@ -42,12 +50,7 @@ angular
         createdAt: new Date(),
       };
 
-      $scope.init = () => {
-        fetchCar();
-        fetchReviews();
-        fetchBlockedDates();
-      };
-
+    
       function fetchCar() {
         IDB.getCarByID($stateParams.id)
           .then((car) => {
@@ -60,6 +63,11 @@ angular
         IDB.getReviewsByCarID($stateParams.id)
           .then((reviews) => {
             $scope.carReviews = reviews;
+            const totalOfRatings = reviews.reduce((acc, review) => acc + review.rating, 0);
+            $scope.averageRating = parseFloat((totalOfRatings / reviews.length).toFixed(1));
+           if(reviews.length === 0){
+            $scope.averageRating = 0;
+           }
           })
           .catch((err) => alert(err));
       }
@@ -81,23 +89,22 @@ angular
 
       function initializeFlatpickr() {
         $timeout(() => {
-          flatpickr("#dateRangePicker", {
-            mode: "range",
-            dateFormat: "Y-m-d",
-            minDate: "today",
-            disable: $scope.blockedDates.map((date) =>
-              new Date(date)
-            ),
-            onClose: function (selectedDates) {
-              if (selectedDates.length === 2) {
-                $scope.bidding.startDate = selectedDates[0].toISOString();
-                $scope.bidding.endDate = selectedDates[1].toISOString();
-                $scope.$apply();
-              }
-            },
-          });
-        }, 500); // Small timeout to ensure Angular updates UI
-      }
+            flatpickr("#dateRangePicker", {
+                mode: "range",
+                dateFormat: "Y-m-d",
+                minDate: "today",
+                disable: $scope.blockedDates.map(date => new Date(date)),
+                onClose: function (selectedDates) {
+                    if (selectedDates.length === 2) {
+                        $scope.bidding.startDate = selectedDates[0].toISOString();
+                        $scope.bidding.endDate = selectedDates[1].toISOString();
+                        $timeout();
+                    }
+                },
+            });
+        });
+    }
+    
 
       $scope.placeBid = async () => {
         if ($scope.bidding.amount < $scope.car.carPrice) {
@@ -120,11 +127,10 @@ angular
         $scope.bidding.location = $scope.car.location;
 
         try {
-          const isValid = validateBidding.isValidBid(
+          const isValid = Bidding.isValidBid(
             $scope.bidding,
             $scope.blockedDates
           );
-
           if (!isValid.success) {
             throw new Error("Car is already booked for the selected date range");
           }
@@ -152,7 +158,7 @@ angular
         try {
              IDB.addReview($scope.review).then((res)=>{
               console.log(res);
-              $scope.carReviews.push($scope.review);
+              fetchReviews();
               $scope.review = {
                 id: crypto.randomUUID(),
                 car: {},
@@ -176,41 +182,58 @@ angular
 // if the conversation does not exist then it creates a new conversation and then redirects to the conversation page
 $scope.chatWithOwner = (owner) => {
   const loggedInUser = JSON.parse(sessionStorage.getItem("user"));
-  IDB.getUserConversations(loggedInUser.username)
-  .then((conversations) => {
-      const existingConversation = conversations.find(conversation => 
-          conversation.receiver.username === owner.username && 
-          conversation.car.id === $scope.car.id
-      );
 
-      if (existingConversation) {
+  async.waterfall(
+    [
+      function (callback) {
+        IDB.getUserConversations(loggedInUser.username)
+          .then((conversations) => callback(null, conversations))
+          .catch((error) => callback(error));
+      },
+      function (conversations, callback) {
+        const existingConversation = conversations.find(
+          (conversation) =>
+            conversation.receiver.username === owner.username &&
+            conversation.car.id === $scope.car.id
+        );
+
+        if (existingConversation) {
           console.log("Existing conversation found", existingConversation);
           $state.go("conversations", { id: $scope.car.id });
-      } else {
-          const conversation = {
-              sender: loggedInUser,
-              receiver: owner,
-              participants: [loggedInUser, owner],
-              car: $scope.car,
-              createdAt: new Date(),
-          };
+          return;
+        }
 
-          IDB.addConversation(conversation)
-          .then((response) => {
-              console.log("Conversation created successfully", response);
-              $state.go("conversations", { id: $scope.car.id });
-          })
-          .catch((error) => {
-              console.log("Error creating conversation", error);
-              alert("There was an error creating the conversation. Please try again.");
-          });
+        const conversation = {
+          sender: loggedInUser,
+          receiver: owner,
+          participants: [{
+            username: loggedInUser.username,
+            firstName: loggedInUser.firstName,
+            lastName: loggedInUser.lastName,
+            email: loggedInUser.email,
+            isBlocked: loggedInUser.isBlocked,
+            isSeller: loggedInUser.isSeller,
+          }, owner],
+          car: $scope.car,
+          createdAt: new Date(),
+        };
+
+        IDB.addConversation(conversation)
+          .then(() => callback(null))
+          .catch((error) => callback(error));
+      },
+    ],
+    function (error) {
+      if (error) {
+        console.error("Error:", error);
+        alert("There was an error. Please try again.");
+      } else {
+        $state.go("conversations", { id: $scope.car.id });
       }
-  })
-  .catch((error) => {
-      console.log("Error fetching conversations", error);
-      alert("There was an error fetching conversations. Please try again.");
-  });
+    }
+  );
 };
+
 
 $scope.openModal = (images) => {
     $scope.car.vehicleImages = images;

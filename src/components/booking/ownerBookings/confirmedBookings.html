@@ -3,32 +3,37 @@
     <title>Confirmed Bookings</title>
     <link rel="stylesheet" href="/src/components/booking/ownerBookings/confirmedBookings.css">
 </head>
-<body ng-controller="confirmedBookingsCtrl" .class="confimed-Bookings" >
-    <h1>Confirmed Bookings</h1>
-    <table border="1" cellpadding="10" cellspacing="0">
+
+
+<body ng-controller="confirmedBookingsCtrl" class="confimed-Bookings"  >
+<label for="" ng-if="bookings.length>0">filter bookings by startDate</label><input ng-show="bookings.length>0" type="date" ng-model="startDate" class="search" > <button ng-show="bookings.length>0" ng-click="resetFilter()">reset filter</button>
+
+<h1 ng-if="bookings.length===0">no bookings</h1>
+    <h1 ng-if="bookings.length>0">Confirmed Bookings</h1>
+    <table ng-if="bookings.length>0" border="1" cellpadding="10" cellspacing="0">
         <thead>
             <tr>
                 <th>Booking ID</th>
                 <th>Total Payable Amount</th>
                 <th>Start Date</th>
                 <th>End Date</th>
-                <th>Owner Details</th>
+                <th>User Details</th>
                 <th>Vehicle Details</th>
                 <th>Manage Booking</th>
                 <th>Vehicle Images</th>
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="booking in bookings | orderBy : '-createdAt'">
+            <tr ng-repeat="booking in bookings | confirmedBookingsFilter:startDate | orderBy : '-createdAt'">
                 <td>{{booking.id}}</td>
                 <td>${{calculateBookingPrice(booking.startDate, booking.endDate, booking.amount)}}</td>
                 <td>{{booking.startDate | date: 'yyyy-MM-dd'}}</td>
                 <td>{{booking.endDate | date: 'yyyy-MM-dd'}}</td>
                 <td>
-                    <p>First Name: {{booking.owner.firstName}}</p>
-                    <p>Last Name: {{booking.owner.lastName}}</p>
-                    <p>Username: {{booking.owner.username}}</p>
-                    <p>Email: {{booking.owner.email}}</p>
+                    <p>First Name: {{booking.from.firstName}}</p>
+                    <p>Last Name: {{booking.from.lastName}}</p>
+                    <p>Username: {{booking.from.username}}</p>
+                    <p>Email: {{booking.from.email}}</p>
                 </td>
                 <td>
                     <p>Car No: {{booking.vehicle.car_no}}</p>
@@ -41,7 +46,7 @@
                 </td>
                 <td>
                     <button ng-click="handleManageBookings(booking.id) " ng-if="todayBooking(booking)">Manage Booking</button>
-                    <h1 ng-if="!todayBooking(booking)">{{booking.startDate | date: 'yyyy-MM-dd'}}</h1>
+                    <h1 ng-if="!todayBooking(booking)">Coming soon</h1>
                 </td>
                 <td>
                     <div>

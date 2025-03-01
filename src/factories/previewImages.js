@@ -8,7 +8,7 @@ angular.module('myApp').factory('previewImages', function($timeout) {
           let processedFiles = 0;
       
           files.forEach((file) => {
-            let reader = new FileReader();// making new instance of FileReader
+            let reader = new FileReader(); // making new instance of FileReader
             reader.readAsDataURL(file); // read the file as data url which means converting it basically into the base64 format
             
             reader.onload = function (e) {  // onload event is triggered when the file is read

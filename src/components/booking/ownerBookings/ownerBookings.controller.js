@@ -6,11 +6,13 @@ angular.module('myApp').controller('ownerBookingsCtrl', function($scope, $state,
 
      $scope.checkApproved = (booking) => booking.status === "approved";
      $scope.checkRejected = (booking) => booking.status === "rejected";
- 
+      // Initial fetch of bookings
+      fetchBookings();
+      
      function fetchBookings() {
          IDB.getBookingsByOwnerId(loggedInUser.username).then((bookings) => {
              $scope.bookings = bookings.filter((booking) => booking.status === "pending");  // filtering out the pending bookings
-             console.log($scope.bookings);2
+             console.log($scope.bookings);
          }).catch((err) => {
              console.log(err);
          });
@@ -55,6 +57,5 @@ angular.module('myApp').controller('ownerBookingsCtrl', function($scope, $state,
          });
      };
  
-     // Initial fetch of bookings
-     fetchBookings();
+    
  });

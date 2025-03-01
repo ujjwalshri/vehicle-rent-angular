@@ -2,12 +2,14 @@
     <link rel="stylesheet" href="/src/components/booking/ownerBookings/ownerBookings.css">
 </head>
 
-<h1> Biddings {{test}}</h1>
-
+<div class="filters">
+    <input type="text" ng-model="searchCarName" placeholder="Search by Car Name" />
+</div>
 <!-- Container for all bookings -->
 <div class="bidding-requests">
     <!-- Loop through bookings -->
-    <div class="bidding-details" ng-repeat="booking in bookings | orderBy: '-createdAt'">
+     
+    <div class="bidding-details" ng-repeat="booking in bookings | ownerBookingFilter:searchCarName | orderBy: '-createdAt'">
         <h2>Car Details</h2>
         <p><strong>Car Name:</strong> {{booking.vehicle.carName}}</p>
         <p><strong>Car Model:</strong> {{booking.vehicle.carModel}} </p>

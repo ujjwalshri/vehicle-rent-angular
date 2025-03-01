@@ -1,4 +1,4 @@
-/* Set the background color of the body to a whitish subtle color */
+
 @import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Mono:ital,wght@0,200..800;1,200..800&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
 
 
@@ -18,7 +18,7 @@ label{
 h1{
     font-family: "Atkinson Hyperlegible Mono", serif;
 }
-/* Style the buttons */
+
 button {
     background-color: #4caf50;
     color: white;
@@ -31,15 +31,12 @@ button {
     font-family: "Atkinson Hyperlegible Mono", serif;
 }
 
-/* Style the button hover effect */
+
 button:hover {
     background-color: #45a049;
 }
 
-/* Add more CSS rules as needed for your website */
 
-/* Global Styles */
-/* Navbar Styles */
 .navbar {
     background-color: #333;
     display: flex;
@@ -59,7 +56,7 @@ button:hover {
     text-decoration: none;
 }
 
-/* Navigation Links */
+
 .nav-links {
     list-style: none;
     display: flex;
@@ -86,7 +83,7 @@ button:hover {
     border-radius: 5px;
 }
 
-/* Dropdown Menu */
+
 .dropdown-menu {
     display: none;
     position: absolute;
@@ -113,7 +110,7 @@ button:hover {
     display: block;
 }
 
-/* Search Box */
+
 .search-box {
     display: flex;
     align-items: center;
@@ -142,7 +139,7 @@ button:hover {
     background: #388E3C;
 }
 
-/* Login Button */
+
 .login-btn {
     background: #4CAF50;
     color: white;
@@ -165,7 +162,7 @@ button:hover {
     height: 100vh;
 }
 
-/* Responsive Design */
+
 @media screen and (max-width: 768px) {
     .navbar {
         flex-direction: column;

@@ -1,1 +1,51 @@
-<h1>Analysis</h1>
+
+<head>
+    <title>Analytics</title>
+    <link rel="stylesheet" href="/src/components/admin/Analytics/analytics.css">
+</head>
+<div ng-init="init()" class="charts-container">
+  <div >
+    <h3 > Average booking duration {{averageBookingDuration}}</h3>
+  </div>
+  <div >
+    <h3>number of blocked users : {{blocked.length}}</h3>
+  </div>
+  <div >
+    <!--gives the chart for top 10 most popular cars-->
+    <h3>total number of bookings : {{confirmedBookings.length}}</h3>
+  </div>
+  <div >
+    <h3>bidding Conversion Percentage : {{calculatedBiddingConversionRate}} %</h3>
+  </div>
+  <div class="chartDiv">
+    <canvas id="userDescriptionChart" width="400" height="400"></canvas>
+  </div>
+  <div class="chartDiv">
+    <!--gives the chart for month wise bookings of cars on the platform-->
+    <canvas id="monthwiseCarTrips"></canvas>
+  </div>
+  <div class="chartDiv">
+    <canvas id="top10Cars"></canvas>
+  </div>
+  <div class="chartDiv">
+  <canvas id="top3Sellers"></canvas>
+  </div> 
+  <div class="chartDiv">
+    <canvas id="top5MostReviewedCars"></canvas>
+  </div>
+  <div class="chartDiv">
+    <canvas id="numberOfUsersPerCity"></canvas>
+  </div>
+  <div class="chartDiv">
+    <canvas id="suvVsSedan"></canvas>
+  </div>
+  <div class="chartDiv">
+    <canvas id="leastRentedCars"></canvas>
+  </div>
+  <div class="chartDiv">
+    <canvas id="mostRentedCars"></canvas>
+  </div>
+  <div class="chartDiv">
+    <canvas id="highestRatedCars"></canvas>
+  </div>
+</div>

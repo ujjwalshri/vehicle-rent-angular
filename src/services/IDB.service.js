@@ -1,11 +1,9 @@
 
-
-
 // this file contains the service that will be used to interact with the IndexedDB database.
 angular.module('myApp').service("IDB", function ($q, hashPassword) {
   let db = null;
   let DB_NAME = "vehicalRental";
-  let DB_VERSION = 5;
+  let DB_VERSION = 6;
   function openDB() {
     let deferred = $q.defer();
     // If database is already open, return it immediately
@@ -20,6 +18,7 @@ angular.module('myApp').service("IDB", function ($q, hashPassword) {
     request.onupgradeneeded = function (event) {
       console.log("db updated");
       db = event.target.result;
+    
       if(!db.objectStoreNames.contains('messages')){
         const messagesObjectStore = db.createObjectStore("messages", {
           keyPath: "id", 
@@ -27,9 +26,7 @@ angular.module('myApp').service("IDB", function ($q, hashPassword) {
         messagesObjectStore.createIndex('conversationIDIndex', 'conversation.id', {
           unique: false
         })
-        messagesObjectStore.createIndex('createdAtIndex', 'createdAt', {
-          unique: false
-        })
+       
         messagesObjectStore.createIndex('senderIndex', 'sender.id', {
           unique :false
         })
@@ -43,29 +40,11 @@ angular.module('myApp').service("IDB", function ($q, hashPassword) {
           keyPath: "username",
         });
         
-        userObjectStore.createIndex("firstNameIndex", "firstName", {
-          unique: false,
-        });
-        userObjectStore.createIndex("lastNameIndex", "lastName", {
-          unique: false,
-        });
         userObjectStore.createIndex("usernameIndex", "username", {
           unique: true,
         });
-        userObjectStore.createIndex("emailIndex", "email", {
-          unique: true,
-        });
-        userObjectStore.createIndex("createdAtIndex", "createdAt", {
-          unique: false,
-        });
-        userObjectStore.createIndex("isSellerIndex", "isSeller", {
-          unique: false,
-        });
+      
         userObjectStore.createIndex("cityIndex", "city", { unique: false });
-        userObjectStore.createIndex("isBlockedIndex", "isBlocked", {
-          unique: false,
-        });
-        userObjectStore.createIndex("adhaarIndex", "adhaar", { unique: true });
       }
       if (!db.objectStoreNames.contains("vehicles")) {
         const vehiclesObjectStore = db.createObjectStore("vehicles", {
@@ -77,30 +56,7 @@ angular.module('myApp').service("IDB", function ($q, hashPassword) {
         vehiclesObjectStore.createIndex("ownerIndex", "owner.username", {
           unique: false,
         });
-        vehiclesObjectStore.createIndex("typeIndex", "type", { unique: false });
-        vehiclesObjectStore.createIndex("nameIndex", "name", { unique: false });
-        vehiclesObjectStore.createIndex("modelIndex", "model", {
-          unique: false,
-        });
-        vehiclesObjectStore.createIndex("categoryIndex", "category", {
-          unique: false,
-        });
-        vehiclesObjectStore.createIndex("locationIndex", "location", {
-          unique: false,
-        });
-        vehiclesObjectStore.createIndex("priceIndex", "price", {
-          unique: false,
-        });
-        vehiclesObjectStore.createIndex("createdAtIndex", "createdAt", {
-          unique: false,
-        });
         vehiclesObjectStore.createIndex("isApprovedIndex", "isApproved", {
-          unique: false,
-        });
-        vehiclesObjectStore.createIndex("deletedIndex", "deleted", {
-          unique: false,
-        });
-        vehiclesObjectStore.createIndex("mileageIndex", "mileage", {
           unique: false,
         });
       }
@@ -117,15 +73,6 @@ angular.module('myApp').service("IDB", function ($q, hashPassword) {
           "reviewer.username",
           { unique: false }
         );
-        vehicleReviewsObjectStore.createIndex("ratingIndex", "rating", {
-          unique: false,
-        });
-        vehicleReviewsObjectStore.createIndex("reviewIndex", "review", {
-          unique: false,
-        });
-        vehicleReviewsObjectStore.createIndex("createdAtIndex", "createdAt", {
-          unique: false,
-        });
       }
        if(!db.objectStoreNames.contains("biddings")){
         const biddingsObjectStore = db.createObjectStore("biddings", {
@@ -136,12 +83,6 @@ angular.module('myApp').service("IDB", function ($q, hashPassword) {
           unique: false,
         });
         biddingsObjectStore.createIndex("bidderIndex", "bidder.username", {
-          unique: false,
-        });
-        biddingsObjectStore.createIndex("amountIndex", "amount", {
-          unique: false,
-        });
-        biddingsObjectStore.createIndex("createdAtIndex", "createdAt", {
           unique: false,
         });
         biddingsObjectStore.createIndex("ownerIndex", "owner.username", {
@@ -161,9 +102,6 @@ angular.module('myApp').service("IDB", function ($q, hashPassword) {
           unique: false,
         });
         conversationsObjectStore.createIndex('carIndex', 'car.id', {
-          unique: false,
-        });
-        conversationsObjectStore.createIndex("createdAtIndex", "createdAt", {
           unique: false,
         });
       }
@@ -219,9 +157,8 @@ angular.module('myApp').service("IDB", function ($q, hashPassword) {
     });
     return deferred.promise;
   };
+  
   // function to check if a user exists in the database with the given username
-
-
   this.loginUser = function (username, password){
     let deferred = $q.defer();
     openDB().then(function (db) {
@@ -771,6 +708,22 @@ this.addReview = (review)=>{
   });
   return deferred.promise;
  }
+
+  this.getAllReviews = ()=>{
+    let deferred = $q.defer();
+    openDB().then(function (db) {
+      let transaction = db.transaction(["carReviews"], "readonly");
+      let objectStore = transaction.objectStore("carReviews");
+      let request = objectStore.getAll();
+      request.onsuccess = function(event) {
+        deferred.resolve(event.target.result);
+      };
+      request.onerror = function(event) {
+        deferred.reject("Error getting reviews: " + event.target.errorCode);
+      };
+    });
+    return deferred.promise;
+  }
 
  // block the user at a particular userID
  this.blockUserByUsername = (username)=>{

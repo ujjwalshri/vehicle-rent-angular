@@ -4,32 +4,74 @@ angular.module("myApp").config(function($stateProvider, $urlRouterProvider) {
         .state("home", {
             url: "/home",
             templateUrl: "components/home/home.html",
-            controller: "homeCtrl"
+            controller: "homeCtrl",
+            resolve : {
+                auth: ['$state', 'RouteProtection', function($state, RouteProtection){
+                    if(RouteProtection.isAdmin()){
+                        $state.go('admin');
+                    }
+                }]
+            }
+
+
         })
         .state("login",{
             url: "/login",
             templateUrl: "components/auth/login.html",
-            controller: "loginCtrl"
+            controller: "loginCtrl",
+            resolve : {
+                auth: ['$state', 'RouteProtection', function($state, RouteProtection){
+                    if(RouteProtection.isAuthorized()){
+                        $state.go('home');
+                    }
+                }]
+            }
         })
         .state("signup",{
            url: "/signup",
            templateUrl: "components/auth/signup.html",
-           controller: "signupCtrl"
+           controller: "signupCtrl",
+              resolve : {
+                auth: ['$state', 'RouteProtection', function($state, RouteProtection){
+                     if(RouteProtection.isAuthorized()){
+                          $state.go('home');
+                     }
+                }]}
         })
         .state('car', {
             url: '/car',
             templateUrl: 'components/car/addCarForm.html',
-            controller: 'addCarCtrl'
+            controller: 'addCarCtrl',
+            resolve : {
+                auth: ['$state', 'RouteProtection', function($state, RouteProtection){
+                    if(!RouteProtection.isAuthorized()){
+                        $state.go('login');
+                    }
+                    if(RouteProtection.isAdmin()){
+                        $state.go('admin');
+                    }
+                }]
+            }
         })
         .state('admin', {
             url: '/admin',
             templateUrl: 'components/admin/admin.html',
-            controller: 'adminCtrl'
+            controller: 'adminCtrl',
+            resolve : {
+                auth: ['$state', 'RouteProtection', function($state, RouteProtection){
+                    if(!RouteProtection.isAuthorized()){
+                        $state.go('login');
+                    }
+                    if(!RouteProtection.isAdmin()){
+                        $state.go('home');
+                    }
+                }]
+            }
         })
         .state('admin.carApprovals', {
             url: '/carApprovals',
             views: {
-                'adminContent@admin': {  // Named view inside 'admin'
+                'adminContent@admin': {  // nested view in admin state 
                     templateUrl: 'components/admin/carApprovals/carApprovals.html',
                     controller: 'carCtrl'
                 }
@@ -50,59 +92,164 @@ angular.module("myApp").config(function($stateProvider, $urlRouterProvider) {
             views: {
                 'adminContent@admin': {
                     templateUrl: 'components/admin/Analytics/analytics.html',
-                    controller: 'adminCtrl'
+                    controller: 'analyticsCtrl'
                 }
             }
         })
-        .state('admin.blockedUsers',{
-            url: '/blockedUsers',
-            views: {
-                'adminContent@admin': {
-                    templateUrl: 'components/admin/userManagement/blockedUsers.html',
-                    controller: ''
-                }
-            }
-        }
-        )
         .state('singleCar',{
             url: '/singleCar/:id',
             templateUrl: 'components/car/singleCar.html',
-            controller: 'singleCarCtrl'
+            controller: 'singleCarCtrl',
+            resolve : {
+                auth: ['$state', 'RouteProtection', function($state, RouteProtection){
+                    if(!RouteProtection.isAuthorized()){
+                        $state.go('login');
+                    }
+                    if(RouteProtection.isAdmin()){
+                        $state.go('admin');
+                    }
+                }]
+            }
         })
         .state('conversations', {
             url: '/conversations:id',
             templateUrl: 'components/conversations/conversations.html',
-            controller: 'conversationsCtrl'
+            controller: 'conversationsCtrl',
+            resolve : {
+                auth: ['$state', 'RouteProtection', function($state, RouteProtection){
+                    if(!RouteProtection.isAuthorized()){
+                        $state.go('login');
+                    }
+                    if(RouteProtection.isAdmin()){
+                        $state.go('admin');
+                    }
+                }]
+            }
         }) 
         .state('myProfile', {
             url: '/myProfile',
             templateUrl: 'components/profile/myProfile.html',
-            controller: 'myProfileCtrl'
+            controller: 'myProfileCtrl',
+            resolve : {
+                auth: ['$state', 'RouteProtection', function($state, RouteProtection){
+                    if(!RouteProtection.isAuthorized()){
+                        $state.go('login');
+                    }
+                    if(RouteProtection.isAdmin()){
+                        $state.go('admin');
+                    }
+                }]
+            }
         })
         .state('userBookings', {
             url: '/userBookings',
             templateUrl: 'components/booking/userBookings/userBookings.html',
-            controller: 'userBookingsCtrl'
+            controller: 'userBookingsCtrl',
+            resolve : {
+                auth: ['$state', 'RouteProtection', function($state, RouteProtection){
+                    if(!RouteProtection.isAuthorized()){
+                        $state.go('login');
+                    }
+                    if(RouteProtection.isAdmin()){
+                        $state.go('admin');
+                    }
+                    if(RouteProtection.isSeller()){
+                        $state.go('ownerBookings');
+                    }
+                }]
+            }
+            
         })
         .state('ownerBookings', {
             url: '/ownerBookings',
             templateUrl: 'components/booking/ownerBookings/ownerBookings.html',
-            controller: 'ownerBookingsCtrl'
+            controller: 'ownerBookingsCtrl',
+            resolve : {
+                auth: ['$state', 'RouteProtection', function($state, RouteProtection){
+                    if(!RouteProtection.isAuthorized()){
+                        $state.go('login');
+                    }
+                    if(RouteProtection.isAdmin()){
+                        $state.go('admin');
+                    }
+                    if(RouteProtection.isBuyer()){
+                        $state.go('userBookings');
+                    }
+                }]
+            }
         })
         .state('confirmedBookings', {
             url: '/confirmedBookings',
             templateUrl: 'components/booking/ownerBookings/confirmedBookings.html',
-            controller: 'confirmedBookingsCtrl'
+            controller: 'confirmedBookingsCtrl',
+            resolve : {
+                auth: ['$state', 'RouteProtection', function($state, RouteProtection){
+                    if(!RouteProtection.isAuthorized()){
+                        $state.go('login');
+                    }
+                    if(RouteProtection.isAdmin()){
+                        $state.go('admin');
+                    }
+                    if(RouteProtection.isBuyer()){
+                        $state.go('userBookings');
+                    }
+                }]
+            }
         })
         .state('manageBookings', {
             url: '/manageBookings:id',
             templateUrl: 'components/booking/ownerBookings/manageBookings.html',
-            controller: 'manageBookingsCtrl'
+            controller: 'manageBookingsCtrl',
+            resolve : {
+                auth: ['$state', 'RouteProtection', function($state, RouteProtection){
+                    if(!RouteProtection.isAuthorized()){
+                        $state.go('login');
+                    }
+                    if(RouteProtection.isAdmin()){
+                        $state.go('admin');
+                    }
+                    if(RouteProtection.isBuyer()){
+                        $state.go('userBookings');
+                    }
+                }]
+            }
         })
         .state('myBiddings', {
             url: '/myBiddings',
             templateUrl: 'components/booking/userBookings/myBiddings.html',
-            controller: 'myBiddingsCtrl'
+            controller: 'myBiddingsCtrl',
+            resolve : {
+                auth: ['$state', 'RouteProtection', function($state, RouteProtection){
+                    if(!RouteProtection.isAuthorized()){
+                        $state.go('login');
+                    }
+                    if(RouteProtection.isAdmin()){
+                        $state.go('admin');
+                    }
+                    if(RouteProtection.isSeller()){
+                        $state.go('ownerBookings');
+                    }
+                }]
+            }
+        })
+        .state('sellerAnalytics', {
+            url: '/sellerAnalytics',
+            templateUrl: 'components/sellerAnalytics/sellerAnalytics.html',
+            controller: 'sellerAnalyticsCtrl',
+            resolve : {
+                auth: ['$state', 'RouteProtection', function($state, RouteProtection){
+                    if(!RouteProtection.isAuthorized()){
+                        $state.go('login');
+                    }
+                    if(RouteProtection.isAdmin()){
+                        $state.go('admin');
+                    }
+                    if(RouteProtection.isBuyer()){
+                        $state.go('home');
+                    }
+                }]
+            }
+            
         })
         
         

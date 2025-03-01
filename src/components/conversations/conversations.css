@@ -1,4 +1,4 @@
-/* General Chat Container */
+
 .chat-container {
     display: flex;
     width: 900px;
@@ -7,7 +7,7 @@
     background: #f8f9fa;
 }
 
-/* Sidebar for Conversations */
+
 .sidebar {
     width: 30%;
     background: #ffffff;
@@ -84,7 +84,7 @@
     font-size: 18px;
 }
 
-/* Chat Messages */
+
 .chat-messages {
     flex-grow: 1;
     padding: 15px;
@@ -93,7 +93,7 @@
     flex-direction: column;
 }
 
-/* Message Styles */
+
 .message {
     max-width: 60%;
     padding: 10px;
@@ -117,7 +117,7 @@
     background: white;
 }
 
-/* Message Time */
+
 .message .time {
     display: block;
     font-size: 12px;
@@ -125,7 +125,7 @@
     margin-top: 5px;
 }
 
-/* Chat Input */
+
 .chat-input {
     display: flex;
     padding: 10px;
@@ -165,12 +165,12 @@
 }
 
 .left {
-    background-color: #cef5b0; /* Green color for sent messages */
+    background-color: #cef5b0; 
     align-self: flex-start;
 }
 
 .right {
-    background-color: #fcfafa; /* White color for received messages */
+    background-color: #fcfafa; 
     align-self: flex-end;
 }
 

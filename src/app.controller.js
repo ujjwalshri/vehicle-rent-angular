@@ -3,7 +3,7 @@ const app = angular.module("myApp", ["ui.router"]);
 app.controller("appCtrl", function($scope, $state, $timeout,$rootScope) {
 
     $scope.init = function() {
-        $rootScope.adminLogged  = false;
+       $rootScope.adminLogged  = false;
        $rootScope.isLogged = false;
         $rootScope.isSeller = false;
             const loggedInUser = JSON.parse(sessionStorage.getItem("user"));

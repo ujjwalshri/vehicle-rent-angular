@@ -11,7 +11,7 @@
         <p><strong>Aadhaar:</strong> {{ user.adhaar }}</p>
     </div>
     
-    <div class="added-cars">
+    <div class="added-cars" ng-if="userCars.length>0">
         <h3>Added Cars</h3>
         <ul>
             <li ng-repeat="car in userCars">

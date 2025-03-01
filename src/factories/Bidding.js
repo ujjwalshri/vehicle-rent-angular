@@ -1,4 +1,4 @@
-angular.module('myApp').factory('validateBidding', function() {
+angular.module('myApp').factory('Bidding', function() {
     return {
         isValidBid: function(bidding, blockedDates) {
          

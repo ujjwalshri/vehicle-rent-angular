@@ -1,7 +1,6 @@
 angular.module("myApp").filter("carFilters", function() {
     return function (cars, search, priceFilter, categoryFilter, carLocation) {
         if (!cars) return [];
-        
         const priceRanges = {
             "0-500": [0, 500],
             "500-1000": [500, 1000],
