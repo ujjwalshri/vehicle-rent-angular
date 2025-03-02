@@ -1,8 +1,7 @@
 angular.module("myApp").controller("carCtrl", function($scope, $state, IDB) {
     
-    
     $scope.init = ()=>{
-        fetchPendingCars();
+        fetchPendingCars(); // initial fetch of pending cars
     }
     // calling db to get the pending cars;
    function fetchPendingCars(){

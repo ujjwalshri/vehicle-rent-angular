@@ -78,11 +78,11 @@ angular
 
       // validation for the car object properties
       if (!carValidation.validateCarSchema(car)) {
-        alert("invalid car schema");
+        alert("Please fill out all the details");
         return;
       }
       if(!carValidation.validateCar(car)){
-        alert("invalid car data");
+        alert("invalid car data Please fill out valid details");
         return;
       }
       // Add the car to the database

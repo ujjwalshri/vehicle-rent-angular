@@ -168,7 +168,20 @@ angular.module('myApp').service("IDB", function ($q, hashPassword) {
       request.onsuccess = function (event) {
         if (event.target.result && event.target.result.isBlocked === false) {
           if (event.target.result.password === hashPassword(password)) {
-            sessionStorage.setItem("user", JSON.stringify(event.target.result));
+            const user = event.target.result;
+            console.log(user);
+            sessionStorage.setItem("user", JSON.stringify({
+              username: user.username,
+              firstName: user.firstName,
+              lastName: user.lastName,
+              email: user.email,
+              city: user.city,
+              isSeller: user.isSeller,
+              isBlocked: user.isBlocked,
+              adhaar: user.adhaar,
+              createdAt: user.createdAt,
+              updatedAt: user.updatedAt,
+            }));
             deferred.resolve();
           } else {
             deferred.reject("Invalid password");

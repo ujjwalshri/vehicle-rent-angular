@@ -17,16 +17,7 @@ angular.module('myApp').controller('sellerAnalyticsCtrl', function($scope, IDB) 
             $scope.bookings = biddings.filter(booking => booking.status === "approved"); // filter out the approved biddings
             
 
-            $scope.bookings.forEach(booking => {
-                 // loop through all bookings and find the bookings at each month 
-                const month = new Date(booking.startDate).getMonth();
-                if ($scope.monthWiseBookings[month]) {
-                    $scope.monthWiseBookings[month] += 1;
-                } else {
-                    $scope.monthWiseBookings[month] = 1;
-                }
-               
-            });
+           
 
             biddings.forEach(bidding => {  // loop through all biddings
                 const carName = bidding.vehicle.carName + ' ' + bidding.vehicle.carModel;

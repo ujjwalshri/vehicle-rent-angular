@@ -28,12 +28,12 @@ angular
 
       // function to get if a booking is sheduled to start at today
       $scope.todayBooking = (booking) => {
-        const bookingStartDate = new Date(booking.startDate);
-        const bookingEndDate = new Date(booking.endDate);
-        const today = new Date();
+        const bookingStartDate = new Date(booking.startDate); // making sure that startDate is date object
+        const bookingEndDate = new Date(booking.endDate); // making sure that endDate is date object
+        const today = new Date(); // getting the current date
 
         // if today date is between the booking start and end date
-        // Assuming today, bookingStartDate, and bookingEndDate are Date objects
+
 
         today.setHours(0, 0, 0, 0); // set the hours to 0 to compare the dates
         bookingStartDate.setHours(0, 0, 0, 0); // set the hours to 0 to compare the dates

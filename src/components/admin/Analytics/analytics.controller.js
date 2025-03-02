@@ -34,8 +34,8 @@ angular.module('myApp').controller('analyticsCtrl', function($scope, IDB, Bookin
                 }
                 return acc;
             }, {});
-
-            createUserDescriptionChart($scope.buyers, $scope.sellers); // create the user description chart
+            createNumberOfUsersPerCityChart(); // create the number of users per city chart
+            createUserDescriptionChart(); // create the user description chart
         });
     }
     // function to fetchAllCars on the platform 
@@ -57,9 +57,6 @@ angular.module('myApp').controller('analyticsCtrl', function($scope, IDB, Bookin
             }, {});
             createSuvVsSedanPieChart(); // create the suv vs sedan pie chart
             $scope.ownerAndAddedCarsMap = Object.entries($scope.ownerAndAddedCarsMap).sort((a,b) => b[1] - a[1]); // sort the ownerAndAddedCarsMap on the basis of the number of cars
-            console.log($scope.ownerAndAddedCarsMap);
-
-            createNumberOfUsersPerCityChart(); // create the number of users per city chart
             createTop3SellersChart(); // create the top 3 sellers chart
         })
     }
@@ -92,12 +89,8 @@ angular.module('myApp').controller('analyticsCtrl', function($scope, IDB, Bookin
             const bookedDays = $scope.confirmedBookings.reduce((acc, booking) => {
                 const startDate = new Date(booking.startDate);  
                 const endDate = new Date(booking.endDate);
-                
-                
                     const duration = Math.abs(endDate - startDate) / (1000 * 60 * 60 * 24); // duration in days
                     acc += duration;  // sum of all the durations
-                
-                
                 return acc; // returing sum of all durations
             }, 0); 
             
@@ -109,9 +102,6 @@ angular.module('myApp').controller('analyticsCtrl', function($scope, IDB, Bookin
 
             // sort the bookings of the car in sorted order
             $scope.numberOfBookingsPerCar = Object.entries($scope.numberOfBookingsPerCar).sort((a,b) => a[1] - b[1]);
-        
-            console.log($scope.monthlyBookings);
-            console.log($scope.mostRentedCars);
             createMostRentedCarsChart(); // create the most rented cars chart
             createNumberOfBookingsPerCarChart(); // create the number of bookings per car chart
             createMonthlyTripsChart(); // create the monthly trips chart
@@ -131,9 +121,9 @@ angular.module('myApp').controller('analyticsCtrl', function($scope, IDB, Bookin
                         $scope.carAndReviewsMap[review.car.carName + ' ' + review.car.carModel] = 1;
                     }
             });
-            console.log($scope.carAndReviewsMap);
             
-            $scope.carAndReviewsMap = Object.entries($scope.carAndReviewsMap).sort((a,b) => b[1] - a[1]); // sort the carAndReviewsMap with the highest number of reviews
+            
+            $scope.carAndReviewsMap = Object.entries($scope.carAndReviewsMap).sort((a,b) => b[1] - a[1]); // sort the carAndReviewsMap with the highest number of reviews and return an array of arrays
             
             // populating the carAndAverageRatingMap with the average rating of the cars
             $scope.reviews.forEach(review => {

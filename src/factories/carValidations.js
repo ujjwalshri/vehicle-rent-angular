@@ -13,7 +13,7 @@ angular.module('myApp').factory('carValidation', function($q) {
             if (car.carModel < 1900 || car.carModel > new Date().getFullYear()) {
                 return false;
             }
-            if (car.mileage < 0) {
+            if (car.mileage < 0 || car.mileage>500) {
                 return false;
             }
             if (car.vehicleImages.length < 1) {
@@ -28,7 +28,7 @@ angular.module('myApp').factory('carValidation', function($q) {
         
         validateCarSchema: function(car) {
             // check if car object has all the required properties
-            const requiredFields = ["car_no", "carType", "carName", "carModel", "category", "location", "carPrice", "mileage"];
+        const requiredFields = ["car_no", "carType", "carName", "carModel", "category", "location", "carPrice", "mileage"];
           for (let field of requiredFields) {
              if (!car[field]) {
                  return false;
