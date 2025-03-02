@@ -10,7 +10,7 @@ angular.module('myApp').factory('carValidation', function($q) {
             if (car.carPrice > 10000 || car.carPrice < 500) {
                 return false;
             }
-            if (car.carModel < 1900 || car.carModel > 2020) {
+            if (car.carModel < 1900 || car.carModel > new Date().getFullYear()) {
                 return false;
             }
             if (car.mileage < 0) {

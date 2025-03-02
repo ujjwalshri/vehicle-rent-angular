@@ -1,4 +1,6 @@
 angular.module("myApp").controller("homeCtrl", function($scope, $state, IDB) {
+    
+    // init function to run when the page mounts
     $scope.init = function (){
         $scope.allCars = [];
         $scope.priceFilter = '';
@@ -7,7 +9,7 @@ angular.module("myApp").controller("homeCtrl", function($scope, $state, IDB) {
         $scope.carLocation = '';
 
         // function to get all the cars that have status === approved
-        IDB.getApprovedCars().then((cars) => {
+     IDB.getApprovedCars().then((cars) => {
             $scope.allCars = cars.filter((car) => {
                 return car.deleted === undefined;
             });
@@ -32,11 +34,5 @@ angular.module("myApp").controller("homeCtrl", function($scope, $state, IDB) {
     $scope.redirectCarPage = (carID) => {
         $state.go("singleCar", {id: carID});
     };
-
-    // function to update the paginated cars
-   
-    // function to go to the next page
-
-    // function to go to the previous page
 
 });

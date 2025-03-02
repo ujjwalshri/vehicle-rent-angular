@@ -1,20 +1,23 @@
 <body>
     <h1>Confirmed Bookings</h1>
+    <input type="text"  ng-model="carName" ng-show="bookings.length>0" placeholder="search by car name">
+    <button ng-show="bookings.length>0" ng-click="resetFilter()">reset filter</button>
+    <h1 ng-show="bookings.length===0"> No  boookings </h1>
     <table border="1" cellpadding="10" cellspacing="0">
         <thead>
             <tr>
+                <th>S.no</th>
                 <th>Booking ID</th>
                 <th>Total Payable Amount</th>
                 <th>Start Date</th>
                 <th>End Date</th>
                 <th>Owner Details</th>
                 <th>Vehicle Details</th>
-              
-               
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="booking in bookings | orderBy : '-createdAt'">
+            <tr ng-repeat="booking in bookings |userBookingsFilter:carName| orderBy : '-createdAt'">
+                <td>{{$index+1}}</td>
                 <td>{{booking.id}}</td>
                 <td>${{calculateBookingPrice(booking.startDate, booking.endDate, booking.amount)}}</td>
                 <td>{{booking.startDate | date: 'yyyy-MM-dd'}}</td>

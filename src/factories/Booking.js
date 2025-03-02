@@ -1,4 +1,4 @@
-app.factory('calculateBookingPrice', function(){
+app.factory('Booking', function(){
     return {
         calculate: function(startDate, endDate, carPrice){
             // Ensure date format is correct

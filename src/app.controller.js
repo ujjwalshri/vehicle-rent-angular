@@ -1,7 +1,6 @@
 const app = angular.module("myApp", ["ui.router"]);
-
-app.controller("appCtrl", function($scope, $state, $timeout,$rootScope) {
-
+app.controller("appCtrl", function($scope,$rootScope) {
+    //init function to run when the app first loads
     $scope.init = function() {
        $rootScope.adminLogged  = false;
        $rootScope.isLogged = false;
@@ -12,6 +11,8 @@ app.controller("appCtrl", function($scope, $state, $timeout,$rootScope) {
             $rootScope.isLogged = loggedInUser;
             console.log('$rootScope.logged', $rootScope.isLogged);
     };
+
+    //logout function to remove the user from the session storage
     $scope.logout = () => {
         sessionStorage.removeItem("user");
         $rootScope.isLogged = false;

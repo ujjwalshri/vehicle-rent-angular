@@ -8,26 +8,24 @@ angular
       IDB,
       $stateParams,
       Bidding,
-      calculateBookingPrice,
+      Booking,
       $timeout
     ) {
 
-
+      // init function to fetch the car, reviews and blocked dates
       $scope.init = () => {
         fetchCar();
         fetchReviews();
         fetchBlockedDates();
       };
 
-      const loggedInUser = JSON.parse(sessionStorage.getItem("user"));
-      $scope.isSeller = loggedInUser && loggedInUser.isSeller === true;
-      $scope.isModalOpen = false;
-      $scope.calculateBookingPrice = calculateBookingPrice.calculate;
-      $scope.user = loggedInUser.username;
-      $scope.car = {};
-      $scope.carReviews = [];
-      $scope.blockedDates = [];
-
+      const loggedInUser = JSON.parse(sessionStorage.getItem("user")); // get the logged in user from the session storage
+      $scope.calculateBookingPrice = Booking.calculate; // function to calculate the booking price
+      $scope.user = loggedInUser.username; // get the username of the logged in user
+      $scope.car = {};  // initial car object
+      $scope.carReviews = []; // intital car reviews array
+      $scope.blockedDates = []; //initial blocked dates array
+      // initial bidding object
       $scope.bidding = {
         id: crypto.randomUUID(),
         amount: null,
@@ -35,30 +33,30 @@ angular
         startDate: null,
         endDate: null,
         status: "pending",
-        from: loggedInUser,
+        from: {
+          username: loggedInUser.username,
+          firstName: loggedInUser.firstName,
+          lastName: loggedInUser.lastName,
+          email: loggedInUser.email,
+          isBlocked: loggedInUser.isBlocked,
+          isSeller: loggedInUser.isSeller,
+          city: loggedInUser.city,
+        },
         owner: null,
         createdAt: new Date(),
         location: "",
       };
 
-      $scope.review = {
-        id: crypto.randomUUID(),
-        car: {},
-        rating: 0,
-        review: "",
-        reviewer: loggedInUser,
-        createdAt: new Date(),
-      };
 
-    
-      function fetchCar() {
+      // function to fetch the car by the carID
+      function fetchCar() { 
         IDB.getCarByID($stateParams.id)
           .then((car) => {
             $scope.car = car;
           })
           .catch((err) => alert(err));
       }
-
+      // function to fetch the reviews by the carID
       function fetchReviews() {
         IDB.getReviewsByCarID($stateParams.id)
           .then((reviews) => {
@@ -71,7 +69,7 @@ angular
           })
           .catch((err) => alert(err));
       }
-
+     // function to fetch the bookings of the car and then calculation the blocked dates by the carID
       function fetchBlockedDates() {
         IDB.getBookingsByCarID($stateParams.id)
           .then((bids) => {
@@ -86,8 +84,8 @@ angular
           })
           .catch((err) => console.error(err));
       }
-
-      function initializeFlatpickr() {
+       // initialize the flatpickr date range picker
+      function initializeFlatpickr() { // using timeout to make sure the angular updates the views after we have the blocked dates
         $timeout(() => {
             flatpickr("#dateRangePicker", {
                 mode: "range",
@@ -96,31 +94,18 @@ angular
                 disable: $scope.blockedDates.map(date => new Date(date)),
                 onClose: function (selectedDates) {
                     if (selectedDates.length === 2) {
-                        $scope.bidding.startDate = selectedDates[0].toISOString();
+                        $scope.bidding.startDate = selectedDates[0].toISOString(); 
                         $scope.bidding.endDate = selectedDates[1].toISOString();
-                        $timeout();
+                        $timeout(); // using timeout to trigger the changes in the above score variables
                     }
                 },
             });
         });
     }
     
-
+      // function to place a bid on the car
       $scope.placeBid = async () => {
-        if ($scope.bidding.amount < $scope.car.carPrice) {
-          alert("Bid amount must be at least the car price");
-          return;
-        }
-
-        if (!$scope.bidding.startDate || !$scope.bidding.endDate) {
-          alert("Please select a valid date range");
-          return;
-        }
-
-        if ($scope.bidding.location !== $scope.car.location) {
-          alert("Please enter a valid location");
-          return;
-        }
+       
 
         $scope.bidding.vehicle = $scope.car;
         $scope.bidding.owner = $scope.car.owner;
@@ -128,11 +113,11 @@ angular
 
         try {
           const isValid = Bidding.isValidBid(
-            $scope.bidding,
-            $scope.blockedDates
+            $scope.bidding
           );
           if (!isValid.success) {
-            throw new Error("Car is already booked for the selected date range");
+            alert(isValid.message);
+            return;
           }
 
           await IDB.addBid($scope.bidding);
@@ -145,28 +130,37 @@ angular
       };
 
       $scope.placeReview = async function() {
-
+     
         // updating the review object 
-        $scope.review.car = $scope.car;
-        $scope.review.rating = parseInt($scope.review.rating);
+        const review = {
+          id: crypto.randomUUID(),
+            car: $scope.car,
+            rating: parseInt($scope.rating),
+            review: $scope.review,
+            reviewer: {
+              username: loggedInUser.username,
+              firstName: loggedInUser.firstName,
+              lastName: loggedInUser.lastName,
+              email: loggedInUser.email,
+              isBlocked: loggedInUser.isBlocked,
+              isSeller: loggedInUser.isSeller,
+              city: loggedInUser.city,
+            },
+            createdAt: new Date(),
+
+        }
         
-        if ($scope.review.review === "") {
-            alert("Please enter a valid review");
-            return;
+        if(review.review === "" ){
+          alert("Please enter a review");
+          return;
         }
       
         try {
-             IDB.addReview($scope.review).then((res)=>{
+             IDB.addReview(review).then((res)=>{
               console.log(res);
               fetchReviews();
-              $scope.review = {
-                id: crypto.randomUUID(),
-                car: {},
-                rating: 0,
-                review: "",
-                reviewer: loggedInUser,
-                createdAt: new Date(),
-              };
+              $scope.review = "";
+              $scope.rating = '';
              }).catch((err)=> {
               alert(err);
              }) // call the IDB service addReview function to add the review to the database
@@ -181,7 +175,6 @@ angular
     // function to chat with the owner of the car which creates a new chat if the conversation does not exist on the car and the buyer and seller and redirects to the conversation page 
 // if the conversation does not exist then it creates a new conversation and then redirects to the conversation page
 $scope.chatWithOwner = (owner) => {
-  const loggedInUser = JSON.parse(sessionStorage.getItem("user"));
 
   async.waterfall(
     [
@@ -243,7 +236,10 @@ $scope.openModal = (images) => {
 $scope.closeModal = () => {
     $scope.isModalOpen = false;
 };
-      function getDatesBetween(startDate, endDate) {
+
+
+// function to get dates between a start and end date
+function getDatesBetween(startDate, endDate) {
         let dates = [];
         let currentDate = new Date(startDate);
         while (currentDate <= endDate) {

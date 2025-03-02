@@ -1,13 +1,16 @@
 <!DOCTYPE html>
 <html lang="en" ng-app="myApp">
   <head>
+    
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Vehical Rental</title>
+
     <!--importing global css for the whole app -->
     <link rel="stylesheet" href="global.style.css" />
     <!-- angular -->
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+   
     <!-- ui Router -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/1.0.29/angular-ui-router.min.js"></script>
 
@@ -87,7 +90,7 @@
     <!--factory for hashing the password-->
     <script src="/src/factories/hashPassword.js"></script>
     <!--importing the factory for calculating the booking price-->
-    <script src="/src/factories/calculateBookingPrice.js"></script>
+    <script src="/src/factories/Booking.js"></script>
     <!--importing the factory for getting the isValid bidding details-->
     <script src="/src/factories/Bidding.js"></script>
     <!--importing the factory for the carValidations-->
@@ -100,6 +103,8 @@
     <script src="/src/filters/ownerBooking.js"></script>
     <!--importing the confirmed booking filter-->
     <script src="/src/filters/confirmedBookingsFilter.js"></script>
+    <!--importing the userBookings filter-->
+    <script src="/src/filters/userBookings.js"></script>
   </head>
   <body ng-controller="appCtrl" ng-init="init()">
     <!-- Navbar -->

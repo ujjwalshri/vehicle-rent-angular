@@ -1,6 +1,6 @@
 angular
   .module("myApp")
-  .controller("userManagementCtrl", function ($scope, $state, IDB, $q) {
+  .controller("userManagementCtrl", function ($scope, $state, IDB, $q, ) {
     $scope.allUsers = [];
     $scope.buyers = [];
     $scope.sellers = [];
@@ -12,7 +12,7 @@ angular
 
     //for fetching all the users and then filtering them into buyers and sellers
     function fetchUsers() {
-      IDB.getAllUsers()
+      IDB.getAllUsers() 
         .then((users) => {
           $scope.allUsers = users.filter((user) => user.isBlocked === false);
           $scope.buyers = $scope.allUsers.filter((user) => {

@@ -1,5 +1,6 @@
 angular.module("myApp").config(function($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise('/home');
+    
     $stateProvider
         .state("home", {
             url: "/home",
@@ -12,8 +13,6 @@ angular.module("myApp").config(function($stateProvider, $urlRouterProvider) {
                     }
                 }]
             }
-
-
         })
         .state("login",{
             url: "/login",
@@ -71,7 +70,7 @@ angular.module("myApp").config(function($stateProvider, $urlRouterProvider) {
         .state('admin.carApprovals', {
             url: '/carApprovals',
             views: {
-                'adminContent@admin': {  // nested view in admin state 
+                'adminContent@admin': { 
                     templateUrl: 'components/admin/carApprovals/carApprovals.html',
                     controller: 'carCtrl'
                 }
@@ -83,7 +82,7 @@ angular.module("myApp").config(function($stateProvider, $urlRouterProvider) {
                 'adminContent@admin': {
                     templateUrl: 'components/admin/userManagement/userManagement.html',
                     controller: 'userManagementCtrl',
-                    controllerAs: 'vm'
+                    controllerAs: 'userManagementCtrl'
                 }
             }
         })

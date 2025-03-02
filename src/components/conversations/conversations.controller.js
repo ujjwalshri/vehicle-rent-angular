@@ -1,18 +1,17 @@
-angular.module('myApp').controller('conversationsCtrl', function($scope, $stateParams, IDB, $rootScope, $timeout,) {
-    $scope.myConversations = [];
-    $scope.messages = [];
-    $scope.selectedConversation = null;
-    const loggedInUser = JSON.parse(sessionStorage.getItem("user"));
-    $scope.loggedUser = loggedInUser.username;
-    $scope.images = [];
-    $scope.inputMessage = "";
+angular.module('myApp').controller('conversationsCtrl', function($scope, $stateParams, IDB, $timeout) {
+    $scope.myConversations = []; //  array to hold all the conversations of the user
+    $scope.messages = []; // array to hold all the messages of a particular conversation
+    $scope.selectedConversation = null; // object to hold the selected conversation
+    const loggedInUser = JSON.parse(sessionStorage.getItem("user")); // getting the logged in user
+     $scope.loggedUser = loggedInUser.username; // for handling the view logic 
+    $scope.images = []; // array to hold the images
+    $scope.inputMessage = ""; // input message
 
     // Fetch all conversations for the logged-in user
     // if stateParams.id is 0, fetch all conversations for the user because he is seeing all his chats on the chats section
     // if stateParams.id is not 0, fetch all conversations for the user where the car id is equal to the stateParams.id because he want to communicate at a particular car
-
     $scope.init = ()=>{
-        if($stateParams.id == 0){
+        if($stateParams.id == 0){ // if the stateParams.id is 0, fetch all conversations for the user
             IDB.getUserConversations(loggedInUser.username).then((conversations) => {
                 $scope.myConversations = conversations;
                 console.log($scope.myConversations);
@@ -20,7 +19,7 @@ angular.module('myApp').controller('conversationsCtrl', function($scope, $stateP
                 console.log(err);
                 alert(err);
             });
-        } else {
+        } else { // else fetch all conversations for the user where the car id is equal to the stateParams.id
             IDB.getUserConversations(loggedInUser.username).then((conversations) => {
                 $scope.myConversations = conversations.filter(conversation => conversation.car.id === $stateParams.id);
                 console.log($scope.myConversations);
@@ -35,9 +34,9 @@ angular.module('myApp').controller('conversationsCtrl', function($scope, $stateP
     $scope.fetchMessages = (conversationId) => {
         IDB.getMessagesAtConversationID(conversationId).then((messages) => {
             console.log(conversationId);
-            $scope.messages = messages;
+            $scope.messages = messages; // set the messages to the messages fetched from the database
             console.log($scope.messages);
-            $scope.selectedConversation = $scope.myConversations.find(conversation => conversation.id === conversationId);
+            $scope.selectedConversation = $scope.myConversations.find(conversation => conversation.id === conversationId); // set the selected conversation to the conversation with the conversationId
         }).catch((err) => {
             console.log(err);
             alert(err);
@@ -74,7 +73,7 @@ angular.module('myApp').controller('conversationsCtrl', function($scope, $stateP
     // function to add a message into the database with a particular conversation id
    // function to add a message into the database with a particular conversation id
 $scope.sendMessage = () => {
-    $scope.images = $scope.images.map(image => image.base64);
+    $scope.images = $scope.images.map(image => image.base64)
     console.log($scope.images);
     const message = {
         message: $scope.inputMessage,

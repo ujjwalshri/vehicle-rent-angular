@@ -1,10 +1,11 @@
 
-angular.module('myApp').controller('analyticsCtrl', function($scope, IDB, calculateBookingPrice) {
+angular.module('myApp').controller('analyticsCtrl', function($scope, IDB, Booking) {
    
   $scope.init = ()=>{
     // Fetch all users
-    $scope.calculateBookingPrice = calculateBookingPrice.calculate;
+    $scope.calculateBookingPrice = Booking.calculate; // function to calculate the booking price from the booking factory
     $scope.months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    $scope.monthlyBookings = []; // monthly bookings as empty in the start
     $scope.carAndBiddingsMap = {};
     $scope.ownerAndAddedCarsMap = {};
     $scope.carAndReviewsMap = {};
@@ -44,8 +45,8 @@ angular.module('myApp').controller('analyticsCtrl', function($scope, IDB, calcul
             console.log($scope.allCars);
             $scope.approvedCars = cars.filter(car => car.status === "approved" ); // all approved cars
             $scope.deletedCars = cars.filter(car => car.deleted === true);// all deleted cars
-            $scope.suvCars = cars.filter(car => car.category === "SUV"); // all suv cars
-            $scope.sedanCars = cars.filter(car => car.category === "Sedan");// all sedan cars
+            $scope.suvCars = cars.filter(car => car.category === "SUV" && car.deleted===undefined); // all suv cars and not deleted
+            $scope.sedanCars = cars.filter(car => car.category === "Sedan" &&  car.deleted===undefined);// all sedan cars and not deleted
             $scope.ownerAndAddedCarsMap = cars.reduce((acc, car)=>{ // number of cars added by owners on the platform
                 if(acc[car.owner.username]){
                     acc[car.owner.username] += 1;
@@ -74,7 +75,7 @@ angular.module('myApp').controller('analyticsCtrl', function($scope, IDB, calcul
             $scope.calculatedBiddingConversionRate = Math.ceil(($scope.confirmedBookings.length / bookings.length) * 100); // bidding conversion rate calculation 
 
             // not i will fetch the boookings with the start month equal to the array of months at that particular month value in the array
-            $scope.monthlyBookings = []; // monthly bookings as empty in the start
+            
             $scope.months.forEach((month, index)=>{
                 $scope.monthlyBookings[index] = bookings.filter(booking => new Date(booking.startDate).getMonth() === index); // filter the bookings with the start month equal to the month value in the array
             });
@@ -448,8 +449,10 @@ angular.module('myApp').controller('analyticsCtrl', function($scope, IDB, calcul
       new Chart(ctx, chartConfig);
 
   }
+
+  // function to create the top 3 highest rated car chart 
   function createTop3HighestRatedChart() {
-    var top3Cars = $scope.carAndAverageRatingMap.slice(0, 3);
+    var top3Cars = $scope.carAndAverageRatingMap.slice(0, 3); 
     var chartConfig = {
         type: "bar",
         data: {

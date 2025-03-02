@@ -53,11 +53,6 @@
                 <label for="dateRangePicker">Booking Dates:</label>
                 <input type="text" id="dateRangePicker" placeholder="Select Start & End Date" required>
                 <label for="location">select location</label>
-                <select id="location" ng-model="bidding.location" required>
-                    <option value="local">Local</option>
-                    <option value="outstation">Outstation</option>
-                    <option value="both">both</option>
-                </select>
                 <button type="submit" ng-click="placeBid()">
                     Place Bid at ${{ calculateBookingPrice(bidding.startDate, bidding.endDate, bidding.amount) }}
                 </button>
@@ -68,10 +63,10 @@
             <h2>Review This Car</h2>
             <form>
                 <label for="review">Review:</label>
-                <textarea id="review" ng-model="review.review" required placeholder="Write your review here..." rows="4"></textarea>
+                <textarea id="review" ng-model="review" required placeholder="Write your review here..." rows="4"></textarea>
         
                 <label for="rating">Rating:</label>
-                <select id="rating" ng-model="review.rating" required>
+                <select id="rating" ng-model="rating" required>
                     <option value="" disabled selected>Select a rating</option>
                     <option value="1">1 - Poor</option>
                     <option value="2">2 - Fair</option>

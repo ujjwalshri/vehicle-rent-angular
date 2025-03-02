@@ -18,7 +18,6 @@ angular.module('myApp').service("IDB", function ($q, hashPassword) {
     request.onupgradeneeded = function (event) {
       console.log("db updated");
       db = event.target.result;
-    
       if(!db.objectStoreNames.contains('messages')){
         const messagesObjectStore = db.createObjectStore("messages", {
           keyPath: "id", 
@@ -127,9 +126,7 @@ angular.module('myApp').service("IDB", function ($q, hashPassword) {
     openDB().then(function (db) {
       let transaction = db.transaction(["users"], "readonly");
       let objectStore = transaction.objectStore("users");
-      console.log(user);
       let index = objectStore.index("usernameIndex");
-      
       let request = index.get(user.username);
       request.onsuccess = function (event) {
         if (event.target.result) {
@@ -154,6 +151,8 @@ angular.module('myApp').service("IDB", function ($q, hashPassword) {
       request.onerror = function (event) {
         deferred.reject("Error checking username: " + event.target.errorCode);
       };
+    }).catch(function (error) {
+      deferred.reject("Error opening database: " + error);
     });
     return deferred.promise;
   };
@@ -181,6 +180,8 @@ angular.module('myApp').service("IDB", function ($q, hashPassword) {
       request.onerror = function (event) {
         deferred.reject("Error checking username: " + event.target.errorCode);
       };
+    }).catch(function(error) {
+      deferred.reject("Error opening database: " + error);
     })
     return deferred.promise;
   }
@@ -188,8 +189,8 @@ angular.module('myApp').service("IDB", function ($q, hashPassword) {
   // function to get a user with a particular username
   this.getUser = function (username) {
     let deferred = $q.defer();
-    
-    // Check if username is valid
+  
+
     if (!username) {
       deferred.reject("Invalid username provided");
       return deferred.promise;
@@ -209,6 +210,8 @@ angular.module('myApp').service("IDB", function ($q, hashPassword) {
         request.onerror = function (event) {
           deferred.reject("Error checking if user exists: " + event.target.errorCode);
         };
+    }).catch(function(error) {
+        deferred.reject("Error opening database: " + error);
     });
     return deferred.promise;
   };
@@ -225,6 +228,8 @@ angular.module('myApp').service("IDB", function ($q, hashPassword) {
       request.onerror = function (event) {
         deferred.reject("Error getting users: " + event.target.errorCode);
       };
+    }).catch(function(error) {
+      deferred.reject("Error opening database: " + error);
     });
     return deferred.promise;
   }
@@ -242,6 +247,8 @@ angular.module('myApp').service("IDB", function ($q, hashPassword) {
       addRequest.onerror = function (event) {
         deferred.reject("Error adding car: " + event.target.errorCode);
       };
+    }).catch(function(error) {  
+      deferred.reject("Error opening database: " + error);
     });
     return deferred.promise;
   }
@@ -259,6 +266,8 @@ angular.module('myApp').service("IDB", function ($q, hashPassword) {
       request.onerror = function (event) {
         deferred.reject("Error getting pending cars: " + event.target.errorCode);
       };
+    }).catch(function(error) {
+      deferred.reject("Error opening database: " + error);
     });
     return deferred.promise;
   }
@@ -276,6 +285,8 @@ angular.module('myApp').service("IDB", function ($q, hashPassword) {
       request.onerror = function (event) {
         deferred.reject("Error getting approved cars: " + event.target.errorCode);
       };
+    }).catch(function(error) {
+      deferred.reject("Error opening database: " + error);
     });
     return deferred.promise;
   }
@@ -464,7 +475,7 @@ angular.module('myApp').service("IDB", function ($q, hashPassword) {
     openDB().then(function (db) {
         let transaction = db.transaction(["biddings"], "readwrite");
         let objectStore = transaction.objectStore("biddings");
-        bid.id = crypto.randomUUID();
+       
         let addRequest = objectStore.add(bid);
         addRequest.onsuccess = function(event) {
             deferred.resolve();
@@ -495,6 +506,8 @@ this.getBookingsByOwnerId = (username) => {
     request.onerror = function (event) {
       deferred.reject("Error getting owner bids: " + event.target.errorCode);
     };
+  }).catch(function (error) {
+    deferred.reject("Error opening database: " + error);
   });
   return deferred.promise;
 };
@@ -563,6 +576,8 @@ this.getAllBookings = ()=>{
     request.onerror = function(event) {
       deferred.reject("Error getting bookings: " + event.target.errorCode);
     };
+  }).catch(function(error) {
+    deferred.reject("Error opening database: " + error);
   });
   return deferred.promise;
 }
@@ -582,6 +597,8 @@ this.getBookingByID = (bookingID)=>{
     request.onerror = function(event) {
       deferred.reject("Error getting booking: " + event.target.errorCode);
     };
+  }).catch(function(error) {
+    deferred.reject("Error opening database: " + error);
   });
   return deferred.promise;
 }
@@ -599,6 +616,8 @@ this.getBookingsByCarId = (carID)=>{
     request.onerror = function(event) {
       deferred.reject("Error getting bookings: " + event.target.errorCode);
     };
+  }).catch(function(error) {
+    deferred.reject("Error opening database: " + error);
   });
   return deferred.promise;
   
@@ -705,6 +724,8 @@ this.addReview = (review)=>{
     request.onerror = function(event) {
       deferred.reject("Error getting reviews: " + event.target.errorCode);
     };
+  }).catch(function(error) {
+    deferred.reject("Error opening database: " + error);
   });
   return deferred.promise;
  }
@@ -721,6 +742,8 @@ this.addReview = (review)=>{
       request.onerror = function(event) {
         deferred.reject("Error getting reviews: " + event.target.errorCode);
       };
+    }).catch(function(error) {
+      deferred.reject("Error opening database: " + error);
     });
     return deferred.promise;
   }
@@ -805,6 +828,8 @@ this.addReview = (review)=>{
       request.onerror = function(event) {
         deferred.reject("Error getting conversations: " + event.target.errorCode);
       };
+    }).catch(function(error) {
+      deferred.reject("Error opening database: " + error);
     });
     return deferred.promise;
   }
@@ -844,6 +869,8 @@ this.addReview = (review)=>{
       request.onerror = function(event) {
         deferred.reject("Error getting messages: " + event.target.errorCode);
       };
+    }).catch(function(error) {
+      deferred.reject("Error opening database: " + error);
     });
     return deferred.promise;
   }

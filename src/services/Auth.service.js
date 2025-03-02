@@ -1,5 +1,6 @@
-
+// auth service to interact with the database
 angular.module('myApp').service('AuthService', function($q, IDB) {
+    // function to validate the user
     this.validateUser = function(user) {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (user.password.trim() !== user.confirmPassword.trim()) {
@@ -19,7 +20,7 @@ angular.module('myApp').service('AuthService', function($q, IDB) {
         }
         return $q.resolve();
     };
-
+     // function to login the user
     this.loginUser = function(username, password) {
         const deferred = $q.defer();
         IDB.loginUser(username, password)
@@ -31,7 +32,7 @@ angular.module('myApp').service('AuthService', function($q, IDB) {
             });
         return deferred.promise;
     };
-
+// function to register the user
     this.registerUser = function(user) {
         return IDB.registerUser(user);
     };

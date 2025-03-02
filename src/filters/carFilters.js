@@ -1,7 +1,7 @@
 angular.module("myApp").filter("carFilters", function() {
     return function (cars, search, priceFilter, categoryFilter, carLocation) {
         if (!cars) return [];
-        const priceRanges = {
+        const priceRanges = { // Define price ranges for filtering
             "0-500": [0, 500],
             "500-1000": [500, 1000],
             "1000-1500": [1000, 1500],
@@ -26,21 +26,22 @@ angular.module("myApp").filter("carFilters", function() {
         };
 
         return cars.filter(function (car) {
-            let matchesSearch = !search || car.carName.toLowerCase().includes(search.toLowerCase());
+            // Check if the car matches the search, price, location, and category filters 
+            let matchesSearch = !search || car.carName.toLowerCase().includes(search.toLowerCase()); // Check if the search string is included in the car name
 
-            let matchesPrice = true;
+            let matchesPrice = true; // Assume the car matches the price filter
             if (priceFilter) {
                 let price = parseFloat(car.carPrice);
                 if (priceRanges[priceFilter]) {
-                    let [min, max] = priceRanges[priceFilter];
-                    matchesPrice = price >= min && price < max;
+                    let [min, max] = priceRanges[priceFilter]; // Get the min and max prices for the selected range
+                    matchesPrice = price >= min && price < max; // Check if the car price is within the selected range
                 }
             }
 
-            let matchesLocation = !carLocation || carLocation === car.location;
-            let matchesCategory = !categoryFilter || car.category === categoryFilter;
+            let matchesLocation = !carLocation || carLocation === car.location; // Checking if the car location matches the selected location
+            let matchesCategory = !categoryFilter || car.category === categoryFilter; // Checking if the car category matches the selected category
 
-            return matchesSearch && matchesPrice && matchesCategory && matchesLocation;
+            return matchesSearch && matchesPrice && matchesCategory && matchesLocation; // Return true if all filters match
         });
     };
 });

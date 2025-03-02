@@ -19,3 +19,10 @@
 .bidding-table tr:nth-child(even) {
     background-color: #f9f9f9;
 }
+
+#filters{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    background-color: #b3afaf;
+}

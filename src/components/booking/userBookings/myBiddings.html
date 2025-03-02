@@ -4,8 +4,13 @@
 
 
 <div class="container">
-    <h1>Your bookings</h1>
-<table class="bidding-table">
+    <h1 ng-show="bookings.length>0">Your Biddings</h1>
+    <h1 ng-show="bookings.length===0">NO BIDDINGS</h1>
+
+    <div class="filters" ng-show="bookings.length>0">
+        <input type="text" ng-model="searchCarName" placeholder="Search by Car Name" />
+    </div>
+<table class="bidding-table" ng-show="bookings.length>0">
     <thead>
         <tr>
             <th>Car Name</th>
@@ -18,10 +23,11 @@
             <th>Total Price</th>
             <th>Username</th>
             <th>Email</th>
+            <th>status</th>
         </tr>
     </thead>
     <tbody>
-        <tr ng-repeat="booking in bookings | orderBy: '-createdAt'">
+        <tr ng-repeat="booking in bookings|ownerBookingFilter:searchCarName | orderBy: '-createdAt'">
             <td>{{booking.vehicle.carName}}</td>
             <td>{{booking.vehicle.carModel}}</td>
             <td>{{booking.vehicle.carType}}</td>
@@ -33,6 +39,7 @@
    
             <td>{{booking.owner.username}}</td>
             <td>{{booking.owner.email}}</td>
+            <td>{{booking.status}}</td>
         </tr>
     </tbody>
 </table>

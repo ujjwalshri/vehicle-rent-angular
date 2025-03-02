@@ -1,14 +1,5 @@
-angular.module("myApp").controller("adminCtrl", function($scope, $state, IDB, $rootScope) {
-
-  
-    // const loggedInUser = JSON.parse(sessionStorage.getItem("user"));
-    // if(loggedInUser && loggedInUser.role === "admin"){
-    //     $scope.adminLogged = true;
-    // }
-    // if (!loggedInUser || loggedInUser.role !== "admin") {
-    //     $scope.adminLogged=false;
-    //     $state.go("login");
-    // }
+angular.module("myApp").controller("adminCtrl", function($scope, $state, $rootScope) {
+    // function to logout the admin on the admin page
     $scope.adminLogout = ()=>{
         sessionStorage.removeItem("user");
         $state.go("login");

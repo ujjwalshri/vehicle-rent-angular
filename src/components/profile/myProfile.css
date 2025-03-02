@@ -1,4 +1,4 @@
-/* User Profile Card */
+
 .user-card {
     max-width: 400px;
     background: white;
@@ -26,20 +26,19 @@
     color: #007bff;
 }
 
-/* Added Cars Section */
+
 .added-cars {
     margin-top: 20px;
     padding: 20px;
     display: flex;
-    flex-wrap: wrap;  /* Allow multiple rows */
-    justify-content: space-between; /* Distribute cars evenly */
+    flex-wrap: wrap; 
+    justify-content: space-between; 
     gap: 20px;
     max-width: 1200px;
     margin-left: auto;
     margin-right: auto;
 }
 
-/* Car List */
 .added-cars ul {
     list-style: none;
     padding: 0;
@@ -49,9 +48,9 @@
     width: 100%;
 }
 
-/* Individual Car Card */
+
 .added-cars li {
-    width: calc(20% - 16px);  /* 5 cars per row (20% each), subtracting the gap */
+    width: calc(20% - 16px); 
     min-width: 200px;
     background: white;
     padding: 15px;
@@ -61,35 +60,35 @@
     text-align: center;
 }
 
-/* Car Images */
+
 .car-image {
     width: 100%;
     height: 150px;
-    object-fit: cover; /* Prevents image stretching */
+    object-fit: cover; 
     border-radius: 8px;
 }
 
-/* Text inside car card */
+
 .added-cars p {
     font-size: 14px;
     margin: 5px 0;
 }
 
-/* Responsive Design */
+
 @media (max-width: 1024px) {
     .added-cars li {
-        width: calc(33.33% - 16px); /* 3 cars per row for tablets */
+        width: calc(33.33% - 16px); 
     }
 }
 
 @media (max-width: 768px) {
     .added-cars li {
-        width: calc(50% - 16px); /* 2 cars per row for mobile */
+        width: calc(50% - 16px);
     }
 }
 
 @media (max-width: 480px) {
     .added-cars li {
-        width: 100%; /* 1 car per row for small screens */
+        width: 100%;
     }
 }

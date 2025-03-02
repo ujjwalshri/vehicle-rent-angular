@@ -2,23 +2,22 @@ angular
   .module("myApp")
   .controller(
     "confirmedBookingsCtrl",
-    function ($scope, $state, IDB, calculateBookingPrice) {
-      $scope.calculateBookingPrice = calculateBookingPrice.calculate; // function to calculate the booking price
+    function ($scope, $state, IDB, Booking) {
+      $scope.calculateBookingPrice = Booking.calculate; // function to calculate the booking price
 
 
- 
-        fetchOwnerConfirmedBookings(); // fetching the confirmed bookings for the owner
+      // initially fetching the confirmed bookings when the page loads
+      fetchOwnerConfirmedBookings(); // fetching the confirmed bookings for the owner
       
       function fetchOwnerConfirmedBookings() {
         const loggedInUser = JSON.parse(sessionStorage.getItem("user"));
 
-        // fetch the biddings at a particular owner.username
-        IDB.getBookingsByOwnerId(loggedInUser.username)
+   
+        IDB.getBookingsByOwnerId(loggedInUser.username) // get all the bookings of a particular owner
           .then((bookings) => {
             $scope.bookings = bookings.filter((booking) => {
               return booking.status === "approved";
             });
-            console.log($scope.bookings);
           })
           .catch((err) => {
             console.log(err);
@@ -36,9 +35,9 @@ angular
         // if today date is between the booking start and end date
         // Assuming today, bookingStartDate, and bookingEndDate are Date objects
 
-        today.setHours(0, 0, 0, 0);
-        bookingStartDate.setHours(0, 0, 0, 0);
-        bookingEndDate.setHours(23, 59, 59, 999);
+        today.setHours(0, 0, 0, 0); // set the hours to 0 to compare the dates
+        bookingStartDate.setHours(0, 0, 0, 0); // set the hours to 0 to compare the dates
+        bookingEndDate.setHours(23, 59, 59, 999); // set the hours to 23 to compare the dates
 
         if (today >= bookingStartDate && today <= bookingEndDate) {
           return true;
@@ -51,14 +50,7 @@ angular
       };
 
       $scope.resetFilter = ()=>{
-        $scope.startDate = '';
+        $scope.startDate = ''; // reset the start date filter
       }
-
-      //   $scope.checkApproved = (booking)=>{
-      //        if(booking.status === "approved"){
-      //             return true;
-      //        }
-      //        return false;
-      //   }
     }
   );
