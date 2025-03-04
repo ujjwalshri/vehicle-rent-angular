@@ -13,6 +13,15 @@ angular.module('myApp').factory('Bidding', function() {
             }
             // check if only the start date date itself is less than the date of today like 23feb < 24 feb
             return { success: true };
+        },
+        validateBiddingSchema : function(bidding){
+            const requiredFields = ["startDate", "endDate", "amount", "location"];
+            for(let field of requiredFields){
+                if(!bidding[field]){
+                    return false;
+                }
+            }
+            return true;
         }
     };
 });

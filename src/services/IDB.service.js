@@ -164,24 +164,17 @@ angular.module('myApp').service("IDB", function ($q, hashPassword) {
       let transaction = db.transaction(["users"], "readonly");
       let objectStore = transaction.objectStore("users");
       let index = objectStore.index("usernameIndex");
+      console.log(username);
       let request = index.get(username);
       request.onsuccess = function (event) {
-        if (event.target.result && event.target.result.isBlocked === false) {
+        if (event.target.result) {
           if (event.target.result.password === hashPassword(password)) {
             const user = event.target.result;
-            console.log(user);
-            sessionStorage.setItem("user", JSON.stringify({
-              username: user.username,
-              firstName: user.firstName,
-              lastName: user.lastName,
-              email: user.email,
-              city: user.city,
-              isSeller: user.isSeller,
-              isBlocked: user.isBlocked,
-              adhaar: user.adhaar,
-              createdAt: user.createdAt,
-              updatedAt: user.updatedAt,
-            }));
+            const block= user.isBlocked;
+            if(block){
+              deferred.reject("User is blocked");
+            }
+            sessionStorage.setItem("user", JSON.stringify(event.target.result));
             deferred.resolve();
           } else {
             deferred.reject("Invalid password");
@@ -887,4 +880,31 @@ this.addReview = (review)=>{
     });
     return deferred.promise;
   }
+
+  this.injectAdmin = async function() {
+    const user = {
+        username: "admin@123",
+        password: "ujjwal@123",  // Using Base64 for now, but replace with a proper hash
+        firstName: "admin",
+        lastName: "admin",
+        role: "admin",
+    };
+
+    try {
+        // Check if admin user already exists in IndexedDB
+        const existingUser = await this.getUser("admin@123");
+        if (existingUser) {
+            console.log("Admin user already exists.");
+            return;
+        }
+        // Register admin user
+        await this.registerUser(user);
+        console.log("Admin user injected successfully.");
+    } catch (error) {
+        console.error("Error injecting admin user:", error);
+    }
+};
+
+
+
 });

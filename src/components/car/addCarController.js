@@ -1,8 +1,8 @@
 angular
   .module("myApp")
-  .controller("addCarCtrl", function ($scope, $state, IDB, $timeout,carValidation ) {
+  .controller("addCarCtrl", function ($scope, $state, IDB, $timeout,carValidation, ToastService ) {
     
-    const loggedInUser = JSON.parse(sessionStorage.getItem("user"));
+    const loggedInUser = JSON.parse(sessionStorage.getItem("user")); // getting the loggedInUser
     $scope.images = []; // This will store the selected images
     // Function to handle image preview and Base64 conversion
     $scope.previewImages = function (input) {
@@ -13,7 +13,7 @@ angular
     
         files.forEach((file) => {
           let reader = new FileReader();
-          reader.readAsDataURL(file);
+          reader.readAsDataURL(file); // converts file into the base64 string
           
           reader.onload = function (e) {
          
@@ -38,6 +38,8 @@ angular
 
     // Submit form function
     $scope.submitCarForm = function () {
+
+      // Car object to be added to the database
       const car = {
         car_no: $scope.car_no,
         carType: $scope.carType,
@@ -78,25 +80,24 @@ angular
 
       // validation for the car object properties
       if (!carValidation.validateCarSchema(car)) {
-        alert("Please fill out all the details");
+        ToastService.error("please fill all the required fields");
         return;
       }
       if(!carValidation.validateCar(car)){
-        alert("invalid car data Please fill out valid details");
+        ToastService.error("invalid car details");
         return;
       }
       // Add the car to the database
       IDB.addCar(car)
         .then((response) => {
-          console.log("Car added successfully:", response);
-          return IDB.makeUserSeller(loggedInUser.username); // Return the next promise
+          ToastService.success(`car added successfully`);
+          return IDB.makeUserSeller(loggedInUser.username); // Returns the next promise
         })
         .then((response) => {
-          console.log("User updated to seller:", response);
           $state.go("home");
         })
         .catch((error) => {
-          alert("error adding car");
+          ToastService.error(`error adding car ${error}`);
         });
     };
   });

@@ -76,15 +76,16 @@ $scope.sendMessage = () => {
     $scope.images = $scope.images.map(image => image.base64)
     console.log($scope.images);
     const message = {
-        message: $scope.inputMessage,
+        message: $scope.inputMessage.trim(),
         sender: loggedInUser.username,
         receiver: $scope.selectedConversation.receiver,
         conversation: $scope.selectedConversation,
         createdAt: new Date()
     };
+
     if ($scope.images.length > 0) {
-        message.images = $scope.images;
-    } 
+        message.images = $scope.images; // Add images to the message if there are any
+    }
 
     IDB.addMessage(message).then((response) => {
         $scope.messages.push(message);

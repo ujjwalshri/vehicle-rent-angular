@@ -3,9 +3,10 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
         <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 </head>
-
+<h1 ng-hide="isSeller">fine of $500 will be applied on travelling more than 300km</h1>
 <div class="outer-div" ng-init="init()">
     <div class="car-booking-container"></div>
+        
         <div class="single-car-container" ng-if="car">
             <h1>{{ car.carName }} ({{ car.carModel }})</h1>
             <div class="car-image" ng-click="openModal(car.vehicleImages)">
@@ -48,13 +49,13 @@
             <h2>Book This Car</h2>
             <form>
                 <label for="amount">Bid Amount:</label>
-                <input type="number" id="amount" ng-model="bidding.amount" required>
+                <input type="number" id="amount" ng-model="amount" required>
         
                 <label for="dateRangePicker">Booking Dates:</label>
                 <input type="text" id="dateRangePicker" placeholder="Select Start & End Date" required>
                 <label for="location">select location</label>
                 <button type="submit" ng-click="placeBid()">
-                    Place Bid at ${{ calculateBookingPrice(bidding.startDate, bidding.endDate, bidding.amount) }}
+                    Place Bid at ${{ calculateBookingPrice(startDate,endDate, amount) }}
                 </button>
             </form>
         </div>

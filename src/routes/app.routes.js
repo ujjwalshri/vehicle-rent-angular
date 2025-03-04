@@ -82,7 +82,6 @@ angular.module("myApp").config(function($stateProvider, $urlRouterProvider) {
                 'adminContent@admin': {
                     templateUrl: 'components/admin/userManagement/userManagement.html',
                     controller: 'userManagementCtrl',
-                    controllerAs: 'userManagementCtrl'
                 }
             }
         })

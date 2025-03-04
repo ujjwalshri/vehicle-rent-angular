@@ -8,10 +8,11 @@
 <div ng-controller = "appCtrl">
     <form  id="userForm" ng-controller="loginCtrl">
         <h1>Login Form</h1>
-        {{test}}
         <label for="username">Username:</label>
         <input type="text" id="username" name="username" placeholder="enter a valid username" ng-model="username" required><br><br>
-        
+        <span class="error" ng-show=" userForm.username.$error.required">
+            Username is required.
+        </span>
         <label for="password">Password:</label>
         <input type="password" id="password" name="password" placeholder="enter your password" ng-model="password" required><br><br>
         

@@ -1,6 +1,6 @@
 angular
   .module("myApp")
-  .controller("userManagementCtrl", function ($scope, $state, IDB, $q, ) {
+  .controller("userManagementCtrl", function ($scope, IDB ) {
     $scope.allUsers = [];
     $scope.buyers = [];
     $scope.sellers = [];
@@ -21,10 +21,6 @@ angular
           $scope.sellers = $scope.allUsers.filter((user) => {
             return user.isSeller === true;
           });
-          console.log("Buyers");
-          console.log($scope.buyers);
-          console.log("Sellers");
-          console.log($scope.sellers);
         })
         .catch((err) => {
           console.log(err);

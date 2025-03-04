@@ -2,11 +2,11 @@
 angular.module('myApp').service('AuthService', function($q, IDB) {
     // function to validate the user
     this.validateUser = function(user) {
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // regex for email validation 
         if (user.password.trim() !== user.confirmPassword.trim()) {
             return $q.reject("Passwords do not match!");
-        }
-        if(user.password.trim().length < 8){
+        } 
+        if(user.password.trim().length < 8){  
             return $q.reject("Password should be atleast 8 characters long");
         }
         if(String(user.adhaar).length !== 12){

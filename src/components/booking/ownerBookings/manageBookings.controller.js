@@ -45,7 +45,7 @@ angular.module('myApp').controller('manageBookingsCtrl', function($scope, $state
     // function to start the trip when the user clicks on the start trip button
     $scope.startTrip = () => {
         if (!$scope.started) {
-            $scope.booking.status = "started";
+
             IDB.updateBookingAndAddStartOdometerValue($scope.booking.id, $scope.startOdometerValue).then(() => { // call to the database function to update the booking  and add the start odometer value
                 $scope.booking.startOdometerValue = $scope.startOdometerValue;
                 $scope.started = true;
@@ -57,7 +57,7 @@ angular.module('myApp').controller('manageBookingsCtrl', function($scope, $state
    // function to end the trip when the user clicks on the end trip button 
     $scope.endTrip = () => {
         if ($scope.started) {
-            $scope.booking.status = "ended";
+
             IDB.updateBookingAndAddEndOdometerValue($scope.booking.id, $scope.endOdometerValue).then(() => { // call to the database function to update the booking  and add the end odometer value
                 $scope.booking.endOdometerValue = $scope.endOdometerValue;
                 $scope.started = false;

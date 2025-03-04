@@ -11,8 +11,6 @@ angular
       
       function fetchOwnerConfirmedBookings() {
         const loggedInUser = JSON.parse(sessionStorage.getItem("user"));
-
-   
         IDB.getBookingsByOwnerId(loggedInUser.username) // get all the bookings of a particular owner
           .then((bookings) => {
             $scope.bookings = bookings.filter((booking) => {
@@ -26,15 +24,13 @@ angular
 
       
 
-      // function to get if a booking is sheduled to start at today
+      // function to get if a booking is started and today date is in between the startDate and endDate
       $scope.todayBooking = (booking) => {
         const bookingStartDate = new Date(booking.startDate); // making sure that startDate is date object
         const bookingEndDate = new Date(booking.endDate); // making sure that endDate is date object
         const today = new Date(); // getting the current date
 
         // if today date is between the booking start and end date
-
-
         today.setHours(0, 0, 0, 0); // set the hours to 0 to compare the dates
         bookingStartDate.setHours(0, 0, 0, 0); // set the hours to 0 to compare the dates
         bookingEndDate.setHours(23, 59, 59, 999); // set the hours to 23 to compare the dates

@@ -15,10 +15,7 @@ angular.module('myApp').controller('sellerAnalyticsCtrl', function($scope, IDB) 
         IDB.getBookingsByOwnerId(loggedInUser.username).then(biddings => {// fetch all biddings for a particular seller username
             console.log(biddings);
             $scope.bookings = biddings.filter(booking => booking.status === "approved"); // filter out the approved biddings
-            
-
-           
-
+        
             biddings.forEach(bidding => {  // loop through all biddings
                 const carName = bidding.vehicle.carName + ' ' + bidding.vehicle.carModel;
                 if ($scope.carsAndBidsMap[carName]) {

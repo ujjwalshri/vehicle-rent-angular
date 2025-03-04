@@ -13,6 +13,7 @@
                 <th>End Date</th>
                 <th>Owner Details</th>
                 <th>Vehicle Details</th>
+                <th >Add a Review</th>
             </tr>
         </thead>
         <tbody>
@@ -37,8 +38,26 @@
                     <p>Category: {{booking.vehicle.category}}</p>
                     <p>Mileage: {{booking.vehicle.mileage}} kmpl</p>
                 </td>
+                <td ng-if="booking.ended === true" > <div class="review-form" ng-hide="isSeller">
+                    <h2>Review This Car</h2>
+                    <form>
+                        <label for="review">Review:</label>
+                        <textarea id="review" ng-model="userReview" required placeholder="Write your review here..." rows="4"></textarea>
                 
-               
+                        <label for="rating">Rating:</label>
+                        <select id="rating" ng-model="userRating" required>
+                            <option value="" disabled selected>Select a rating</option>
+                            <option value="1">1 - Poor</option>
+                            <option value="2">2 - Fair</option>
+                            <option value="3">3 - Good</option>
+                            <option value="4">4 - Very Good</option>
+                            <option value="5">5 - Excellent</option>
+                        </select>
+                
+                        <button type="submit" ng-click="addReview(booking.vehicle)"> place review</button>
+                    </form>
+                </div></td>
+                <td ng-if="booking.ended === undefined">not completed</td>
             </tr>
         </tbody>
     </table>

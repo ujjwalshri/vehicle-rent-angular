@@ -11,9 +11,8 @@ angular.module("myApp").controller("homeCtrl", function($scope, $state, IDB) {
         // function to get all the cars that have status === approved
      IDB.getApprovedCars().then((cars) => {
             $scope.allCars = cars.filter((car) => {
-                return car.deleted === undefined;
+                return car.deleted === undefined; // filter out the deleted cars 
             });
-           
             console.log($scope.allCars);
         })
         .catch((err) => {

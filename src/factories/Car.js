@@ -1,5 +1,6 @@
 angular.module('myApp').factory('carValidation', function($q) {
     return {
+        // function to validate the car object
         validateCar: function(car) {
             if (car.carName.trim().length < 3) {
                 return false;

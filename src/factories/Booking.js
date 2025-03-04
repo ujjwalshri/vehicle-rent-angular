@@ -8,10 +8,7 @@ app.factory('Booking', function(){
             // Convert to Date objects
             var start = new Date(startDate);
             var end = new Date(endDate);
-            // Check if dates are valid
-            if (isNaN(start.getTime()) || isNaN(end.getTime())) {
-                return 0;
-            }
+            
             // Calculate difference in days
             var diffTime = end.getTime() - start.getTime();
             var diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
